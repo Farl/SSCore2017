@@ -10,9 +10,12 @@ public class SSVR : MonoBehaviour
 
 	#if UNITY_EDITOR
 	Vector3 mousePos;
-	#endif
+#else
+    Vector3 gyroForward = Vector3.zero;
+    Vector3 gyroUp = Vector3.zero;
+#endif
 
-	void Awake()
+    void Awake()
 	{
 		SSGUI.Register(DrawGUI);
 		Input.gyro.enabled = true;

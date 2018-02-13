@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ReorderableListTest : MonoBehaviour {
 
-	//[ReorderableAttribute]
+	[ReorderableAttribute]
 	public List<string> testString = new List<string>();
 
 	//[ReorderableAttribute]
@@ -18,8 +18,8 @@ public class ReorderableListTest : MonoBehaviour {
 		public List<string> strList;
 	}
 
-	//[ReorderableAttribute]
-	//public List<TestClass> testClass;
+	[ReorderableAttribute]
+	public List<TestClass> testClass;
 
 	//[AutoAttribute]
 	//public List<TestClass> testClass2;

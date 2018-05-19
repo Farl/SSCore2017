@@ -23,7 +23,10 @@ public class ButtonAttributeDrawer : PropertyDrawer {
                 MethodInfo mi = t.GetMethod(ba.methodName, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 if (mi != null)
                 {
-                    mi.Invoke(property.serializedObject.targetObject, new object[] { });
+                    foreach (UnityEngine.Object obj in property.serializedObject.targetObjects)
+                    {
+                        mi.Invoke(obj, new object[] { });
+                    }
                 }
             }
         }

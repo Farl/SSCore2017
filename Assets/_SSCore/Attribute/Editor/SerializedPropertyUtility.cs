@@ -20,9 +20,23 @@ public static class SerializedPropertyUtility
 			return Convert.ToInt32(prop.propertyPath.Substring(prop.propertyPath.LastIndexOf("[")).Replace("[","").Replace("]",""));
 		else
 			return 0;
-	}
+    }
 
-	public static SerializedProperty GetArrayParentProperty(SerializedProperty property)
+    public static SerializedProperty GetArrayParentProperty(SerializedProperty property)
+    {
+        if (IsArrayElement(property) || property.propertyPath.EndsWith(".Array"))
+        {
+            int arrayStrIdx = property.propertyPath.LastIndexOf(".Array");
+            string newPath = property.propertyPath.Substring(0, arrayStrIdx);
+            return property.serializedObject.FindProperty(newPath);
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    public static SerializedProperty GetArrayParentProperty2(SerializedProperty property)
 	{
 		//Debug.Log("Searching parent of " + property.propertyPath + "...");
 		if (!IsArrayElement(property))
@@ -57,7 +71,7 @@ public static class SerializedPropertyUtility
 	public static object GetParent(SerializedProperty prop)
 	{
 		var path = prop.propertyPath.Replace(".Array.data[", "[");
-		object obj = prop.serializedObject.targetObject;
+		object obj = prop.serializedObject.targetObjects[0];
 		var elements = path.Split('.');
 		foreach(var element in elements.Take(elements.Length-1))
 		{

@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEngine;
+using UnityEditor;
+#endif
 
 public class TestReorderableArray : MonoBehaviour
 {
@@ -23,9 +27,18 @@ public class TestReorderableArray : MonoBehaviour
         public TestClass2 c;
     }
 
+    [System.Serializable]
+    public class TestClass3
+    {
+        public TestClass2[] test;
+    }
+
+    [Reorderable]
     public TestClass[] tArray;
     [Reorderable]
     public List<TestClass> tList;
+    [Auto]
+    public TestClass3 autoArray;
 
     // Use this for initialization
     void Start () {
@@ -37,3 +50,15 @@ public class TestReorderableArray : MonoBehaviour
 		
 	}
 }
+
+#if UNITY_EDITOR
+[CanEditMultipleObjects]
+[CustomEditor(typeof(TestReorderableArray))]
+public class TestReorderableArrayEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+    }
+}
+#endif

@@ -358,7 +358,7 @@ public class AutoDrawer : PropertyDrawer {
 					}
 					toolPos.x += smallHeight;
 					
-					// Array element remvoe
+					// Array element remove
 					GUI.enabled = origProp.arraySize > 0;
 					if (GUI.Button (toolPos, "-"))
 						action = new InsertDeleteElement(origProp, false, i);

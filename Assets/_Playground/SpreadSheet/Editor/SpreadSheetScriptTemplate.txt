@@ -1,0 +1,21 @@
+﻿/**
+ *  [ScriptComments]
+ *  This is a automatically generated script.
+ *  Do not modify if you don't know the consequences.
+ **/
+
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+[UsingNamespaces]
+
+namespace SS
+{
+
+public [MainClassName]: ScriptableObject
+{
+[Classes]
+[Properties]
+}
+
+}

@@ -24,7 +24,7 @@ public class Example_SpreadSheet: ScriptableObject
 		public int[] integerArray;
 	}
 
-	public Data[] datas;
+	public List<Data> datas;
 
 }
 

@@ -19,7 +19,7 @@ public class SpreadSheetImporter {
     {
         public string className;
         public ICell defineCell;
-        public List<string> properties = new List<string>();
+        public List<string> fields = new List<string>();
 
         public void Input(ICell cell)
         {
@@ -29,7 +29,7 @@ public class SpreadSheetImporter {
                 if (defineCell.RowIndex == cell.RowIndex && cell.ColumnIndex > defineCell.ColumnIndex)
                 {
                     // Class properties
-                    properties.Add(cellStringValue);
+                    fields.Add(cellStringValue);
                 }
             }
         }
@@ -40,7 +40,7 @@ public class SpreadSheetImporter {
             result += "\tpublic " + className + '\n';
             result += "\t{\n";
             string prevPropertie = string.Empty;
-            foreach (string propertie in properties)
+            foreach (string propertie in fields)
             {
                 if (propertie.StartsWith("/", StringComparison.InvariantCulture))
                     continue;
@@ -59,7 +59,7 @@ public class SpreadSheetImporter {
         {
             string result = '\t' + className + '\n';
             result += "\t{\n";
-            foreach (string propertie in properties)
+            foreach (string propertie in fields)
             {
                 result += "\t\t" + propertie + '\n';
             }
@@ -432,8 +432,14 @@ public class SpreadSheetImporter {
                             {
                                 string fieldName = fieldTokens[1];
                                 FieldInfo fi = textType.GetField(fieldName);
+
+                                // Is a List<...> filed
                                 if (fi != null && fi.FieldType.IsGenericType && fi.FieldType.GetGenericTypeDefinition() == typeof(List<>))
                                 {
+                                    // new List<'Data'>()
+                                    var container = Activator.CreateInstance(fi.FieldType);
+                                    fi.SetValue(sObj, container);
+
                                     Type entityType = fi.FieldType.GetGenericArguments()[0];
                                     MethodInfo mi = fi.FieldType.GetMethod("Add", new Type[] { entityType });
                                     if (mi != null)
@@ -441,16 +447,22 @@ public class SpreadSheetImporter {
                                         foreach (ICell cell in fd.cellList)
                                         {
                                             IRow row = cell.Row;
+
+                                            // find this 'Data' class define
                                             ClassDefine cd = scriptDefine.classDefines.Find((x) => x.className.Replace("class ", string.Empty) == fd.typeName);
                                             if (cd != null && row != null)
                                             {
+                                                // new a 'Data' class
                                                 var element = Activator.CreateInstance(entityType);
-                                                for (int i = 0; i < cd.properties.Count; i++)
+
+                                                // for each fileds in this class
+                                                for (int i = 0; i < cd.fields.Count; i++)
                                                 {
-                                                    string assetField = cd.properties[i];
+                                                    string assetField = cd.fields[i];
                                                     if (assetField[0] != '/')
                                                     {
                                                         string[] assetFieldTokens = assetField.Split(' ');
+
                                                         FieldInfo efi = entityType.GetField(assetFieldTokens[1]);
                                                         if (efi != null)
                                                         {
@@ -476,21 +488,95 @@ public class SpreadSheetImporter {
                                                                 else if (efi.FieldType == typeof(float))
                                                                 {
                                                                     float result;
-                                                                    if (float.TryParse(currCell.ToString(), out result))
+                                                                    if (currCell.CellType == CellType.Numeric)
                                                                     {
-                                                                        efi.SetValue(element, result);
+                                                                        result = (float)currCell.NumericCellValue;
                                                                     }
+                                                                    else if (float.TryParse(currCell.ToString(), out result))
+                                                                    {
+                                                                    }
+                                                                    efi.SetValue(element, result);
                                                                 }
                                                                 else if (efi.FieldType == typeof(string))
                                                                 {
                                                                     efi.SetValue(element, currCell.ToString());
+                                                                }
+                                                                else if (efi.FieldType.IsArray)
+                                                                {
+                                                                    // import Array
+
+                                                                    Type elementType = efi.FieldType.GetElementType();
+                                                                    IRow defineRow = cd.defineCell.Row;
+
+                                                                    // Get array
+                                                                    Array array = efi.GetValue(element) as Array;
+                                                                    if (array == null)
+                                                                    {
+                                                                        // count array
+                                                                        int numElement = 0;
+                                                                        foreach (ICell countCell in defineRow)
+                                                                        {
+                                                                            if (countCell.ToString() == defineRow.GetCell(i+1).ToString())
+                                                                            {
+                                                                                numElement++;
+                                                                            }
+                                                                        }
+                                                                        array = Array.CreateInstance(elementType, numElement);
+                                                                        efi.SetValue(element, array);
+                                                                    }
+                                                                    if (array != null)
+                                                                    {
+                                                                        int idxElement = 0;
+                                                                        foreach (ICell countCell in defineRow)
+                                                                        {
+                                                                            if (countCell == defineRow.GetCell(i+1))
+                                                                                break;
+                                                                            if (countCell.ToString() == defineRow.GetCell(i + 1).ToString())
+                                                                            {
+                                                                                idxElement++;
+                                                                            }
+                                                                        }
+                                                                        // set element value
+                                                                        if (elementType == typeof(int))
+                                                                        {
+                                                                            int result;
+                                                                            if (int.TryParse(currCell.ToString(), out result))
+                                                                            {
+                                                                                array.SetValue(result, idxElement);
+                                                                            }
+                                                                        }
+                                                                        else if (elementType == typeof(bool))
+                                                                        {
+                                                                            bool result;
+                                                                            if (bool.TryParse(currCell.ToString(), out result))
+                                                                            {
+                                                                                array.SetValue(result, idxElement);
+                                                                            }
+                                                                        }
+                                                                        else if (elementType == typeof(float))
+                                                                        {
+                                                                            float result;
+                                                                            if (currCell.CellType == CellType.Numeric)
+                                                                            {
+                                                                                result = (float)currCell.NumericCellValue;
+                                                                            }
+                                                                            else if (float.TryParse(currCell.ToString(), out result))
+                                                                            {
+                                                                            }
+                                                                            array.SetValue(result, idxElement);
+                                                                        }
+                                                                        else if (elementType == typeof(string))
+                                                                        {
+                                                                            array.SetValue(currCell.ToString(), idxElement);
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
                                                 }
 
-                                                mi.Invoke(sObj, new object[] { element });
+                                                mi.Invoke(container, new object[] { element });
                                             }
                                         }
                                     }
@@ -499,10 +585,9 @@ public class SpreadSheetImporter {
                             }
                         }
                         Debug.Log(textType);
-                        AssetDatabase.CreateAsset(sObj, "Test.asset");
+                        AssetDatabase.CreateAsset(sObj, "Assets/Test.asset");
                         //scriptDefine.GenerateClass();
                     }
-
 
                     // close file stream
                     stream.Close();

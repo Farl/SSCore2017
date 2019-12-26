@@ -45,7 +45,7 @@ public class SpreadSheetImporter {
                 if (field.IsComment)
                     continue;
 
-                if (field.fieldName != prevField.fieldName)
+                if (prevField == null || field.fieldName != prevField.fieldName)
                 {
                     result += "\t\tpublic " + field.GetFieldString() + ";\n";
                 }
@@ -190,10 +190,25 @@ public class SpreadSheetImporter {
 
         public List<string> usingNamespaces = new List<string>();
         public string filename;
-        public string mainClass;
+        public string _classString;
+        public string className;
+        public string mainClass
+        {
+            get
+            {
+                return _classString;
+            }
+            set
+            {
+                _classString = value;
+                className = _classString.Replace("class", string.Empty).Trim();
+            }
+        }
         public List<ClassDefine> classDefines = new List<ClassDefine>();
         private ClassDefine currentClass;
+
         public List<FieldDefine> fields = new List<FieldDefine>();
+        private FieldDefine lastField;
 
         public ScriptDefine()
         {
@@ -226,13 +241,20 @@ public class SpreadSheetImporter {
                         classDefines.Add(currentClass);
                     }
                 }
-                else if (!string.IsNullOrEmpty(cellStringValue.Trim()))
+                else if (!string.IsNullOrEmpty(cellStringValue.Trim()) && !cellStringValue.StartsWith("//", StringComparison.InvariantCulture))
                 {
+                    // Find the same field
                     FieldDefine fd = fields.Find((x) => x.GetFieldString() == cellStringValue);
+                    if (!cellStringValue.Contains(" "))
+                    {
+                        // Use previos field
+                        fd = lastField;
+                    }
                     if (fd == null)
                     {
                         fd = new FieldDefine(cellStringValue);
                         fields.Add(fd);
+                        lastField = fd;
                     }
                     if (fd != null)
                     {
@@ -252,7 +274,7 @@ public class SpreadSheetImporter {
 
         public void Import()
         {
-            Type textType = SpreadSheetImporter.GetType("SS." + mainClass.Replace("class ", ""));
+            Type textType = SpreadSheetImporter.GetType("SS." + className);
 
             // new ScriptableObject
             var sObj = ScriptableObject.CreateInstance(textType);
@@ -262,12 +284,12 @@ public class SpreadSheetImporter {
             {
                 fd.Import(sObj, textType, this);
             }
-            AssetDatabase.CreateAsset(sObj, "Assets/Test.asset");
+            AssetDatabase.CreateAsset(sObj, Path.Combine("Assets", filename + ".asset"));
         }
 
         public void GenerateClass()
         {
-            string outFilePath = Path.Combine(Path.Combine(Application.dataPath, outputPath), filename);// + ".txt";
+            string outFilePath = Path.Combine(Path.Combine(Application.dataPath, outputPath), className + ".cs");// + ".txt";
             string inFilePath = Path.Combine(Application.dataPath, templatePath);
 
             using (StreamReader inReader = File.OpenText(inFilePath))
@@ -337,6 +359,38 @@ public class SpreadSheetImporter {
         return resultType;
     }
 
+    static T Get<T>(ICell cell) where T : IConvertible
+    {
+        T result = default(T);
+        if (cell != null)
+        {
+            try
+            {
+                var converter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(T));
+                if (converter != null)
+                {
+                    if (cell.CellType == CellType.Numeric || (cell.CellType == CellType.Formula && cell.CachedFormulaResultType == CellType.Numeric))
+                    {
+                        result = (T)Convert.ChangeType(cell.NumericCellValue, typeof(T));
+                    }
+                    else if (cell.CellType == CellType.Formula && cell.CachedFormulaResultType == CellType.String)
+                    {
+                        result = (T)converter.ConvertFromString(cell.StringCellValue);
+                    }
+                    else
+                    {
+                        result = (T)converter.ConvertFromString(cell.ToString());
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
+        return result;
+    }
+
     static void SetValue(object element, FieldInfo efi, ICell currCell)
     {
         if (efi == null || currCell == null)
@@ -346,22 +400,14 @@ public class SpreadSheetImporter {
 
         if (fieldType == typeof(int) || fieldType.IsEnum)
         {
-            int result = 0;
+            int result = Get<int>(currCell);
             
-            if (currCell.CellType == CellType.Numeric)
-            {
-                result = (int)currCell.NumericCellValue;
-            }
-            else
-            {
-                int.TryParse(currCell.ToString(), out result);
-            }
             efi.SetValue(element, result);
         }
         else if (fieldType == typeof(bool))
         {
             bool result = false;
-            if (currCell.CellType == CellType.Numeric)
+            if (currCell.CellType == CellType.Numeric || (currCell.CellType == CellType.Formula && currCell.CachedFormulaResultType == CellType.Numeric))
             {
                 result = (int)currCell.NumericCellValue != 0;
             }
@@ -374,7 +420,7 @@ public class SpreadSheetImporter {
         else if (fieldType == typeof(float))
         {
             float result = 0;
-            if (currCell.CellType == CellType.Numeric)
+            if (currCell.CellType == CellType.Numeric || (currCell.CellType == CellType.Formula && currCell.CachedFormulaResultType == CellType.Numeric))
             {
                 result = (float)currCell.NumericCellValue;
             }
@@ -387,7 +433,7 @@ public class SpreadSheetImporter {
         else if (fieldType == typeof(double))
         {
             double result = 0;
-            if (currCell.CellType == CellType.Numeric)
+            if (currCell.CellType == CellType.Numeric || (currCell.CellType == CellType.Formula && currCell.CachedFormulaResultType == CellType.Numeric))
             {
                 result = currCell.NumericCellValue;
             }
@@ -399,7 +445,16 @@ public class SpreadSheetImporter {
         }
         else if (fieldType == typeof(string))
         {
-            efi.SetValue(element, currCell.ToString());
+            string result = "";
+            if (currCell.CellType == CellType.Formula)
+            {
+                result = currCell.StringCellValue;
+            }
+            else
+            {
+                result = currCell.ToString();
+            }
+            efi.SetValue(element, result);
         }
         else
         {
@@ -467,23 +522,31 @@ public class SpreadSheetImporter {
             if (elementType == typeof(int))
             {
                 int result;
-                if (int.TryParse(currCell.ToString(), out result))
+                if (currCell.CellType == CellType.Numeric || (currCell.CellType == CellType.Formula && currCell.CachedFormulaResultType == CellType.Numeric))
                 {
-                    array.SetValue(result, idxElement);
+                    result = (int)currCell.NumericCellValue;
                 }
+                else if (int.TryParse(currCell.ToString(), out result))
+                {
+                }
+                array.SetValue(result, idxElement);
             }
             else if (elementType == typeof(bool))
             {
                 bool result;
-                if (bool.TryParse(currCell.ToString(), out result))
+                if (currCell.CellType == CellType.Numeric || (currCell.CellType == CellType.Formula && currCell.CachedFormulaResultType == CellType.Numeric))
                 {
-                    array.SetValue(result, idxElement);
+                    result = (int)currCell.NumericCellValue != 0;
                 }
+                else if (bool.TryParse(currCell.ToString(), out result))
+                {
+                }
+                array.SetValue(result, idxElement);
             }
             else if (elementType == typeof(float))
             {
                 float result;
-                if (currCell.CellType == CellType.Numeric)
+                if (currCell.CellType == CellType.Numeric || (currCell.CellType == CellType.Formula && currCell.CachedFormulaResultType == CellType.Numeric))
                 {
                     result = (float)currCell.NumericCellValue;
                 }
@@ -494,7 +557,16 @@ public class SpreadSheetImporter {
             }
             else if (elementType == typeof(string))
             {
-                array.SetValue(currCell.ToString(), idxElement);
+                string result = "";
+                if (currCell.CellType == CellType.Formula && currCell.CachedFormulaResultType == CellType.String)
+                {
+                    result = currCell.StringCellValue;
+                }
+                else
+                {
+                    result = currCell.ToString();
+                }
+                array.SetValue(result, idxElement);
             }
         }
     }

@@ -6,26 +6,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 
 namespace SS
 {
     [InitializeOnLoad]
-    public class EditorWorld
+    public class EditorWorld:
+        IPreprocessBuild
     {
         static EditorWorld()
         {
             EditorApplication.update += Update;
         }
 
+        public int callbackOrder
+        {
+            get
+            { return 0; }
+        }
+
         static void Update()
         {
+            // Prepare runtime player settings
             RuntimePlayerSettings setting = RuntimePlayerSettings.Instance;
+
+            // Update scenes
             if (setting.scenes == null)
                 setting.scenes = new List<string>();
-
-
             EditorBuildSettingsScene[] scenes = EditorBuildSettings.scenes;
             int sceneCount = scenes.Length;
 
@@ -44,6 +53,18 @@ namespace SS
                     setting.scenes[i] = scenes[i].path;
                 }
             }
+        }
+
+        public void OnPreprocessBuild(BuildTarget target, string path)
+        {
+            // Prepare runtime player settings
+            RuntimePlayerSettings setting = RuntimePlayerSettings.Instance;
+
+            // Update machine name
+            setting.userName = System.Environment.UserName;
+
+            // Update build time
+            setting.buildTime = System.DateTime.Now.ToString();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SS
         }
     }
 
-    public class DebugMenu : MonoBehaviour
+    public class DebugMenu : UIBaseSingleton<DebugMenu>
     {
         [SerializeField]
         private GameObject _sceneButtonTemplate;
@@ -31,11 +31,19 @@ namespace SS
 
         bool waitZeroInput = false;
 
+        public bool drawOnGUI = false;
+
+        private QuickPanel panel = null;
+
         [Auto]
         public DebugEventInfo[] debugEvent;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
+            panel = GetComponent<QuickPanel>();
+
             if (_sceneButtonTemplate)
             {
                 _sceneButtonRoot = _sceneButtonTemplate.transform.parent;
@@ -60,10 +68,14 @@ namespace SS
                     go.SetActive(true);
                 }
             }
+
+            World.RegisterOnGUI(DrawGUI, this);
         }
 
-        void Start()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
+            World.UnregisterOnGUI(DrawGUI, this);
         }
 
         void Update()
@@ -79,14 +91,22 @@ namespace SS
                 if (Input.GetKeyDown(KeyCode.Backspace) || Input.touchCount == 3)
                 {
                     debugMenuShow = !debugMenuShow;
+                    if (debugMenuShow)
+                    {
+                        panel.Open();
+                    }
+                    else
+                    {
+                        panel.Close();
+                    }
                     waitZeroInput = true;
                 }
             }
         }
 
-        void OnGUI()
+        void DrawGUI()
         {
-            if (!debugMenuShow)
+            if (!debugMenuShow || !drawOnGUI)
                 return;
             int segW = 5;
             int segH = 5;
@@ -94,7 +114,7 @@ namespace SS
             float layoutW = Screen.width / (float)segW;
             float layoutH = Screen.height / (float)segH;
 
-            GUILayoutOption[] layout = new GUILayoutOption[] { GUILayout.Width(layoutW), GUILayout.Height(layoutH) };
+            GUILayoutOption[] layout = { GUILayout.Width(layoutW), GUILayout.Height(layoutH) };
 
             int id = 0;
 

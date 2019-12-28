@@ -11,7 +11,6 @@ namespace SS
 		public static void PostProcessScene()
 		{
 			Debug.LogFormat("Scene {0}", EditorApplication.currentScene);
-			Debug.Log("[SS] (PostProcessScene) World Init");
 			World.Init();
 		}
 	}

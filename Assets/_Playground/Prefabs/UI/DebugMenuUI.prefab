@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae117e8832e5a034486b46abd331c8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiType: DebugMenu
   _sceneButtonTemplate: {fileID: 1590482215347372}
   debugEvent: []
 --- !u!114 &114563335932624584

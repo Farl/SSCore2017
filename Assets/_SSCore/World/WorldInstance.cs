@@ -3,22 +3,30 @@ using System.Collections;
 
 namespace SS
 {
+    [AddComponentMenu("")]
 	public class WorldInstance : MonoBehaviour
 	{
+        public static WorldInstance Instance;
+
 		void Awake()
 		{
-			if (World.instance != null)
+			if (Instance != null)
 			{
 				Destroy(this.gameObject);
 			}
 			else
 			{
-				World.instance = this;
+				Instance = this;
 				DontDestroyOnLoad(gameObject);
 			}
 		}
-		
-		void Start()
+
+        private void OnDestroy()
+        {
+            Debug.Log("WorldInstance.OnDestroy");
+        }
+
+        void Start()
 		{
 			World.Start();
 		}

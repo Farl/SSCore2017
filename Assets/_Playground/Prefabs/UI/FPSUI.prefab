@@ -37,6 +37,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224404171231444884}
+  - component: {fileID: 114118608401906266}
   m_Layer: 0
   m_Name: FPSUI
   m_TagString: Untagged
@@ -44,6 +45,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114118608401906266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1384092420815892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cc7a08ca1a54a1eb307256900876f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiType: FPS
 --- !u!114 &114300531262555232
 MonoBehaviour:
   m_ObjectHideFlags: 1

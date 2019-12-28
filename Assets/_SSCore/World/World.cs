@@ -8,8 +8,6 @@ namespace SS
 
 	static public class World
 	{
-		public static WorldInstance instance;
-		
 		static SortedVoidDelegate onGUISet = new SortedVoidDelegate();
 		static SortedVoidDelegate updateSet = new SortedVoidDelegate();
 		static SortedVoidDelegate lateUpdateSet = new SortedVoidDelegate();
@@ -88,7 +86,7 @@ namespace SS
 		// World initalization (create World instance)
 		public static void Init()
 		{
-			if (instance == null)
+			if (WorldInstance.Instance == null)
 			{
 				Debug.Log("[SS] World Init.");
 				GameObject worldObj = new GameObject("_World");

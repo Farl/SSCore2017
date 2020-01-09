@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4180221521676370}
   - component: {fileID: 114024824844999620}
   - component: {fileID: 114958730139891232}
+  - component: {fileID: 114904771254728448}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -89,6 +90,8 @@ MonoBehaviour:
       order: 0
     - uiType: FPS
       order: 1
+    - uiType: Fade
+      order: 2
 --- !u!114 &114189143437592092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,6 +124,19 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 5
+--- !u!114 &114904771254728448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1611786944740010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f78b8cebaa3f47a7ba3cf4840dd3f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stages:
+  - {fileID: 11400000, guid: d76c0068b957c451a94651e11fbce477, type: 2}
 --- !u!114 &114958730139891232
 MonoBehaviour:
   m_ObjectHideFlags: 1

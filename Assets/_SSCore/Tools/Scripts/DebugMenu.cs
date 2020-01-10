@@ -5,7 +5,7 @@
  */
 
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace SS
 {
@@ -27,6 +27,10 @@ namespace SS
         private GameObject _sceneButtonTemplate;
         private Transform _sceneButtonRoot;
 
+        [SerializeField]
+        private GameObject _stageButtonTemplate;
+        private Transform _stageButtonRoot;
+
         bool debugMenuShow = false;
 
         bool waitZeroInput = false;
@@ -44,6 +48,7 @@ namespace SS
 
             panel = GetComponent<QuickPanel>();
 
+            // scene buttons
             if (_sceneButtonTemplate)
             {
                 _sceneButtonRoot = _sceneButtonTemplate.transform.parent;
@@ -70,6 +75,35 @@ namespace SS
             }
 
             World.RegisterOnGUI(DrawGUI, this);
+        }
+
+        // stage buttons
+        public void CreateStageButtons(List<Stage> stages)
+        {
+            if (stages != null && _stageButtonTemplate)
+            {
+                _stageButtonRoot = _stageButtonTemplate.transform.parent;
+                _stageButtonTemplate.SetActive(false);
+                foreach (var stage in stages)
+                {
+                    var id = stage.name;
+                    GameObject go = Instantiate(_stageButtonTemplate, _stageButtonRoot);
+                    UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
+                    if (button)
+                    {
+                        button.onClick.AddListener(() =>
+                        {
+                            StageSystem.SetNextStage(id);
+                        });
+                    }
+                    UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
+                    if (text)
+                    {
+                        text.text = id;
+                    }
+                    go.SetActive(true);
+                }
+            }
         }
 
         protected override void OnDestroy()

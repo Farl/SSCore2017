@@ -13,19 +13,42 @@ namespace SS
         private string _nextStageName;
         Coroutine changeStageCoroutine;
 
+        private static StageSystem _instance;
 
         public override void OnInit()
         {
             base.OnInit();
 
-            foreach (var stage in stages)
+            if (_instance == null)
             {
-                stage.Init(this);
-            }
+                _instance = this;
 
-            if (stages.Count > 0 && stages[0] != null)
+                if (DebugMenu.Instance)
+                {
+                    DebugMenu.Instance.CreateStageButtons(stages);
+                }
+
+                foreach (var stage in stages)
+                {
+                    stage.Init(this);
+                }
+
+                if (stages.Count > 0 && stages[0] != null)
+                {
+                    currStage = stages[0];
+                }
+            }
+            else
             {
-                SetNextStage(stages[0]);
+                Destroy(this);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_instance == this)
+            {
+                _instance = null;
             }
         }
 
@@ -37,30 +60,44 @@ namespace SS
             }
         }
 
-        private void SetNextStage(Stage nextStage)
+        public static bool SetNextStage(string nextStageName)
         {
-            if (nextStage != null)
+            if (_instance)
+            {
+                _instance._SetNextStage(nextStageName);
+                return true;
+            }
+            return false;
+        }
+
+        private void _SetNextStage(Stage nextStage)
+        {
+            if (nextStage != null && currStage.CanEnter(nextStage))
             {
                 changeStageCoroutine = StartCoroutine(ChangeStage(nextStage));
             }
         }
 
-        private void SetNextStage(string nextStageName)
+        private void _SetNextStage(string nextStageName)
         {
             // Check can enter
-            if (_nextStageName != null)
+            if (!string.IsNullOrEmpty(nextStageName))
             {
-                return;
+                // Find next stage
+                Stage nextStage = stages.Find(x => x.name == nextStageName);
+                _SetNextStage(nextStage);
             }
-
-            // Find next stage
-            SetNextStage(stages.Find(x => x.name == nextStageName));
         }
 
         IEnumerator ChangeStage(Stage nextStage)
         {
             // Start
             _nextStageName = nextStage.name;
+
+            // Test
+            FadeUI.FadeTask fadeTask = FadeUI.StartFade(Color.black, 3f, 0f, 3f, false);
+            fadeTask.SetPauseAt(FadeUI.State.Remain);
+            yield return new WaitForSecondsRealtime(3.0f);
 
             // Leave
             if (currStage)
@@ -82,6 +119,9 @@ namespace SS
                 }
                 currStage = nextStage;
             }
+
+            // Fade
+            fadeTask.Resume();
 
             _nextStageName = null;
         }

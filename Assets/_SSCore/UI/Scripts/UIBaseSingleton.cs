@@ -6,8 +6,8 @@ namespace SS
 {
     public class UIBaseSingleton<T> : UIBase where T : UIBase
     {
-        private T _instance;
-        public T Instance
+        private static  T _instance;
+        public static T Instance
         {
             get
             {

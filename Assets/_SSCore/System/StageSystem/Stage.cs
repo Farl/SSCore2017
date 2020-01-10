@@ -7,6 +7,8 @@ namespace SS
     [CreateAssetMenu(fileName = "Stage", menuName = "SS/Stage", order = 0)]
     public class Stage : ScriptableObject
     {
+        public bool canEnter = true;
+
         private StageSystem _system;
         private Coroutine coroutine;
         private bool _isActive = false;
@@ -23,6 +25,11 @@ namespace SS
             _system = system;
         }
 
+        public virtual bool CanEnter(Stage nextStage)
+        {
+            return (nextStage && nextStage.canEnter);
+        }
+
         public virtual void OnEnter()
         {
             if (coroutine != null)
@@ -34,13 +41,16 @@ namespace SS
         {
             Debug.Log(name + ".Prepare");
 
-            yield return new WaitForSecondsRealtime(3.0f);
+            // Release memory
+            AsyncOperation ao = SceneManager.LoadSceneAsync("Empty");
+            while (!ao.isDone)
+            {
+                yield return null;
+            }
+            Resources.UnloadUnusedAssets();
 
-            // Test
-            FadeUI.StartFade(Color.black, 3f, 0f, 0f, false);
-            yield return new WaitForSecondsRealtime(3.0f);
-
-            AsyncOperation ao = SceneManager.LoadSceneAsync(name);
+            // LoadScene
+            ao = SceneManager.LoadSceneAsync(name);
             while (!ao.isDone)
             {
                 yield return null;
@@ -48,9 +58,6 @@ namespace SS
             
             _isActive = true;
             Debug.Log(name + ".Prepare Done");
-
-            // Fade
-            FadeUI.StartFade(Color.black, 0f, 0f, 3f, false);
         }
 
         public virtual void Update()
@@ -72,13 +79,13 @@ namespace SS
         {
             Debug.Log(name + ".Release");
 
-            // Test
-            yield return new WaitForSecondsRealtime(3.0f);
-
             AsyncOperation ao = SceneManager.UnloadSceneAsync(name);
-            while (!ao.isDone)
+            if (ao != null)
             {
-                yield return null;
+                while (!ao.isDone)
+                {
+                    yield return null;
+                }
             }
             _isActive = false;
             Debug.Log(name + ".Release Done");

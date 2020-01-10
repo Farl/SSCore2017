@@ -13,6 +13,13 @@ namespace SS
             Always,
             Manual
         }
+        public enum State
+        {
+            Start,
+            Remain,
+            End,
+            Finished
+        }
         public class FadeTask
         {
             public Color color = Color.black;
@@ -24,12 +31,26 @@ namespace SS
             private float timer = 0;
             private float startTime;
             private float factor = 0;
-            private bool finished = false;
+            private State state = State.Start;
             private bool pause = false;
+            private int pauseAt = 0;
 
             public void Stop()
             {
-                finished = true;
+                state = State.Finished;
+            }
+
+            public void Resume()
+            {
+                pause = false;
+            }
+
+            public void SetPauseAt(params State[] pauseState)
+            {
+                foreach (var s in pauseState)
+                {
+                    pauseAt |= 1 << (int)s;
+                }
             }
 
             public void SetFactor(float f)
@@ -42,29 +63,71 @@ namespace SS
                 startTime = Time.realtimeSinceStartup;
                 timer = 0;
                 factor = 0;
-                finished = false;
+                if (updateMethod != UpdateMethod.Manual)
+                {
+                    if (start <= 0)
+                    {
+                        if (remain <= 0)
+                        {
+                            if (end <= 0)
+                            {
+                                state = State.Finished;
+                            }
+                            else
+                            {
+                                state = State.End;
+                            }
+                        }
+                        else
+                        {
+                            state = State.Remain;
+                        }
+                    }
+                    else
+                    {
+                        state = State.Start;
+                    }
+                }
             }
 
             public bool Update(ref Color output)
             {
                 if (updateMethod != UpdateMethod.Manual)
                 {
-                    if (start > 0 && timer < start)
+                    switch (state)
                     {
-                        factor = timer / start;
-                    }
-                    else if (timer <= start + remain)
-                    {
-                        factor = 1;
-                    }
-                    else if (end > 0 && timer < start + remain + end)
-                    {
-                        factor = 1 - (timer - start - remain) / end;
-                    }
-                    else
-                    {
-                        factor = 0;
-                        Stop();
+                        case State.Start:
+                            factor = Mathf.Clamp01(timer / start);
+                            if (timer >= start)
+                            {
+                                state += 1;
+                                if ((pauseAt & (int)state) != 0)
+                                    pause = true;
+                            }
+                            break;
+
+                        case State.Remain:
+                            factor = 1;
+                            if (timer >= start + remain)
+                            {
+                                state += 1;
+                                if ((pauseAt & (int)state) != 0)
+                                    pause = true;
+                            }
+                            break;
+                        case State.End:
+                            factor = 1 - Mathf.Clamp01((timer - start - remain) / end);
+                            if (timer >= start + remain + end)
+                            {
+                                state += 1;
+                                if ((pauseAt & (int)state) != 0)
+                                    pause = true;
+                            }
+                            break;
+                        case State.Finished:
+                            factor = 0;
+                            Stop();
+                            break;
                     }
                 }
 
@@ -82,7 +145,7 @@ namespace SS
                     }
                 }
 
-                return !finished;
+                return state != State.Finished;
             }
         }
 

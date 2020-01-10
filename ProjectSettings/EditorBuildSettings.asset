@@ -9,11 +9,17 @@ EditorBuildSettings:
     path: Assets/_Playground/PT/Scenes/Main.unity
     guid: a0a004a913d0a462996fec6eedbb3de4
   - enabled: 1
-    path: Assets/_Playground/PT/Scenes/PT.unity
-    guid: 634d19221fd838147b89fe262dd18216
-  - enabled: 1
     path: Assets/_SSCore/Scenes/Empty.unity
     guid: d9687698f43343c49aefaf10eb153848
   - enabled: 1
     path: Assets/_Playground/PT/Scenes/InitStage.unity
     guid: 469e81dae252342c78dd5c8d71f3fe79
+  - enabled: 1
+    path: Assets/_Playground/PT/Scenes/TitleStage.unity
+    guid: 93e1ce0b6b78847d5ab76ccae3a16382
+  - enabled: 1
+    path: Assets/_Playground/PT/Scenes/LevelStage.unity
+    guid: b56cc78d6f4ee4ec181f318ce7857ad9
+  - enabled: 1
+    path: Assets/_Playground/PT/Scenes/PT.unity
+    guid: 634d19221fd838147b89fe262dd18216

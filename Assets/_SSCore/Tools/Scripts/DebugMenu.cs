@@ -37,7 +37,7 @@ namespace SS
 
         public bool drawOnGUI = false;
 
-        private QuickPanel panel = null;
+        private UIBase panel = null;
 
         [Auto]
         public DebugEventInfo[] debugEvent;
@@ -46,7 +46,7 @@ namespace SS
         {
             base.Awake();
 
-            panel = GetComponent<QuickPanel>();
+            panel = GetComponent<UIBase>();
 
             // scene buttons
             if (_sceneButtonTemplate)

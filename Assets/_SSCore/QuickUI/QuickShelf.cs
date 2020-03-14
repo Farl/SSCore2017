@@ -20,7 +20,7 @@ namespace SS
 		
 		private CanvasGroup canvasGroup;
 		private Animator animator;
-		private QuickPanel page;
+		private UIBase page;
 		
 		private float defaultTransitionTime = 0.2f;
 		
@@ -125,7 +125,8 @@ namespace SS
 		void InitScale()
 		{
 		}
-		
+
+        [ContextMenu("Init Translate")]
 		void InitTranslate()
 		{
 			RectTransform[] group = GetComponentsInChildren<RectTransform>();
@@ -143,12 +144,14 @@ namespace SS
 					{
 						Vector3[] corners = new Vector3[4];
 						rt.GetWorldCorners(corners);
-						
-						foreach (Vector3 v in corners)
+
+						foreach (Vector3 corner in corners)
 						{
+							Debug.Log(rt.name + " " + corner);
+
 							// World to local
 							// (Canvas pivot is always center)
-							Vector3 vRel = canvasRT.InverseTransformPoint(v);
+							Vector3 vRel = canvasRT.InverseTransformPoint(corner);
 							
 							if (!init)
 							{
@@ -157,35 +160,36 @@ namespace SS
 							}
 							else
 							{
-								bound.Encapsulate(vRel);
+                                bound.Encapsulate(vRel);
 							}
 						}
 					}
 				}
 				
-				//Debug.Log (bound.max + " ~ " + bound.min);
+				Debug.Log (bound.max + " ~ " + bound.min);
+				Debug.Log(canvasRT.rect.size);
 				
 				RectTransform currRT = GetComponent<RectTransform>();
-				offsetPos = (Vector3)((currRT.anchorMax + currRT.anchorMin) - Vector2.one);
-				
+				offsetPos = (Vector3)((currRT.anchorMax + currRT.anchorMin) / 2.0f);
+
 				Vector2 canvasSize = canvasRT.rect.size;
 				
-				if (offsetPos.x < -0.5f)
+				if (offsetPos.x < 0.5f)
 				{
-					offsetPos.x = - bound.max.x - canvasSize.x / 2;
+					offsetPos.x = bound.max.x - canvasSize.x / 2.0f;
 				}
 				else if (offsetPos.x > 0.5f)
 				{
-					offsetPos.x = - bound.min.x + canvasSize.x / 2;
+					offsetPos.x = - bound.min.x + canvasSize.x / 2.0f;
 				}
 				
-				if (offsetPos.y < -0.5f)
+				if (offsetPos.y < 0.5f)
 				{
-					offsetPos.y = - bound.max.y - canvasSize.y / 2;
+					offsetPos.y = bound.max.y - canvasSize.y / 2.0f;
 				}
 				else if (offsetPos.y > 0.5f)
 				{
-					offsetPos.y = - bound.min.y + canvasSize.y / 2;
+					offsetPos.y = - bound.min.y + canvasSize.y / 2.0f;
 				}
 				
 				offsetPos -= origLocalPos - transform.localPosition;
@@ -239,7 +243,7 @@ namespace SS
 		}
 		
 		[ContextMenu("Out")]
-		public void Out(QuickPanel _page = null)
+		public void Out(UIBase _page = null)
 		{
 			page = _page;
 

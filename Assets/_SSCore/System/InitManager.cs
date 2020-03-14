@@ -7,14 +7,21 @@ namespace SS
     {
         private static List<InitBehaviour> initBehaviours = new List<InitBehaviour>();
         private static List<InitBehaviour> removedBehaviours = new List<InitBehaviour>();
+        private static HashSet<int> initQueue = new HashSet<int>();
+        private static int initQueueIndex = -1;
         private static bool _isInitializing = false;
 
         public EventArray eventInitial;
-        public EventArray eventShutdown;
 
-        public static void Add(InitBehaviour initBehaviour)
+        public static int Add(InitBehaviour initBehaviour, bool waitingQueue = false)
         {
             initBehaviours.Add(initBehaviour);
+            if (waitingQueue)
+            {
+                initQueue.Add(++initQueueIndex);
+                return initQueueIndex;
+            }
+            return -1;
         }
 
         public static void Remove(InitBehaviour initBehaviour)
@@ -25,15 +32,24 @@ namespace SS
                 initBehaviours.Remove(initBehaviour);
         }
 
+        public static void Finish(int handle)
+        {
+            if (initQueue.Contains(handle))
+                initQueue.Remove(handle);
+        }
+
+        public static bool IsEmpty()
+        {
+            return initBehaviours.Count <= 0 && initQueue.Count <= 0;
+        }
+
         void Awake()
         {
-            DontDestroyOnLoad(gameObject);
             eventInitial.Broadcast(this);
         }
 
         void OnDestroy()
         {
-            eventShutdown.Broadcast(this);
         }
 
         private void Start()

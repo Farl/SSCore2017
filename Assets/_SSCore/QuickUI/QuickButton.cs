@@ -33,7 +33,7 @@ public class QuickButton : UIBehaviour, IPointerClickHandler
 
 	public bool scaleEffect = true;
 
-	private QuickPanel page;
+	private UIBase page;
 
 	private float autoLockOnceTime = 1.5f;
 	private float autoLockRepeatTime = 0.1f;
@@ -81,7 +81,7 @@ public class QuickButton : UIBehaviour, IPointerClickHandler
 		}
 
 		// register page
-		page = GetComponentInParent<QuickPanel>();
+		page = GetComponentInParent<UIBase>();
 	}
 	
 	public Button.ButtonClickedEvent onClick

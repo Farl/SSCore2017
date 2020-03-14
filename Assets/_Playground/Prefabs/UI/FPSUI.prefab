@@ -56,6 +56,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cc7a08ca1a54a1eb307256900876f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startEnabled: 1
+  destroyWhenClose: 0
+  inSound: UI_In
+  outSound: UI_Out
   uiType: FPS
 --- !u!114 &114300531262555232
 MonoBehaviour:

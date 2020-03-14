@@ -41,21 +41,13 @@ namespace SS
         {
             Debug.Log(name + ".Prepare");
 
-            // Release memory
-            AsyncOperation ao = SceneManager.LoadSceneAsync("Empty");
-            while (!ao.isDone)
-            {
-                yield return null;
-            }
-            Resources.UnloadUnusedAssets();
-
             // LoadScene
-            ao = SceneManager.LoadSceneAsync(name);
+            AsyncOperation ao = SceneManager.LoadSceneAsync(name);
             while (!ao.isDone)
             {
                 yield return null;
             }
-            
+
             _isActive = true;
             Debug.Log(name + ".Prepare Done");
         }
@@ -79,7 +71,9 @@ namespace SS
         {
             Debug.Log(name + ".Release");
 
-            AsyncOperation ao = SceneManager.UnloadSceneAsync(name);
+            // Unload scene
+            // Release memory
+            AsyncOperation ao = SceneManager.LoadSceneAsync("Empty");
             if (ao != null)
             {
                 while (!ao.isDone)
@@ -87,6 +81,8 @@ namespace SS
                     yield return null;
                 }
             }
+            //Resources.UnloadUnusedAssets();
+
             _isActive = false;
             Debug.Log(name + ".Release Done");
         }

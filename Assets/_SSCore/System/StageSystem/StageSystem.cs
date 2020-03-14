@@ -99,6 +99,8 @@ namespace SS
             fadeTask.SetPauseAt(FadeUI.State.Remain);
             yield return new WaitForSecondsRealtime(3.0f);
 
+            EventManager.Broadcast(new EventMessage("UISystem.Open(LoadingUI)", this, true));
+
             // Leave
             if (currStage)
             {
@@ -119,6 +121,13 @@ namespace SS
                 }
                 currStage = nextStage;
             }
+
+            while (!LoadingUI.IsFinished())
+            {
+                yield return null;
+            }
+
+            EventManager.Broadcast(new EventMessage("UISystem.Open(LoadingUI)", this, false));
 
             // Fade
             fadeTask.Resume();

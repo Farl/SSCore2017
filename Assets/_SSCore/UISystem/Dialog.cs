@@ -94,7 +94,7 @@ namespace SS
 			// Check if exist (a valid page)
 			if (dialogObj)
 			{
-				QuickPanel page = dialogObj.GetComponent<QuickPanel>();
+				UIBase page = dialogObj.GetComponent<UIBase>();
 				if (page && page.IsActive())
 				{
 					dialogObj = null;
@@ -112,7 +112,7 @@ namespace SS
 			if (dialogObj)
 			{
 				dialogObj.SetActive(true);
-				QuickPanel page = dialogObj.GetComponent<QuickPanel>();
+				UIBase page = dialogObj.GetComponent<UIBase>();
 				if (page)
 				{
 					page.destroyWhenClose = isSpawned;
@@ -194,7 +194,7 @@ namespace SS
 		{
 			if (dialogObj != null)
 			{
-				QuickPanel page = dialogObj.GetComponent<QuickPanel>();
+				UIBase page = dialogObj.GetComponent<UIBase>();
 				if (page)
 				{
 					page.Close();
@@ -233,7 +233,7 @@ namespace SS
 			}
 			else
 			{
-				QuickPanel page = dialogObj.GetComponent<QuickPanel>();
+				UIBase page = dialogObj.GetComponent<UIBase>();
 				if (page && !page.IsActive())
 				{
 					return null;

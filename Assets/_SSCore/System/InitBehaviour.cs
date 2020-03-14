@@ -12,13 +12,26 @@ namespace SS
             get { return 0; }
         }
 
+        public virtual bool NeedWait
+        {
+            get { return false; }
+        }
+
+        protected int initHandle = -1;
+
+        protected void Finish()
+        {
+            if (initHandle >= 0)
+                InitManager.Finish(initHandle);
+        }
+
         public virtual void OnInit()
         {
         }
 
         protected virtual void Awake()
         {
-            InitManager.Add(this);
+            initHandle = InitManager.Add(this, NeedWait);
         }
     }
 

@@ -22,17 +22,30 @@ public class ATCharacter : MonoBehaviour {
 	FiniteStateMachine<State> stateMachine = new FiniteStateMachine<State>();
     private AdventureTask currTask;
     private ATNode currNode;
+    private Animator _animator;
 
 	
 	void Awake ()
     {
+        _animator = GetComponent<Animator>();
         stateMachine.AddState(State.Observe, OnEnterState, OnLeaveState, OnUpdateObserve);
         stateMachine.AddState(State.Action, OnEnterState, OnLeaveState, OnUpdateAction);
     }
 
     void OnEnterState()
     {
-
+        switch (stateMachine.GetNextState())
+        {
+            case State.Observe:
+                _animator.Play("Observe");
+                break;
+            case State.Action:
+                if (currNode)
+                {
+                    _animator.Play(currNode.animID);
+                }
+                break;
+        }
     }
 
     void OnLeaveState()
@@ -47,11 +60,17 @@ public class ATCharacter : MonoBehaviour {
             if (!currNode)
             {
                 List<ATNode> visableNode = currTask.visiableNodes;
-                // TODO: Random or sort
-                foreach (ATNode node in visableNode)
+                if (visableNode.Count <= 0)
                 {
-                    currNode = node;
-                    break;
+                }
+                else
+                {
+                    // TODO: Random or sort
+                    foreach (ATNode node in visableNode)
+                    {
+                        currNode = node;
+                        break;
+                    }
                 }
             }
             else

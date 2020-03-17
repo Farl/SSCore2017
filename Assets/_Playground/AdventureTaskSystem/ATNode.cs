@@ -37,6 +37,14 @@ public class ATNode : MonoBehaviour {
     private float life;
     [SerializeField] private float attack;
 	[SerializeField] private float defense;
+    [SerializeField] private string _animID = "Jump";
+    public string animID
+    {
+        get
+        {
+            return _animID;
+        }
+    }
 
     private ATCharacter occupyCharacter;
 

@@ -13,6 +13,20 @@ public class AdventureTask : MonoBehaviour {
             return _visiableNodes;
         }
     }
+    private bool _isFinished = false;
+    public bool IsFinished
+    {
+        get
+        {
+            return _isFinished;
+        }
+    }
+
+    public void Init()
+    {
+        _isFinished = false;
+        Refresh();
+    }
 
     public void Refresh()
     {
@@ -29,6 +43,10 @@ public class AdventureTask : MonoBehaviour {
                     _visiableNodes.Add(node);
                 }
             }
+        }
+        if (_visiableNodes.Count <= 0)
+        {
+            _isFinished = true;
         }
     }
 }

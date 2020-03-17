@@ -8,6 +8,7 @@ public class AdventureTaskSystem : Singleton<AdventureTaskSystem> {
     [SerializeField] private List<ATCharacter> characters = new List<ATCharacter>();
 
     int taskIndex = 0;
+    AdventureTask currTask = null;
 
     private void Start()
     {
@@ -26,8 +27,12 @@ public class AdventureTaskSystem : Singleton<AdventureTaskSystem> {
         if (index >= 0 && tasks.Count > index && tasks[index] != null)
         {
             taskIndex = index;
-            tasks[taskIndex].Refresh();
-            tasks[taskIndex].gameObject.SetActive(true);
+            currTask = tasks[taskIndex];
+            if (currTask)
+            {
+                currTask.Init();
+                currTask.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -35,10 +40,19 @@ public class AdventureTaskSystem : Singleton<AdventureTaskSystem> {
     {
         if (taskIndex >= 0 && tasks.Count > taskIndex && tasks[taskIndex] != null)
         {
-            AdventureTask task = tasks[taskIndex];
-            foreach (ATCharacter ch in characters)
+            if (currTask)
             {
-                ch.OnUpdate(task);
+                if (currTask.IsFinished)
+                {
+                    SetNextTask(taskIndex++);
+                }
+                else
+                {
+                    foreach (ATCharacter ch in characters)
+                    {
+                        ch.OnUpdate(currTask);
+                    }
+                }
             }
         }
     }

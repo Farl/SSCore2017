@@ -18,7 +18,9 @@ public class FiniteStateMachine<T> where T : struct, IConvertible
     }
     private Dictionary<T, StateInfo> stateMap = new Dictionary<T, StateInfo>();
     private T currentState;
+    private T nextState;
     private StateInfo currentStateInfo;
+    private StateInfo nextStateInfo;
 
     public FiniteStateMachine()
     {
@@ -51,6 +53,11 @@ public class FiniteStateMachine<T> where T : struct, IConvertible
         return currentState;
     }
 
+    public T GetNextState()
+    {
+        return nextState;
+    }
+
     private StateInfo CheckCanEnter(T nextState)
     {
         StateInfo si = null;
@@ -69,10 +76,12 @@ public class FiniteStateMachine<T> where T : struct, IConvertible
         }
     }
 
-    private void Enter(T nextState, StateInfo nextStateInfo)
+    private void Enter(T _nextState, StateInfo _nextStateInfo)
     {
-        if (nextStateInfo != null && nextStateInfo.enterAction != null)
+        if (_nextStateInfo != null && _nextStateInfo.enterAction != null)
         {
+            nextState = _nextState;
+            nextStateInfo = _nextStateInfo;
             nextStateInfo.enterAction();
         }
     }

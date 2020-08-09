@@ -32,25 +32,28 @@ namespace SS
             // Prepare runtime player settings
             RuntimePlayerSettings setting = RuntimePlayerSettings.Instance;
 
-            // Update scenes
-            if (setting.scenes == null)
-                setting.scenes = new List<string>();
-            EditorBuildSettingsScene[] scenes = EditorBuildSettings.scenes;
-            int sceneCount = scenes.Length;
+            if (setting != null)
+            {
+                // Update scenes
+                if (setting.scenes == null)
+                    setting.scenes = new List<string>();
+                EditorBuildSettingsScene[] scenes = EditorBuildSettings.scenes;
+                int sceneCount = scenes.Length;
 
-            while(setting.scenes.Count < sceneCount)
-            {
-                setting.scenes.Add(string.Empty);
-            }
-            while (setting.scenes.Count > sceneCount)
-            {
-                setting.scenes.RemoveAt(sceneCount);
-            }
-            for (int i = 0; i < sceneCount; i++)
-            {
-                if (scenes[i].path != setting.scenes[i])
+                while (setting.scenes.Count < sceneCount)
                 {
-                    setting.scenes[i] = scenes[i].path;
+                    setting.scenes.Add(string.Empty);
+                }
+                while (setting.scenes.Count > sceneCount)
+                {
+                    setting.scenes.RemoveAt(sceneCount);
+                }
+                for (int i = 0; i < sceneCount; i++)
+                {
+                    if (scenes[i].path != setting.scenes[i])
+                    {
+                        setting.scenes[i] = scenes[i].path;
+                    }
                 }
             }
         }

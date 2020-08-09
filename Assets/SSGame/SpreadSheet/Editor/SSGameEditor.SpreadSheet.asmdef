@@ -1,9 +1,11 @@
 {
-    "name": "SSGame",
+    "name": "SSGameEditor.SpreadSheet",
     "references": [
-        "GUID:af4e4e6675422b147835a4d750f188db"
+        "GUID:9fd4fd9e184f29545a5f5ded5f78d942"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

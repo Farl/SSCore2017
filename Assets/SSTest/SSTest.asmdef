@@ -1,0 +1,15 @@
+{
+    "name": "SSTest",
+    "references": [
+        "GUID:af4e4e6675422b147835a4d750f188db"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b852a17ab4b294360a15cd47ed6cbe4b, type: 3}
+  m_Name: RandomTile
+  m_EditorClassIdentifier: 
+  tiles:
+  - gameObject: {fileID: 2781308215449976633, guid: 576b0db923b594238840143443f9b698,
+      type: 3}
+    direction: 8
+  - gameObject: {fileID: 3225297008510393179, guid: 25de9725717fe415c970652fa4fe3f48,
+      type: 3}
+    direction: 4
+  - gameObject: {fileID: 1525022230086889921, guid: c96baaa93aff54fb99e7cef5617f0df4,
+      type: 3}
+    direction: 2
+  - gameObject: {fileID: 6339089864285734083, guid: 2cc352a079dcd4c2985ce755e6e796e7,
+      type: 3}
+    direction: 10
+  - gameObject: {fileID: 6170822656396210142, guid: f934c67b9298c4832a016184b52e976a,
+      type: 3}
+    direction: 14
+  - gameObject: {fileID: 6436117958837531035, guid: 21edfc50efcf94b05a92a5aaeacb4baa,
+      type: 3}
+    direction: 1
+  - gameObject: {fileID: 8477184621014382677, guid: ee49a592bef804c938b33f778e9d77b7,
+      type: 3}
+    direction: 5
+  - gameObject: {fileID: 5014472271754530896, guid: 8ad1bf663aa7d4c40ada10e1902dd09a,
+      type: 3}
+    direction: 13
+  - gameObject: {fileID: 5674238339211805348, guid: 44ef22daaa31449db974e6962eaa0482,
+      type: 3}
+    direction: 11
+  - gameObject: {fileID: 305734743164761090, guid: c70ca310a463043d88cdc8d837569b6e,
+      type: 3}
+    direction: 7
+  - gameObject: {fileID: 8559680385066450075, guid: 3f6d20590ee534864911b01daa3e83e9,
+      type: 3}
+    direction: -1

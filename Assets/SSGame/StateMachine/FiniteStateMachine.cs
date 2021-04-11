@@ -21,6 +21,13 @@ public class FiniteStateMachine<T> where T : struct, IConvertible
     private T nextState;
     private StateInfo currentStateInfo;
     private StateInfo nextStateInfo;
+    private float _stateTimer = 0;
+
+    public float timer
+    {
+        get { return _stateTimer; }
+        set { _stateTimer = value; }
+    }
 
     public FiniteStateMachine()
     {
@@ -93,6 +100,7 @@ public class FiniteStateMachine<T> where T : struct, IConvertible
         {
             Leave(nextState, nextStateInfo);
             Enter(nextState, nextStateInfo);
+            _stateTimer = 0;
             currentState = nextState;
             currentStateInfo = nextStateInfo;
         }
@@ -103,6 +111,7 @@ public class FiniteStateMachine<T> where T : struct, IConvertible
         if (currentStateInfo != null && currentStateInfo.updateAction != null)
         {
             currentStateInfo.updateAction();
+            _stateTimer += Time.deltaTime;
         }
     }
 }

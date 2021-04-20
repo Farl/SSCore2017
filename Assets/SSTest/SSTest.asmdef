@@ -1,7 +1,8 @@
 {
     "name": "SSTest",
     "references": [
-        "GUID:af4e4e6675422b147835a4d750f188db"
+        "GUID:af4e4e6675422b147835a4d750f188db",
+        "GUID:d8e7b33ba1e4a89fc8a64b6b1e97a6ac"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

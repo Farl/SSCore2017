@@ -35,6 +35,11 @@ namespace JetGen
             if (layoutGroup != null)
             {
                 _gridLayoutGroup = layoutGroup;
+                var sscontentSizeFitter = _gridLayoutGroup.GetComponent<SSContentSizeFitter>();
+                if (sscontentSizeFitter)
+                {
+                    sscontentSizeFitter.enabled = false;
+                }
                 var contentSizeFitter = _gridLayoutGroup.GetComponent<ContentSizeFitter>();
                 if (contentSizeFitter)
                 {

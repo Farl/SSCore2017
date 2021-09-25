@@ -10,7 +10,7 @@ namespace UnityEngine.UI
     /// <remarks>
     /// The GridLayoutGroup component is used to layout child layout elements in a uniform grid where all cells have the same size. The size and the spacing between cells is controlled by the GridLayoutGroup itself. The children have no influence on their sizes.
     /// </remarks>
-    public class CustomGridLayoutGroup : LayoutGroup
+    public class CustomGridLayoutGroup : LayoutGroup, ILayoutSelfController
     {
         /// <summary>
         /// Which corner is the starting corner for the grid.
@@ -122,17 +122,58 @@ namespace UnityEngine.UI
         /// </summary>
         public int constraintCount { get { return m_ConstraintCount; } set { SetProperty(ref m_ConstraintCount, Mathf.Max(1, value)); } }
 
+        public bool isLayoutGroup = true;
+        public bool isContentSizeFitter = false;
+        public bool debugTest = true;
+
+        private DrivenRectTransformTracker m_SelfTracker;
+
         protected CustomGridLayoutGroup()
         { }
+
+        // Reference from content size fitter
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            if (isContentSizeFitter)
+                SetLayoutDirty();
+        }
+
+        // Reference from content size fitter
+        protected override void OnDisable()
+        {
+            if (isContentSizeFitter)
+                LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
+            base.OnDisable();
+        }
+
+        // Reference from content size fitter
+        protected override void OnRectTransformDimensionsChange()
+        {
+            base.OnRectTransformDimensionsChange();
+            if (isContentSizeFitter)
+                SetLayoutDirty();
+        }
 
 #if UNITY_EDITOR
         protected override void OnValidate()
         {
             base.OnValidate();
             constraintCount = constraintCount;
+            if (isContentSizeFitter)
+                SetLayoutDirty();
         }
 
 #endif
+
+        // Reference from content size fitter
+        protected void SetLayoutDirty()
+        {
+            if (!IsActive())
+                return;
+
+            LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
+        }
 
         /// <summary>
         /// Called by the layout system to calculate the horizontal layout size.
@@ -141,6 +182,9 @@ namespace UnityEngine.UI
         public override void CalculateLayoutInputHorizontal()
         {
             base.CalculateLayoutInputHorizontal();
+
+            if (!isLayoutGroup)
+                return;
 
             if (fixedCellSize)
             {
@@ -182,6 +226,9 @@ namespace UnityEngine.UI
         /// </summary>
         public override void CalculateLayoutInputVertical()
         {
+            if (!isLayoutGroup)
+                return;
+
             if (fixedCellSize)
             {
                 int minRows = 0;
@@ -214,13 +261,30 @@ namespace UnityEngine.UI
             }
         }
 
+        // Reference from content size fitter
+        private void HandleSelfFittingAlongAxis(int axis)
+        {
+            if (!isContentSizeFitter)
+            {
+                // Keep a reference to the tracked transform, but don't control its properties:
+                m_Tracker.Add(this, rectTransform, DrivenTransformProperties.None);
+                return;
+            }
+
+            m_Tracker.Add(this, rectTransform, (axis == 0 ? DrivenTransformProperties.SizeDeltaX : DrivenTransformProperties.SizeDeltaY));
+
+            rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, LayoutUtility.GetPreferredSize(rectTransform, axis));
+        }
+
         /// <summary>
         /// Called by the layout system
         /// Also see ILayoutElement
         /// </summary>
         public override void SetLayoutHorizontal()
         {
+            m_SelfTracker.Clear();
             SetCellsAlongAxis(0);
+            HandleSelfFittingAlongAxis(0);
         }
 
         /// <summary>
@@ -230,6 +294,7 @@ namespace UnityEngine.UI
         public override void SetLayoutVertical()
         {
             SetCellsAlongAxis(1);
+            HandleSelfFittingAlongAxis(1);
         }
 
         private void CalcCellCount(out int cellCountX, out int cellCountY)
@@ -267,7 +332,7 @@ namespace UnityEngine.UI
             }
         }
 
-        private Vector2 TraverseChildren(bool setChild)
+        private Vector2 TraverseChildren(bool setChild, bool controlSize = false)
         {
             int cellCountX;
             int cellCountY;
@@ -307,14 +372,21 @@ namespace UnityEngine.UI
             Vector2 maxOffset = Vector2.zero;
             int currColCount = 0;
 
+            int axis = (int)startAxis;
+            int subAxis = 1 ^ axis;
+
             // For each children
             for (int i = 0; i < rectChildren.Count; i++)
             {
-                Vector2 size = rectChildren[i].rect.size;
+                var rect = rectChildren[i];
+                Vector2 size = rect.sizeDelta;
+
+                if (controlSize)
+                {
+                    size = new Vector2(LayoutUtility.GetPreferredWidth(rect), LayoutUtility.GetPreferredHeight(rect));
+                }
 
                 Vector2 position = new Vector2(padding.left, padding.top) + offset;
-                int axis = (int)startAxis;
-                int subAxis = 1 ^ axis;
 
                 offset[axis] += size[axis] + spacing[axis];
                 maxOffset[axis] = Mathf.Max(maxOffset[axis], offset[axis]);
@@ -336,24 +408,37 @@ namespace UnityEngine.UI
 
                 if (setChild)
                 {
-                    SetChildAlongAxis(rectChildren[i], 0, position.x, size[0]);
-                    SetChildAlongAxis(rectChildren[i], 1, position.y, size[1]);
+                    if (controlSize)
+                    {
+                        SetChildAlongAxis(rect, 0, position.x, size[0]);
+                        SetChildAlongAxis(rect, 1, position.y, size[1]);
+                    }
+                    else
+                    {
+                        SetChildAlongAxis(rect, 0, position.x);
+                        SetChildAlongAxis(rect, 1, position.y);
+                    }
                 }
             }
             if (fixedCellSize)
             {
                 return requiredSpace + new Vector2(padding.horizontal, padding.vertical);
             }
+            maxOffset[axis] -= spacing[axis];
             return maxOffset + new Vector2(padding.horizontal, padding.vertical);
         }
 
         private void SetCellsAlongAxis(int axis)
         {
+            if (!isLayoutGroup)
+                return;
+
             // Normally a Layout Controller should only set horizontal values when invoked for the horizontal axis
             // and only vertical values when invoked for the vertical axis.
             // However, in this case we set both the horizontal and vertical position when invoked for the vertical axis.
             // Since we only set the horizontal position and not the size, it shouldn't affect children's layout,
             // and thus shouldn't break the rule that all horizontal layout must be calculated before all vertical layout.
+
 
             if (axis == 0)
             {
@@ -375,16 +460,54 @@ namespace UnityEngine.UI
                     }
                     else
                     {
-                        m_Tracker.Add(this, rect,
-                            DrivenTransformProperties.Anchors |
-                            DrivenTransformProperties.AnchoredPosition |
-                            DrivenTransformProperties.SizeDelta);
                     }
                 }
+            }
+            else
+            {
+                TraverseChildren(true);
+            }
+        }
+
+        // Reference form HorizontalOrVerticalLayoutGroup
+#if UNITY_EDITOR
+
+        private int m_Capacity = 10;
+        private Vector2[] m_Sizes = new Vector2[10];
+
+        protected virtual void Update()
+        {
+            if (Application.isPlaying)
                 return;
+
+            int count = transform.childCount;
+
+            if (count > m_Capacity)
+            {
+                if (count > m_Capacity * 2)
+                    m_Capacity = count;
+                else
+                    m_Capacity *= 2;
+
+                m_Sizes = new Vector2[m_Capacity];
             }
 
-            TraverseChildren(true);
+            // If children size change in editor, update layout (case 945680 - Child GameObjects in a Horizontal/Vertical Layout Group don't display their correct position in the Editor)
+            bool dirty = false;
+            for (int i = 0; i < count; i++)
+            {
+                RectTransform t = transform.GetChild(i) as RectTransform;
+                if (t != null && t.sizeDelta != m_Sizes[i])
+                {
+                    dirty = true;
+                    m_Sizes[i] = t.sizeDelta;
+                }
+            }
+
+            if (dirty)
+                LayoutRebuilder.MarkLayoutForRebuild(transform as RectTransform);
         }
+
+#endif
     }
 }

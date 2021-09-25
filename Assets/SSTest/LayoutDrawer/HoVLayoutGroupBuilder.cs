@@ -35,6 +35,16 @@ namespace JetGen
             if (layoutGroup != null)
             {
                 _layoutGroup = layoutGroup;
+                var sscontentSizeFitter = layoutGroup.GetComponent<SSContentSizeFitter>();
+                if (sscontentSizeFitter)
+                {
+                    sscontentSizeFitter.enabled = false;
+                }
+                var contentSizeFitter = layoutGroup.GetComponent<ContentSizeFitter>();
+                if (contentSizeFitter)
+                {
+                    contentSizeFitter.enabled = false;
+                }
                 _layoutGroup.enabled = false;
 
                 // Fix anchor

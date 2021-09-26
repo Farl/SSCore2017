@@ -72,6 +72,7 @@ namespace UnityEngine.UI
             FixedRowCount = 2
         }
 
+        [HideInInspector]
         [SerializeField] protected Corner m_StartCorner = Corner.UpperLeft;
 
         /// <summary>
@@ -105,6 +106,7 @@ namespace UnityEngine.UI
         /// </summary>
         public Vector2 spacing { get { return m_Spacing; } set { SetProperty(ref m_Spacing, value); } }
 
+        [HideInInspector]
         [SerializeField] protected Constraint m_Constraint = Constraint.FixedColumnCount;
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace UnityEngine.UI
         /// </remarks>
         public Constraint constraint { get { return m_Constraint; } set { SetProperty(ref m_Constraint, value); } }
 
-        [SerializeField] protected int m_ConstraintCount = 2;
+        [SerializeField] protected int m_ConstraintCount = 1;
 
         /// <summary>
         /// How many cells there should be along the constrained axis.
@@ -124,7 +126,6 @@ namespace UnityEngine.UI
 
         public bool isLayoutGroup = true;
         public bool isContentSizeFitter = false;
-        public bool debugTest = true;
 
         private DrivenRectTransformTracker m_SelfTracker;
 
@@ -190,6 +191,13 @@ namespace UnityEngine.UI
             {
                 int minColumns = 0;
                 int preferredColumns = 0;
+
+                if (startAxis == Axis.Vertical)
+                    minColumns = preferredColumns = Mathf.CeilToInt(rectChildren.Count / (float)m_ConstraintCount - 0.001f);
+                else
+                    minColumns = preferredColumns = m_ConstraintCount;
+
+                /*
                 if (m_Constraint == Constraint.FixedColumnCount)
                 {
                     minColumns = preferredColumns = m_ConstraintCount;
@@ -203,6 +211,7 @@ namespace UnityEngine.UI
                     minColumns = 1;
                     preferredColumns = Mathf.CeilToInt(Mathf.Sqrt(rectChildren.Count));
                 }
+                */
 
                 SetLayoutInputForAxis(
                     padding.horizontal + (cellSize.x + spacing.x) * minColumns - spacing.x,
@@ -232,6 +241,13 @@ namespace UnityEngine.UI
             if (fixedCellSize)
             {
                 int minRows = 0;
+
+                if (startAxis == Axis.Vertical)
+                    minRows = m_ConstraintCount;
+                else
+                    minRows = Mathf.CeilToInt(rectChildren.Count / (float)m_ConstraintCount - 0.001f);
+
+                /*
                 if (m_Constraint == Constraint.FixedColumnCount)
                 {
                     minRows = Mathf.CeilToInt(rectChildren.Count / (float)m_ConstraintCount - 0.001f);
@@ -246,6 +262,7 @@ namespace UnityEngine.UI
                     int cellCountX = Mathf.Max(1, Mathf.FloorToInt((width - padding.horizontal + spacing.x + 0.001f) / (cellSize.x + spacing.x)));
                     minRows = Mathf.CeilToInt(rectChildren.Count / (float)cellCountX);
                 }
+                */
 
                 float minSpace = padding.vertical + (cellSize.y + spacing.y) * minRows - spacing.y;
                 SetLayoutInputForAxis(minSpace, minSpace, -1, 1);
@@ -332,6 +349,41 @@ namespace UnityEngine.UI
             }
         }
 
+        private Vector2 GetChildSize(RectTransform rect, bool controlSize)
+        {
+            if (controlSize)
+            {
+                return new Vector2(LayoutUtility.GetPreferredWidth(rect), LayoutUtility.GetPreferredHeight(rect));
+            }
+            else
+            {
+                return rect.sizeDelta;
+            }
+        }
+
+        public Vector2 Calculate(Vector2 size, ref int curColCount, ref Vector2 offset, ref Vector2 maxOffset)
+        {
+            var startAxis = (int)this.startAxis;
+            var extendAxis = 1 ^ startAxis;
+
+            var position = new Vector2(padding.left, padding.top) + offset;
+
+            maxOffset[startAxis] = Mathf.Max(maxOffset[startAxis], offset[startAxis] + size[startAxis]);
+            offset[startAxis] += size[startAxis] + spacing[startAxis];
+            maxOffset[extendAxis] = Mathf.Max(maxOffset[extendAxis], offset[extendAxis] + size[extendAxis]);
+
+            curColCount++;
+
+            if (curColCount >= constraintCount)
+            {
+                offset[extendAxis] = maxOffset[extendAxis] + spacing[extendAxis];
+
+                offset[startAxis] = 0;
+                curColCount = 0;
+            }
+            return position;
+        }
+
         private Vector2 TraverseChildren(bool setChild, bool controlSize = false)
         {
             int cellCountX;
@@ -364,42 +416,17 @@ namespace UnityEngine.UI
                 GetStartOffset(1, requiredSpace.y)
             );
 
-            Vector2 current = startOffset;
-            Vector2 prev = startOffset;
-            Vector2 max = (fixedCellSize)? requiredSpace: current;
-
             Vector2 offset = Vector2.zero;
             Vector2 maxOffset = Vector2.zero;
             int currColCount = 0;
-
-            int axis = (int)startAxis;
-            int subAxis = 1 ^ axis;
 
             // For each children
             for (int i = 0; i < rectChildren.Count; i++)
             {
                 var rect = rectChildren[i];
-                Vector2 size = rect.sizeDelta;
+                Vector2 size = GetChildSize(rect, controlSize); ;
 
-                if (controlSize)
-                {
-                    size = new Vector2(LayoutUtility.GetPreferredWidth(rect), LayoutUtility.GetPreferredHeight(rect));
-                }
-
-                Vector2 position = new Vector2(padding.left, padding.top) + offset;
-
-                offset[axis] += size[axis] + spacing[axis];
-                maxOffset[axis] = Mathf.Max(maxOffset[axis], offset[axis]);
-                maxOffset[subAxis] = Mathf.Max(maxOffset[subAxis], offset[subAxis] + size[subAxis]);
-
-                currColCount++;
-
-                if (currColCount >= m_ConstraintCount)
-                {
-                    offset[axis] = 0;
-                    offset[subAxis] = maxOffset[subAxis] + spacing[subAxis];
-                    currColCount = 0;
-                }
+                Vector2 position = Calculate(size, ref currColCount, ref offset, ref maxOffset);
 
                 if (fixedCellSize)
                 {
@@ -424,7 +451,7 @@ namespace UnityEngine.UI
             {
                 return requiredSpace + new Vector2(padding.horizontal, padding.vertical);
             }
-            maxOffset[axis] -= spacing[axis];
+            //maxOffset[(int)startAxis] -= spacing[(int)startAxis];
             return maxOffset + new Vector2(padding.horizontal, padding.vertical);
         }
 

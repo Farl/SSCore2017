@@ -6,20 +6,20 @@ using UnityEngine.UI;
 
 namespace JetGen
 {
-    [ExecuteInEditMode]
     public class LayoutDrawerController : MonoBehaviour
     {
-        [SerializeField] private bool _runInEditor;
-
+        [Header("Basic")]
         [SerializeField] private RectTransform _content;
         [SerializeField] private RectTransform _viewport;
         [SerializeField] private ScrollRect _scrollrect;
 
-        [SerializeField] private VerticalLayoutGroup _verticalLayoutGroup;
+        [Header("Layout Group 1")]
+        [SerializeField] private CustomGridLayoutGroup _layoutGroup1;
         [SerializeField] private RectTransform _banner;
         [SerializeField] private RectTransform _footer;
 
-        [SerializeField] private CustomGridLayoutGroup _gridLayoutGroup;
+        [Header("Layout Group 2")]
+        [SerializeField] private CustomGridLayoutGroup _layoutGroup2;
         [SerializeField] private LayoutDrawerTestElement _prefab;
         [SerializeField] private LayoutDrawerTestElement2 _prefab2;
 
@@ -37,9 +37,6 @@ namespace JetGen
 
         private void OnDisable()
         {
-            if (!Application.isPlaying && !_runInEditor)
-                return;
-
             if (_layoutDrawer != null)
             {
                 if (_currLayout != null)
@@ -61,9 +58,6 @@ namespace JetGen
 
         private void OnEnable()
         {
-            if (!Application.isPlaying && !_runInEditor)
-                return;
-
             CreateLayoutDrawer();
         }
 
@@ -82,11 +76,6 @@ namespace JetGen
                     if (_prefab != null)
                     {
                         var element = Instantiate(_prefab, parentTransform);
-                        if (!Application.isPlaying)
-                        {
-                            element.gameObject.hideFlags = HideFlags.DontSave;
-                            element.gameObject.name = $"(DontSave){element.gameObject.name}";
-                        }
                         element.gameObject.SetActive(true);
                         return element;
                     }
@@ -105,11 +94,6 @@ namespace JetGen
                 spawner: (parentTransform) =>
                 {
                     var element = Instantiate(_prefab2, parentTransform);
-                    if (!Application.isPlaying)
-                    {
-                        element.gameObject.hideFlags = HideFlags.DontSave;
-                        element.gameObject.name = $"(DontSave){element.gameObject.name}";
-                    }
                     element.gameObject.SetActive(true);
                     return element;
                 },
@@ -140,11 +124,6 @@ namespace JetGen
             coroutine = StartCoroutine(UpdateLayoutCoroutine());
         }
 
-        void DestroyLayoutDrawer()
-        {
-
-        }
-
         void Start()
         {
             _buttonAction = () =>
@@ -154,6 +133,8 @@ namespace JetGen
                 {
                     _scrollrect.verticalNormalizedPosition =
                         element.GetVerticallyCenteredNormalizedPosition(_viewport, _content);
+                    _scrollrect.horizontalNormalizedPosition =
+                        element.GetHorizontallyCenteredNormalizedPosition(_viewport, _content);
                 }
             };
             _button?.onClick.AddListener(_buttonAction);
@@ -187,10 +168,9 @@ namespace JetGen
         private IHoVLayout _GetIHoVLayout()
         {
             var rectTrans = _prefab.GetComponent<RectTransform>();
-            Debug.Log($"{_prefab.name} {rectTrans.rect}", rectTrans);
 
             // GridLayoutGroup builder
-            var gridBuilder = (new GridLayoutGroupBuilder(_gridLayoutGroup.transform as RectTransform, _gridLayoutGroup, false) as ILayoutBuilder);
+            var gridBuilder = (new GridLayoutGroupBuilder(_layoutGroup2.transform as RectTransform, _layoutGroup2, false) as ILayoutBuilder);
 
             // Add Pooled Layout Element in Grid
             var idx = 0;
@@ -216,8 +196,8 @@ namespace JetGen
                 }
             }
 
-            gridBuilder.Add(new RowLayoutElement(500, 100));
-            gridBuilder.Add(new RowLayoutElement(500, 100));
+            //gridBuilder.Add(new RowLayoutElement(500, 100));
+            //gridBuilder.Add(new RowLayoutElement(500, 100));
 
             for (; idx < _testElementCount; idx++)
             {
@@ -240,13 +220,11 @@ namespace JetGen
                     gridBuilder.Add(element, idx);
                 }
             }
-
-            var gridLayout = gridBuilder.GetLayout();
             
-            // VerticalLayoutGroup builder
-            var mainBuilder = (new HoVLayoutGroupBuilder(_verticalLayoutGroup.GetComponent<RectTransform>(), _verticalLayoutGroup) as ILayoutBuilder)
+            // Main builder
+            var mainBuilder = (new GridLayoutGroupBuilder(_layoutGroup1.GetComponent<RectTransform>(), _layoutGroup1) as ILayoutBuilder)
             .Add(new StaticLayoutElement(_banner))
-            .Add(gridLayout)
+            .Add(gridBuilder.GetLayout())
             .Add(new RowLayoutElement(400, 100))
             .Add(new StaticLayoutElement(_footer))
             ;

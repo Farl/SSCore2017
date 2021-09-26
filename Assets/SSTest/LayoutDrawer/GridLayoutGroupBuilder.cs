@@ -4,6 +4,7 @@ namespace JetGen
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
+    using UnityEngine.EventSystems;
 
     public class GridLayoutGroupBuilder : ILayoutBuilder
     {
@@ -13,13 +14,21 @@ namespace JetGen
 
         private CustomGridLayoutGroup _gridLayoutGroup;
 
-        private int _axis
+        private int _startAxis
         {
             get
             {
                 if (_gridLayoutGroup)
-                    return ((int)_gridLayoutGroup.startAxis + 1) % 2;
-                return 1;
+                    return (int)_gridLayoutGroup.startAxis;
+                return 0;
+            }
+        }
+
+        private int _extendAxis
+        {
+            get
+            {
+                return 1 ^ _startAxis;
             }
         }
 
@@ -35,15 +44,14 @@ namespace JetGen
             if (layoutGroup != null)
             {
                 _gridLayoutGroup = layoutGroup;
-                var sscontentSizeFitter = _gridLayoutGroup.GetComponent<SSContentSizeFitter>();
-                if (sscontentSizeFitter)
+                var uiBehaviours = _rectTransform.GetComponents<UIBehaviour>();
+                foreach (var uiB in uiBehaviours)
                 {
-                    sscontentSizeFitter.enabled = false;
-                }
-                var contentSizeFitter = _gridLayoutGroup.GetComponent<ContentSizeFitter>();
-                if (contentSizeFitter)
-                {
-                    contentSizeFitter.enabled = false;
+                    var layoutSelfController = uiB as ILayoutSelfController;
+                    if (layoutSelfController != null)
+                    {
+                        uiB.enabled = false;
+                    }
                 }
                 _gridLayoutGroup.enabled = false;
 
@@ -56,9 +64,6 @@ namespace JetGen
                 {
                     trans.anchorMin = new Vector2(0, 1);
                     trans.anchorMax = new Vector2(0, 1);
-
-                    //var layoutEle = trans.GetOrAddComponent<LayoutElement>();
-                    //layoutEle.ignoreLayout = true;
 
                     if (!keepChildren)
                         trans.gameObject.SetActive(false);
@@ -74,7 +79,7 @@ namespace JetGen
             var position = _rectTransform.anchoredPosition;
             _DoLayout();
             _rectTransform.anchoredPosition = position;
-            return new HoVLayout(_axis, _rectTransform, _elements, _elementDict);
+            return new HoVLayout(_extendAxis, _rectTransform, _elements, _elementDict);
         }
 
         private void _DoLayout()
@@ -82,30 +87,22 @@ namespace JetGen
             if (_gridLayoutGroup == null)
                 return;
 
-            var topLeftPadding = new Vector2(_gridLayoutGroup.padding.left, _gridLayoutGroup.padding.top);
-            var mainOffset = 0f;
-            var subOffset = 0f;
-            var maxMainOffset = 0f;
-            var maxSubOffset = 0f;
-            var curColCount = 0;
-            var subAxis = 1 ^ _axis;
+            var padding = _gridLayoutGroup.padding;
+            var spacing = _gridLayoutGroup.spacing;
+
+            int startAxis = _startAxis;
+            Vector2 offset = Vector2.zero;
+            Vector2 maxOffset = Vector2.zero;
+            int curColCount = 0;
+
             foreach (var element in _elements)
             {
-                var mainPos = topLeftPadding[_axis] + mainOffset;
-                var subPos = topLeftPadding[subAxis] + subOffset;
-                element.Position = _GetElementPos(_axis, mainPos, subPos);
-                subOffset += element.Size[subAxis] + _gridLayoutGroup.spacing[subAxis];
-                maxSubOffset = Mathf.Max(maxSubOffset, subOffset);
-                maxMainOffset = Mathf.Max(maxMainOffset, mainOffset + element.Size[_axis]);
-                curColCount++;
+                Vector2 size = element.Size;
+                Vector2 position = _gridLayoutGroup.Calculate(size, ref curColCount, ref offset, ref maxOffset);
 
-                if (curColCount >= _gridLayoutGroup.constraintCount)
-                {
-                    mainOffset = maxMainOffset + _gridLayoutGroup.spacing[_axis];
-                    subOffset = 0f;
-                    curColCount = 0;
-                }
+                element.Position = position;
             }
+
             if (_rectTransform.anchorMin.x != 0)
             {
                 Debug.LogWarning("Layout should have anchorMin set to the left.", _rectTransform);
@@ -114,45 +111,15 @@ namespace JetGen
             {
                 Debug.LogWarning("Layout should have anchorMax set to the top.", _rectTransform);
             }
-            if (_axis == (int)RectTransform.Axis.Vertical)
-            {
-                var height = maxMainOffset + _gridLayoutGroup.padding.bottom;
-                var width = maxSubOffset + _gridLayoutGroup.padding.right;
-                _rectTransform.offsetMin = new Vector2(
-                    0f,
-                    -height
-                );
-                _rectTransform.offsetMax = new Vector2(
-                    width,
-                    0f
-                );
-            }
-            else
-            {
-                var height = maxSubOffset + _gridLayoutGroup.padding.bottom;
-                var width = maxMainOffset + _gridLayoutGroup.padding.right;
-                _rectTransform.offsetMin = new Vector2(
-                    0f,
-                    -height
-                );
-                _rectTransform.offsetMax = new Vector2(
-                    width,
-                    0f
-                );
 
-            }
-        }
-
-        private Vector2 _GetElementPos(int axis, float mainPos, float subPos)
-        {
-            if (axis == (int)RectTransform.Axis.Vertical)
-            {
-                return new Vector2(subPos, mainPos);
-            }
-            else
-            {
-                return new Vector2(mainPos, subPos);
-            }
+            _rectTransform.offsetMin = new Vector2(
+                0f,
+                -(maxOffset.y + padding.vertical)
+            );
+            _rectTransform.offsetMax = new Vector2(
+                (maxOffset.x + padding.horizontal),
+                0f
+            );
         }
 
         ILayoutBuilder ILayoutBuilder.Add(IHoVLayoutElement element)
@@ -171,7 +138,7 @@ namespace JetGen
         ILayoutBuilder ILayoutBuilder.SetAxis(int axis)
         {
             if (_gridLayoutGroup)
-                _gridLayoutGroup.startAxis = (CustomGridLayoutGroup.Axis)axis;
+                _gridLayoutGroup.startAxis = (CustomGridLayoutGroup.Axis)(1 ^ axis);
             return this;
         }
 

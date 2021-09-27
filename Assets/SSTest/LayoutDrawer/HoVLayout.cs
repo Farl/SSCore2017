@@ -75,6 +75,8 @@ namespace JetGen
             }
         }
         int IHoVLayout.Axis => _axis;
+        bool IHoVLayout.RedrawBothAxis => true;
+
         RectTransform IHoVLayout.RectTransform => _contentRect;
         void IHoVLayoutElement.Accept(IHoVLayoutElementVisitor visitor)
         {
@@ -97,6 +99,22 @@ namespace JetGen
             }
             return null;
         }
+        IEnumerable<IHoVLayoutElement> IHoVLayout.GetElements(Vector2 begin, Vector2 end)
+        {
+            foreach (var element in _elementList)
+            {
+                var startPos = element.Position;
+                if (startPos.x > end.x || startPos.y > end.y)
+                    yield break;
+
+                var endPos = element.Position + element.Size;
+                if (endPos.x >= begin.x && endPos.y >= begin.y)
+                {
+                    yield return element;
+                }
+            }
+        }
+
         IEnumerable<IHoVLayoutElement> IHoVLayout.GetElements(float begin, float end)
         {
             foreach (var element in _elementList)

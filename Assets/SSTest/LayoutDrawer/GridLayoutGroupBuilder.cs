@@ -32,6 +32,25 @@ namespace JetGen
             }
         }
 
+        public static ILayoutBuilder CreateLayoutBuilder(LayoutGroup layoutGroup, bool keepChildren = true)
+        {
+            if (layoutGroup == null)
+                return null;
+
+            var t = layoutGroup.GetType();
+            var rt = layoutGroup.GetComponent<RectTransform>();
+
+            if (t == typeof(CustomGridLayoutGroup))
+            {
+                return new GridLayoutGroupBuilder(rt, layoutGroup as CustomGridLayoutGroup, keepChildren);
+            }
+            else if (t.IsSubclassOf(typeof(HorizontalOrVerticalLayoutGroup)))
+            {
+                return new HoVLayoutGroupBuilder(rt, layoutGroup as HorizontalOrVerticalLayoutGroup, keepChildren);
+            }
+            return null;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -94,13 +113,29 @@ namespace JetGen
             Vector2 offset = Vector2.zero;
             Vector2 maxOffset = Vector2.zero;
             int curColCount = 0;
+            int curRowCount = 0;
+            List<float> rowSizeList = new List<float>();
+            List<Rect> rectList = new List<Rect>();
 
             foreach (var element in _elements)
             {
                 Vector2 size = element.Size;
-                Vector2 position = _gridLayoutGroup.Calculate(size, ref curColCount, ref offset, ref maxOffset);
+                Vector2 position = _gridLayoutGroup.Calculate(size, ref curColCount, ref curRowCount, ref offset, ref maxOffset, ref rowSizeList);
+                rectList.Add(new Rect(position, size));
+            }
 
+            curColCount = curRowCount = 0;
+            int i = 0;
+            foreach (var element in _elements)
+            {
+                float _startOffset = 0;
+                var position = rectList[i].position;
+                _gridLayoutGroup.CountColumnRow(rowSizeList, ref curColCount, ref curRowCount, ref _startOffset);
+                position[startAxis] += _startOffset;
+
+                // Set child
                 element.Position = position;
+                i++;
             }
 
             if (_rectTransform.anchorMin.x != 0)

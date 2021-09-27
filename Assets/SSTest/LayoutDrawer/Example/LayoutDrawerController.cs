@@ -14,12 +14,12 @@ namespace JetGen
         [SerializeField] private ScrollRect _scrollrect;
 
         [Header("Layout Group 1")]
-        [SerializeField] private CustomGridLayoutGroup _layoutGroup1;
+        [SerializeField] private LayoutGroup _layoutGroup1;
         [SerializeField] private RectTransform _banner;
         [SerializeField] private RectTransform _footer;
 
         [Header("Layout Group 2")]
-        [SerializeField] private CustomGridLayoutGroup _layoutGroup2;
+        [SerializeField] private LayoutGroup _layoutGroup2;
         [SerializeField] private LayoutDrawerTestElement _prefab;
         [SerializeField] private LayoutDrawerTestElement2 _prefab2;
 
@@ -167,10 +167,8 @@ namespace JetGen
 
         private IHoVLayout _GetIHoVLayout()
         {
-            var rectTrans = _prefab.GetComponent<RectTransform>();
-
-            // GridLayoutGroup builder
-            var gridBuilder = (new GridLayoutGroupBuilder(_layoutGroup2.transform as RectTransform, _layoutGroup2, false) as ILayoutBuilder);
+            // Sub layout builder
+            var subBuilder = GridLayoutGroupBuilder.CreateLayoutBuilder(_layoutGroup2, false);
 
             // Add Pooled Layout Element in Grid
             var idx = 0;
@@ -183,7 +181,7 @@ namespace JetGen
                         idx,
                         idx.ToString()
                     );
-                    gridBuilder.Add(element, idx);
+                    subBuilder.Add(element, idx);
                 }
                 else
                 {
@@ -192,12 +190,9 @@ namespace JetGen
                         idx,
                         idx.ToString()
                     );
-                    gridBuilder.Add(element, idx);
+                    subBuilder.Add(element, idx);
                 }
             }
-
-            //gridBuilder.Add(new RowLayoutElement(500, 100));
-            //gridBuilder.Add(new RowLayoutElement(500, 100));
 
             for (; idx < _testElementCount; idx++)
             {
@@ -208,7 +203,7 @@ namespace JetGen
                         idx,
                         idx.ToString()
                     );
-                    gridBuilder.Add(element, idx);
+                    subBuilder.Add(element, idx);
                 }
                 else
                 {
@@ -217,43 +212,19 @@ namespace JetGen
                         idx,
                         idx.ToString()
                     );
-                    gridBuilder.Add(element, idx);
+                    subBuilder.Add(element, idx);
                 }
             }
             
-            // Main builder
-            var mainBuilder = (new GridLayoutGroupBuilder(_layoutGroup1.GetComponent<RectTransform>(), _layoutGroup1) as ILayoutBuilder)
+            // Main layout builder
+            var mainBuilder = GridLayoutGroupBuilder.CreateLayoutBuilder(_layoutGroup1)
             .Add(new StaticLayoutElement(_banner))
-            .Add(gridBuilder.GetLayout())
+            .Add(subBuilder.GetLayout())
             .Add(new RowLayoutElement(400, 100))
             .Add(new StaticLayoutElement(_footer))
             ;
 
             return mainBuilder.GetLayout();
-        }
-
-        /// <summary>
-        /// Deprecated
-        /// </summary>
-        /// <returns></returns>
-        private IHoVLayoutV1 _GetLagecyLayout()
-        {
-            IHoVLayoutV1 trophyLayout = new VerticalLayout(_content);
-            for (var i = 0; i < 20; i++)
-            {
-                var id = i;
-                var item = PooledLayoutElement.Create(
-                    _prefab,
-                    id,
-                    id.ToString()
-                );
-                trophyLayout.Add(item, id);
-            }
-            trophyLayout.Spacing = 20f;
-            trophyLayout.SetPadding(10f);
-            trophyLayout.DoLayout();
-
-            return trophyLayout;
         }
     }
 }

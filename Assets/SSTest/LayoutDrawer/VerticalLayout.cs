@@ -71,6 +71,7 @@ namespace JetGen
         }
 
         int IHoVLayout.Axis => 1;
+        bool IHoVLayout.RedrawBothAxis => false;
 
         RectTransform IHoVLayout.RectTransform => _rectTransform;
 
@@ -213,6 +214,22 @@ namespace JetGen
                 return value;
             }
             return null;
+        }
+
+        IEnumerable<IHoVLayoutElement> IHoVLayout.GetElements(Vector2 min, Vector2 max)
+        {
+            foreach (var element in _elements)
+            {
+                var startPos = element.Position;
+                if (startPos.x > max.x || startPos.y > max.y)
+                    yield break;
+
+                var endPos = element.Position + element.Size;
+                if (endPos.x >= min.x || endPos.y >= min.y)
+                {
+                    yield return element;
+                }
+            }
         }
 
         IEnumerable<IHoVLayoutElement> IHoVLayout.GetElements(float begin, float end)

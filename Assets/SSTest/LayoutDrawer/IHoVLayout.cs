@@ -16,10 +16,12 @@ namespace JetGen
 {
     public interface IHoVLayout : IHoVLayoutElement
     {
+        bool RedrawBothAxis { get; }
         int Axis { get; }
         RectTransform RectTransform { get; }
         IHoVLayoutElement GetElementById(int id);
         IEnumerable<IHoVLayoutElement> GetElements(float begin, float end);
+        IEnumerable<IHoVLayoutElement> GetElements(Vector2 min, Vector2 max);
     }
 
     [System.Obsolete("Use LayoutBuilder to create layout instead")]

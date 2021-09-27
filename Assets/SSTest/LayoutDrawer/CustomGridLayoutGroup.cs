@@ -351,9 +351,10 @@ namespace UnityEngine.UI
 
         private Vector2 GetChildSize(RectTransform rect, bool controlSize)
         {
+            var preferedSize = new Vector2(LayoutUtility.GetPreferredWidth(rect), LayoutUtility.GetPreferredHeight(rect));
             if (controlSize)
             {
-                return new Vector2(LayoutUtility.GetPreferredWidth(rect), LayoutUtility.GetPreferredHeight(rect));
+                return preferedSize;
             }
             else
             {
@@ -361,7 +362,31 @@ namespace UnityEngine.UI
             }
         }
 
-        public Vector2 Calculate(Vector2 size, ref int curColCount, ref Vector2 offset, ref Vector2 maxOffset)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curColCount"></param>
+        /// <param name="curRowCount"></param>
+        /// <returns>True if change row</returns>
+        public bool CountColumnRow(List<float> rowSizeList, ref int curColCount, ref int curRowCount, ref float startOffset)
+        {
+            startOffset = GetStartOffset( (int)startAxis, rowSizeList[curRowCount] - ((startAxis == 0)? padding.left: padding.top) );
+            return CountColumnRow(ref curColCount, ref curRowCount);
+        }
+
+        public bool CountColumnRow(ref int curColCount, ref int curRowCount)
+        {
+            curColCount++;
+            if (curColCount >= constraintCount)
+            {
+                curRowCount++;
+                curColCount = 0;
+                return true;
+            }
+            return false;
+        }
+
+        public Vector2 Calculate(Vector2 size, ref int curColCount, ref int curRowCount, ref Vector2 offset, ref Vector2 maxOffset, ref List<float> rowSizeList)
         {
             var startAxis = (int)this.startAxis;
             var extendAxis = 1 ^ startAxis;
@@ -372,19 +397,23 @@ namespace UnityEngine.UI
             offset[startAxis] += size[startAxis] + spacing[startAxis];
             maxOffset[extendAxis] = Mathf.Max(maxOffset[extendAxis], offset[extendAxis] + size[extendAxis]);
 
-            curColCount++;
+            while (curRowCount >= rowSizeList.Count)
+            {
+                rowSizeList.Add(0);
+            }
+            var rowSize = offset[startAxis] - spacing[startAxis];
+            rowSizeList[curRowCount] = rowSize;
 
-            if (curColCount >= constraintCount)
+            if (CountColumnRow(ref curColCount, ref curRowCount))
             {
                 offset[extendAxis] = maxOffset[extendAxis] + spacing[extendAxis];
-
                 offset[startAxis] = 0;
-                curColCount = 0;
             }
+
             return position;
         }
 
-        private Vector2 TraverseChildren(bool setChild, bool controlSize = false)
+        private Vector2 TraverseChildren(bool setChild)
         {
             int cellCountX;
             int cellCountY;
@@ -418,40 +447,58 @@ namespace UnityEngine.UI
 
             Vector2 offset = Vector2.zero;
             Vector2 maxOffset = Vector2.zero;
-            int currColCount = 0;
+            int curColCount = 0;
+            int curRowCount = 0;
+
+            List<float> rowSizeList = new List<float>();
+            List<Rect> rectList = new List<Rect>();
 
             // For each children
             for (int i = 0; i < rectChildren.Count; i++)
             {
-                var rect = rectChildren[i];
-                Vector2 size = GetChildSize(rect, controlSize); ;
+                var rectChild = rectChildren[i];
 
-                Vector2 position = Calculate(size, ref currColCount, ref offset, ref maxOffset);
-
+                Vector2 size = GetChildSize(rectChild, controlSize: false);
                 if (fixedCellSize)
                 {
                     size = cellSize;
                 }
 
-                if (setChild)
+                Vector2 position = Calculate(size, ref curColCount, ref curRowCount, ref offset, ref maxOffset, ref rowSizeList);
+                rectList.Add(new Rect(position, size));
+            }
+
+            // Set child
+            if (setChild)
+            {
+                curColCount = curRowCount = 0;
+                for (int i = 0; i < rectChildren.Count; i++)
                 {
-                    if (controlSize)
+                    var rectChild = rectChildren[i];
+                    var rect = rectList[i];
+
+                    float _startOffset = 0;
+                    var position = rect.position;
+                    CountColumnRow(rowSizeList, ref curColCount, ref curRowCount, ref _startOffset);
+                    position[(int)startAxis] += _startOffset;
+
+                    if (fixedCellSize)
                     {
-                        SetChildAlongAxis(rect, 0, position.x, size[0]);
-                        SetChildAlongAxis(rect, 1, position.y, size[1]);
+                        SetChildAlongAxis(rectChild, 0, position.x, rect.size[0]);
+                        SetChildAlongAxis(rectChild, 1, position.y, rect.size[1]);
                     }
                     else
                     {
-                        SetChildAlongAxis(rect, 0, position.x);
-                        SetChildAlongAxis(rect, 1, position.y);
+                        SetChildAlongAxis(rectChild, 0, position.x);
+                        SetChildAlongAxis(rectChild, 1, position.y);
                     }
                 }
             }
+
             if (fixedCellSize)
             {
                 return requiredSpace + new Vector2(padding.horizontal, padding.vertical);
             }
-            //maxOffset[(int)startAxis] -= spacing[(int)startAxis];
             return maxOffset + new Vector2(padding.horizontal, padding.vertical);
         }
 
@@ -487,6 +534,7 @@ namespace UnityEngine.UI
                     }
                     else
                     {
+                        m_Tracker.Add(this, rect, DrivenTransformProperties.None);
                     }
                 }
             }

@@ -219,6 +219,34 @@ namespace JetGen
             _staticHandler.Finish();
         }
 
+        void ILayoutDrawer.RedrawBothAxis(RectTransform viewport, RectTransform content)
+        {
+            if (_layout == null)
+                return;
+
+            _staticHandler.Begin();
+
+            foreach (var e in _poolHandlers.Values)
+                e.Begin();
+
+            var begin = new Vector2(-content.offsetMin.x, content.offsetMax.y);
+            var end = new Vector2(-content.offsetMin.x + viewport.rect.width, content.offsetMax.y + viewport.rect.height);
+
+            _begin = (_layout.Axis == 0) ? begin.x : begin.y;
+            _end = (_layout.Axis == 0) ? end.x : end.y;
+
+            foreach (var element in _layout.GetElements(begin, end))
+                element.Accept(_prepareToRedraw);
+
+            foreach (var element in _layout.GetElements(begin, end))
+                element.Accept(_redraw);
+
+            foreach (var e in _poolHandlers.Values)
+                e.Finish();
+
+            _staticHandler.Finish();
+        }
+
         void ILayoutDrawer.RedrawVertically(RectTransform viewport, RectTransform content)
         {
             (this as ILayoutDrawer).Redraw(
@@ -237,13 +265,20 @@ namespace JetGen
         {
             if (_layout == null)
                 return;
-            if (_layout.Axis == (int)RectTransform.Axis.Vertical)
+            if (_layout.RedrawBothAxis)
             {
-                (this as ILayoutDrawer).RedrawVertically(viewport, content);
+                (this as ILayoutDrawer).RedrawBothAxis(viewport, content);
             }
             else
             {
-                (this as ILayoutDrawer).RedrawHorizontally(viewport, content);
+                if (_layout.Axis == (int)RectTransform.Axis.Vertical)
+                {
+                    (this as ILayoutDrawer).RedrawVertically(viewport, content);
+                }
+                else
+                {
+                    (this as ILayoutDrawer).RedrawHorizontally(viewport, content);
+                }
             }
         }
 

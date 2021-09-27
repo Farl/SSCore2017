@@ -30,6 +30,8 @@ namespace JetGen
 
         void RedrawHorizontally(RectTransform viewport, RectTransform content);
 
+        void RedrawBothAxis(RectTransform viewport, RectTransform content);
+
         void RedrawAlongAxis(RectTransform viewport, RectTransform content);
 
         void RedrawAlongAxis(ScrollRect scrollRect);

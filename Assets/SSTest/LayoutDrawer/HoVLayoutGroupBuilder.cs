@@ -4,6 +4,7 @@ namespace JetGen
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
+    using UnityEngine.EventSystems;
 
     public class HoVLayoutGroupBuilder : ILayoutBuilder
     {
@@ -35,15 +36,14 @@ namespace JetGen
             if (layoutGroup != null)
             {
                 _layoutGroup = layoutGroup;
-                var sscontentSizeFitter = layoutGroup.GetComponent<SSContentSizeFitter>();
-                if (sscontentSizeFitter)
+                var uiBehaviours = _rectTransform.GetComponents<UIBehaviour>();
+                foreach (var uiB in uiBehaviours)
                 {
-                    sscontentSizeFitter.enabled = false;
-                }
-                var contentSizeFitter = layoutGroup.GetComponent<ContentSizeFitter>();
-                if (contentSizeFitter)
-                {
-                    contentSizeFitter.enabled = false;
+                    var layoutSelfController = uiB as ILayoutSelfController;
+                    if (layoutSelfController != null)
+                    {
+                        uiB.enabled = false;
+                    }
                 }
                 _layoutGroup.enabled = false;
 

@@ -370,7 +370,7 @@ namespace UnityEngine.UI
         /// <returns>True if change row</returns>
         public bool CountColumnRow(List<float> rowSizeList, ref int curColCount, ref int curRowCount, ref float startOffset)
         {
-            startOffset = GetStartOffset( (int)startAxis, rowSizeList[curRowCount] - ((startAxis == 0)? padding.left: padding.top) );
+            startOffset = GetStartOffset( (int)startAxis, rowSizeList[curRowCount] ) - ((startAxis == 0) ? padding.left : padding.top);
             return CountColumnRow(ref curColCount, ref curRowCount);
         }
 

@@ -1,13 +1,12 @@
 {
-    "name": "SSGameEditor.RecorderableList",
-    "rootNamespace": "",
+    "name": "SSCore",
+    "rootNamespace": "SS",
     "references": [
-        "GUID:9fd4fd9e184f29545a5f5ded5f78d942",
-        "GUID:7f6ee2fbb1e5f344084495d6eb21494f"
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:69448af7b92c7f342b298e06a37122aa"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

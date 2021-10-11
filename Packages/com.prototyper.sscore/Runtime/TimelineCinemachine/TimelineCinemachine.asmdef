@@ -1,13 +1,12 @@
 {
-    "name": "SSGameEditor.RecorderableList",
+    "name": "TimelineCinemachine",
     "rootNamespace": "",
     "references": [
-        "GUID:9fd4fd9e184f29545a5f5ded5f78d942",
-        "GUID:7f6ee2fbb1e5f344084495d6eb21494f"
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:af4e4e6675422b147835a4d750f188db",
+        "GUID:3d1d65fc5a0f441459b5110783a0cfe0"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

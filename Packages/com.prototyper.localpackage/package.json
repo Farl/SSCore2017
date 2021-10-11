@@ -1,0 +1,24 @@
+{
+  "name": "com.prototyper.localpackage",
+  "version": "0.0.1",
+  "description": "This is an example local package",
+  "displayName": "SS Local Package",
+  "unity": "2020.3",
+  "unityRelease": "18f1",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "license": "",
+  "licensesUrl": "",
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "samples": {
+    "displayName": "Sample",
+    "description": "Sample description",
+    "path": "Samples~/Sample"
+  },
+  "type": "sample"
+}

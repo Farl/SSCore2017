@@ -1,0 +1,11 @@
+{
+  "name": "com.prototyper.ugui",
+  "version": "0.0.1",
+  "description": "Description",
+  "displayName": "SS UGUI",
+  "samples": [{
+    "displayName": "Content Size Fitter",
+    "description": "Custom Content Size Fitter sample",
+    "path": "Samples~/ContentSizeFitter"
+  }]
+}

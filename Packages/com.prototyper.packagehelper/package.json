@@ -1,0 +1,24 @@
+{
+  "name": "com.prototyper.packagehelper",
+  "version": "0.0.1",
+  "description": "Helper to create package",
+  "displayName": "SS Package Helper",
+  "unity": "2020.3",
+  "unityRelease": "18f1",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "license": "",
+  "licensesUrl": "",
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "samples": {
+    "displayName": "Sample",
+    "description": "Sample description",
+    "path": "Samples~/Sample"
+  },
+  "type": "sample"
+}

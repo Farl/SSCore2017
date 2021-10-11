@@ -1,10 +1,7 @@
 {
-    "name": "SSGame",
-    "rootNamespace": "",
-    "references": [
-        "GUID:af4e4e6675422b147835a4d750f188db",
-        "GUID:3d1d65fc5a0f441459b5110783a0cfe0"
-    ],
+    "name": "SS.PackageHelper",
+    "rootNamespace": "SS.PackageHelper",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

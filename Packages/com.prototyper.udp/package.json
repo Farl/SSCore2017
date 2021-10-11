@@ -1,0 +1,13 @@
+{
+  "name": "com.prototyper.udp",
+  "version": "0.0.1",
+  "description": "Description",
+  "displayName": "SS UDP",
+  "samples": [
+	  {
+		  "displayName": "UDP Example",
+		  "description": "",
+		  "path": "Samples~/UDP Sample"
+	  }
+  ]
+}

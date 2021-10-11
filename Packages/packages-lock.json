@@ -1,5 +1,65 @@
 {
   "dependencies": {
+    "com.prototyper.json": {
+      "version": "file:com.prototyper.json",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.layoutdrawer": {
+      "version": "file:com.prototyper.layoutdrawer",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.localpackage": {
+      "version": "file:com.prototyper.localpackage",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.packagehelper": {
+      "version": "file:com.prototyper.packagehelper",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.playable": {
+      "version": "file:com.prototyper.playable",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.prototype": {
+      "version": "file:com.prototyper.prototype",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.spreadsheet": {
+      "version": "file:com.prototyper.spreadsheet",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.sscore": {
+      "version": "file:com.prototyper.sscore",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.udp": {
+      "version": "file:com.prototyper.udp",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.ugui": {
+      "version": "file:com.prototyper.ugui",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

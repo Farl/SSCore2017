@@ -46,6 +46,14 @@
       "version": "file:com.prototyper.sscore",
       "depth": 0,
       "source": "embedded",
+      "dependencies": {
+        "com.prototyper.stringevent": ""
+      }
+    },
+    "com.prototyper.stringevent": {
+      "version": "file:com.prototyper.stringevent",
+      "depth": 0,
+      "source": "embedded",
       "dependencies": {}
     },
     "com.prototyper.udp": {

@@ -6,12 +6,13 @@ namespace SS
 {
 	public class EventListener : MonoBehaviour
 	{
-        public bool listenOnlyEnabled = true;
-        protected bool enableListen = true;
-		bool m_intialized;
-		public string m_eventID;
-		public bool m_recvGlobal = true;
-		public bool m_recvLocal = false;
+		[HideInInspector] public bool listenOnlyEnabled = true;
+		[HideInInspector] public string m_eventID;
+		[HideInInspector] public bool m_recvGlobal = true;
+		[HideInInspector] public bool m_recvLocal = false;
+
+		protected bool enableListen = true;
+		private bool m_intialized;
 
 		public void Init()
 		{

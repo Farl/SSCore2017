@@ -1,1 +1,6 @@
-{"name":"com.prototyper.playable","version":"0.0.1","description":"Description"}
+{
+  "name": "com.prototyper.playable",
+  "version": "0.0.1",
+  "description": "Description",
+  "displayName": "SS Playable"
+}

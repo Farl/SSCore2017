@@ -19,7 +19,6 @@ namespace SS
 	[System.Serializable]
 	public class EventArray
 	{
-		[Auto]
 		public List<EventMsg> eventArray;
 
         public static EventArray operator+ (EventArray left, EventArray right)

@@ -35,11 +35,11 @@ namespace SS
 				EventManager.RemoveEventListener(m_eventID, OnEvent, gameObject);
 		}
 
-		void Awake () {
+		protected virtual void Awake () {
 			Init ();
 		}
 
-		void OnDestroy() {
+		protected virtual void OnDestroy() {
 			Delete ();
         }
 

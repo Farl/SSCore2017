@@ -1,6 +1,7 @@
 {
   "name": "com.prototyper.stringevent",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Description",
-  "displayName": "SS StringEvent"
+  "displayName": "SS StringEvent",
+  "type": "tests"
 }

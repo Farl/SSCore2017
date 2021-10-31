@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/URP/Samples/URP.unity
+    guid: 1f2e3dd49e1e242688e695df3115c302
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e1225c919dcc2e141a8d23f9d003d60b,
       type: 2}

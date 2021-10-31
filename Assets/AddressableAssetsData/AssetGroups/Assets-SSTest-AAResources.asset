@@ -17,12 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 0eb677a4dffc052439e3127e7fc41565
   m_SerializeEntries:
-  - m_GUID: 66074bb22629ee34993e2870e0528595
+  - m_GUID: 317aac975b54349438f2023df39926d7
     m_Address: Assets/SSTest/AAResources/RuntimePlayerSettings.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a3f60157a05614145acefd024eb792bd
-    m_Address: Assets/SSTest/AAResources/UISettings.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

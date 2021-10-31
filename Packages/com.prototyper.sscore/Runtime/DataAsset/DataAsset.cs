@@ -29,6 +29,24 @@ namespace SS
 		
 		private static T instance;
 
+        static void CheckParentFolderRecursive(DirectoryInfo directoryInfo, string projectPath)
+        {
+            //Debug.Log(directoryInfo);
+            if (directoryInfo == null || string.IsNullOrEmpty(directoryInfo.ToString()))
+                return;
+
+            if (!Directory.Exists(directoryInfo.ToString()))
+            {
+                var parentDirectoryInfo = directoryInfo.Parent;
+                CheckParentFolderRecursive(parentDirectoryInfo, projectPath);
+                var parentPath = parentDirectoryInfo.ToString().Replace(projectPath, "").TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+                //Debug.Log($"{parentPath} create {directoryInfo.Name}");
+                AssetDatabase.CreateFolder(parentPath, directoryInfo.Name);
+            }
+
+        }
+
         static void OnLoadComplete(T loadedInst)
         {
             if (loadedInst != null)
@@ -44,15 +62,11 @@ namespace SS
                 instance = ResourceSystem.CreateInstance<T>();
 
 #if UNITY_EDITOR
-                string properPath = Path.Combine(Application.dataPath, settingsPath);
-                if (!Directory.Exists(properPath))
-                {
-                    AssetDatabase.CreateFolder(settingsParentPath, subFolderName);
-                }
+                var projectPath = (new DirectoryInfo(Application.dataPath)).Parent.ToString();
+                string properPath = Path.Combine(projectPath, "Assets", mainFolder, subFolderName);
+                CheckParentFolderRecursive(new DirectoryInfo(properPath), projectPath);
 
-                string fullPathWithoutExt = Path.Combine(Path.Combine("Assets", settingsPath),
-                                               settingsAssetName
-                                               );
+                string fullPathWithoutExt = Path.Combine("Assets", mainFolder, subFolderName, settingsAssetName);
 
                 ResourceSystem.CreateAsset(instance, fullPathWithoutExt, settingsAssetExtension);
 #endif

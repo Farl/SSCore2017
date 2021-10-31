@@ -7,6 +7,12 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.prototyper.addressable": {
+      "version": "file:com.prototyper.addressable",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.prototyper.json": {
       "version": "file:com.prototyper.json",
       "depth": 0,
@@ -71,6 +77,12 @@
     },
     "com.prototyper.ugui": {
       "version": "file:com.prototyper.ugui",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.urp": {
+      "version": "file:com.prototyper.urp",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

@@ -69,6 +69,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.prototyper.tools": {
+      "version": "file:com.prototyper.tools",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.prototyper.udp": {
       "version": "file:com.prototyper.udp",
       "depth": 0,

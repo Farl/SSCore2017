@@ -46,12 +46,12 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1102 &-411175000464590128
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PCE_Idle 2
+  m_Name: Idle 2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -77,7 +77,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayableComponentExample
+  m_Name: APC Example
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -93,14 +93,40 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &789450525054777826
+--- !u!1102 &132541278552770982
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PCE_Interact
+  m_Name: Interact 2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 66b3bfb41660dd948a0fbd2e006d3d05, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &789450525054777826
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Interact
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -121,7 +147,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1107 &5376039598437445268
 AnimatorStateMachine:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -130,13 +156,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6563863709766457418}
-    m_Position: {x: 328, y: 57, z: 0}
+    m_Position: {x: 330, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -411175000464590128}
-    m_Position: {x: 484.89963, y: 122.32873, z: 0}
+    m_Position: {x: 480, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 789450525054777826}
-    m_Position: {x: 519.89966, y: 187.32874, z: 0}
+    m_Position: {x: 520, y: 180, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 132541278552770982}
+    m_Position: {x: 560, y: 220, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -149,12 +178,12 @@ AnimatorStateMachine:
   m_DefaultState: {fileID: 6563863709766457418}
 --- !u!1102 &6563863709766457418
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PCE_Idle
+  m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

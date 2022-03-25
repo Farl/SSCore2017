@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayablesSystem : MonoBehaviour
+public class SSAudioBank : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

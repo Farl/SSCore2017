@@ -162,4 +162,4 @@ MonoBehaviour:
   animationClips:
   - {fileID: 7400000, guid: b200bbefd33442b429bf30fe2fc0b857, type: 2}
   - {fileID: 7400000, guid: 66b3bfb41660dd948a0fbd2e006d3d05, type: 2}
-  slider: 0
+  slider: 1

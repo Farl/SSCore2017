@@ -14,6 +14,7 @@ namespace SS
 
         PlayableGraph playableGraph;
         AnimatorPlayableComponent apComp;
+        AnimatorPlayableComponent.PlayMode playMode;
         float crossfadeTime = 0.3f;
 
         [MenuItem("Tools/SS/Animator Playable Editor")]
@@ -26,6 +27,7 @@ namespace SS
         private void OnGUI()
         {
             EditorGUILayout.ObjectField(new GUIContent("Target"), apComp, typeof(AnimatorPlayableComponent), false);
+            playMode = (AnimatorPlayableComponent.PlayMode)EditorGUILayout.EnumPopup("Play Mode", playMode);
             crossfadeTime = EditorGUILayout.FloatField("Crossfade Time", crossfadeTime);
             if (apComp)
             {
@@ -33,7 +35,7 @@ namespace SS
                 {
                     if (GUILayout.Button(clip.name))
                     {
-                        apComp.Play(clip.name, crossfadeTime);
+                        apComp.Play(clip.name, crossfadeTime, playMode);
                     }
                 }
 

@@ -16,6 +16,12 @@ namespace SS
         private Animator animator;
         private AnimationMixerPlayable weightMixer;
 
+        public enum PlayMode
+        {
+            CrossFade,
+            Once
+        }
+
         public List<AnimationClip> animationClips = new List<AnimationClip>();
 
         private void Awake()
@@ -36,12 +42,7 @@ namespace SS
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                animator.playableGraph.Play();
-            }
-
-            if (weightMixer.IsValid())
+            if (weightMixer.IsValid() && weightMixer.GetInputWeight(1) != slider)
             {
                 weightMixer.SetInputWeight(1, slider);
                 weightMixer.SetInputWeight(0, 1-slider);
@@ -118,7 +119,7 @@ namespace SS
             return controllerPlayable;
         }
 
-        public void Play(string animName, float xfadeTime = 0.3f)
+        public void Play(string animName, float xfadeTime = 0.3f, PlayMode playMode = PlayMode.CrossFade)
         {
             var clip = animationClips.Find(x => x != null && x.name == animName);
 
@@ -128,22 +129,10 @@ namespace SS
             if (!weightMixer.IsValid())
                 return;
 
-            var coroutine = StartCoroutine(CrossFade(clip, xfadeTime));
+            var coroutine = StartCoroutine(CrossFade(playMode, clip, xfadeTime));
         }
 
-        [ContextMenu("Play 0")]
-        void Play0()
-        {
-            Play(0);
-        }
-
-        [ContextMenu("Play 1")]
-        void Play1()
-        {
-            Play(1);
-        }
-
-        public void Play(int animIdx, float xfadeTime = 0.3f)
+        public void Play(int animIdx, float xfadeTime = 0.3f, PlayMode playMode = PlayMode.CrossFade)
         {
             if (animIdx < 0 || animIdx >= animationClips.Count)
                 return;
@@ -156,10 +145,10 @@ namespace SS
             if (!weightMixer.IsValid())
                 return;
 
-            var coroutine = StartCoroutine(CrossFade(clip, xfadeTime));
+            var coroutine = StartCoroutine(CrossFade(playMode, clip, xfadeTime));
         }
 
-        public IEnumerator CrossFade(AnimationClip clip, float xfadeTime)
+        public IEnumerator CrossFade(PlayMode playMode, AnimationClip clip, float xfadeTime)
         {
             var originalFrom = weightMixer;
             var originalTo = weightMixer.GetInput(1);
@@ -175,9 +164,11 @@ namespace SS
             playableGraph.Connect(newMixer, 0, originalFrom, 1);
             playableGraph.Connect(originalTo, 0, newMixer, 0);
 
+            // Create clip playable
             var clipPlayable = AnimationClipPlayable.Create(playableGraph, clip);
             playableGraph.Connect(clipPlayable, 0, newMixer, 1);
 
+            // Fade in
             var time = xfadeTime;
             while (xfadeTime > 0 && time > 0)
             {
@@ -196,6 +187,34 @@ namespace SS
             newMixer.SetInputWeight(0, 0);
             newMixer.SetInputWeight(1, 1);
 
+            // Play clip
+            if (playMode == PlayMode.Once)
+            {
+                while (clipPlayable.GetTime() < clip.length)
+                {
+                    yield return null;
+                }
+
+                // Fade out
+                time = xfadeTime;
+                while (xfadeTime > 0 && time > 0)
+                {
+                    var weight = time / xfadeTime;
+
+                    newMixer.SetInputWeight(0, 1 - weight);
+                    newMixer.SetInputWeight(1, weight);
+
+                    if (animator.updateMode == AnimatorUpdateMode.UnscaledTime)
+                        time -= Time.unscaledDeltaTime;
+                    else
+                        time -= Time.deltaTime;
+
+                    yield return null;
+                }
+                newMixer.SetInputWeight(0, 1);
+                newMixer.SetInputWeight(1, 0);
+            }
+
             var currFrom = newMixer.GetOutput(0);
             var currFromIdx = 0;
             for (var i = 0; i < currFrom.GetInputCount(); i++)
@@ -203,7 +222,9 @@ namespace SS
                 if (currFrom.GetInput(i).Equals(newMixer))
                     currFromIdx = i;
             }
-            var currTo = newMixer.GetInput(1);
+            var currTo = (playMode == PlayMode.CrossFade)?
+                newMixer.GetInput(1):
+                newMixer.GetInput(0);
 
             // Disconnect
             currFrom.DisconnectInput(currFromIdx);

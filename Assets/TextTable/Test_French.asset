@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe119c93b76566e49ad239bd3d4c6279, type: 3}
+  m_Name: Test_French
+  m_EditorClassIdentifier: 
+  referenceFileGUIDs:
+  - 377a9d0aa7291a14b8ec2f55c152b3eb
+  packageName: Test
+  isGlobal: 0
+  language: 14
+  Value:
+  - textID: Test
+    speaker: 
+    type: 
+    text: Test
+  - textID: UI_Confirm
+    speaker: 
+    type: 
+    text: Confirm

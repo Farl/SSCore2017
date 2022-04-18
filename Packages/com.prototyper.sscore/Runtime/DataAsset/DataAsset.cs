@@ -29,23 +29,6 @@ namespace SS
 		
 		private static T instance;
 
-        static void CheckParentFolderRecursive(DirectoryInfo directoryInfo, string projectPath)
-        {
-            //Debug.Log(directoryInfo);
-            if (directoryInfo == null || string.IsNullOrEmpty(directoryInfo.ToString()))
-                return;
-
-            if (!Directory.Exists(directoryInfo.ToString()))
-            {
-                var parentDirectoryInfo = directoryInfo.Parent;
-                CheckParentFolderRecursive(parentDirectoryInfo, projectPath);
-                var parentPath = parentDirectoryInfo.ToString().Replace(projectPath, "").TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-
-                //Debug.Log($"{parentPath} create {directoryInfo.Name}");
-                AssetDatabase.CreateFolder(parentPath, directoryInfo.Name);
-            }
-
-        }
 
         static void OnLoadComplete(T loadedInst)
         {
@@ -62,9 +45,8 @@ namespace SS
                 instance = ResourceSystem.CreateInstance<T>();
 
 #if UNITY_EDITOR
-                var projectPath = (new DirectoryInfo(Application.dataPath)).Parent.ToString();
-                string properPath = Path.Combine(projectPath, "Assets", mainFolder, subFolderName);
-                CheckParentFolderRecursive(new DirectoryInfo(properPath), projectPath);
+                string properPath = Path.Combine(DirectoryUtility.ProjectPath, "Assets", mainFolder, subFolderName);
+                DirectoryUtility.CheckParentFolderRecursive(new DirectoryInfo(properPath));
 
                 string fullPathWithoutExt = Path.Combine("Assets", mainFolder, subFolderName, settingsAssetName);
 

@@ -4,115 +4,113 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using SS;
 
 // Create a new type of Settings Asset.
-class MyCustomSettings : ScriptableObject
+class MyCustomSettings : SettingObject<MyCustomSettings>
 {
-    public const string k_MyCustomSettingsPath = "Assets/Editor/MyCustomSettings.asset";
-
     [SerializeField]
     private int m_Number;
 
     [SerializeField]
     private string m_SomeString;
 
-    internal static MyCustomSettings GetOrCreateSettings()
+    protected override void OnCreate()
     {
-        var settings = AssetDatabase.LoadAssetAtPath<MyCustomSettings>(k_MyCustomSettingsPath);
-        if (settings == null)
-        {
-            settings = ScriptableObject.CreateInstance<MyCustomSettings>();
-            settings.m_Number = 42;
-            settings.m_SomeString = "The answer to the universe";
-            AssetDatabase.CreateAsset(settings, k_MyCustomSettingsPath);
-            AssetDatabase.SaveAssets();
-        }
-        return settings;
+        m_Number = 42;
+        m_SomeString = "The answer to the universe";
     }
 
-    internal static SerializedObject GetSerializedSettings()
+    [MenuItem("Test/Test Create Asset")]
+    public static void TestCreateAsset()
     {
-        return new SerializedObject(GetOrCreateSettings());
-    }
-}
+        var path = $"Assets/Test/Test/Test/Test.asset";
+        var so = ScriptableObject.CreateInstance<MyCustomSettings>();
+        DirectoryUtility.CheckAndCreateDirectory(path);
 
-// Register a SettingsProvider using IMGUI for the drawing framework:
-static class MyCustomSettingsIMGUIRegister
-{
+        AssetDatabase.CreateAsset(so, path);
+    }
+
+    // Register a SettingsProvider using IMGUI for the drawing framework:
     [SettingsProvider]
     public static SettingsProvider CreateMyCustomSettingsProvider()
     {
-        // First parameter is the path in the Settings window.
-        // Second parameter is the scope of this setting: it only appears in the Project Settings window.
-        var provider = new SettingsProvider("Project/MyCustomIMGUISettings", SettingsScope.Project)
+        return SettingIMGUIRegister.Register<MyCustomSettings>("Custom Setting", new HashSet<string>(new[] { "Number", "Some String" }));
+    }
+}
+
+namespace SS
+{
+    public abstract class SettingObject<T> : ScriptableObject where T : SettingObject<T>
+    {
+        protected static string path { get { return $"Assets/Settings/Resources/{typeof(T).ToString()}.asset"; } }
+        protected abstract void OnCreate();
+
+        public static T GetOrCreateSettings()
         {
-            // By default the last token of the path is used as display name if no label is provided.
-            label = "Custom IMGUI",
-            // Create the SettingsProvider and initialize its drawing (IMGUI) function in place:
-            guiHandler = (searchContext) =>
+            T settings = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (settings == null)
             {
-                var settings = MyCustomSettings.GetSerializedSettings();
-                EditorGUILayout.PropertyField(settings.FindProperty("m_Number"), new GUIContent("My Number"));
-                EditorGUILayout.PropertyField(settings.FindProperty("m_SomeString"), new GUIContent("My String"));
-                settings.ApplyModifiedProperties();
-            },
+                settings = ScriptableObject.CreateInstance<T>();
+                settings.OnCreate();
 
-            // Populate the search keywords to enable smart search filtering and label highlighting:
-            keywords = new HashSet<string>(new[] { "Number", "Some String" })
-        };
+                DirectoryUtility.CheckAndCreateDirectory(path);
+                AssetDatabase.CreateAsset(settings, path);
 
-        return provider;
-    }
-}
-/*
-// Create MyCustomSettingsProvider by deriving from SettingsProvider:
-class MyCustomSettingsProvider : SettingsProvider
-{
-    private SerializedObject m_CustomSettings;
+                AssetDatabase.SaveAssets();
+            }
+            return settings;
+        }
 
-    class Styles
-    {
-        public static GUIContent number = new GUIContent("My Number");
-        public static GUIContent someString = new GUIContent("Some string");
-    }
-
-    const string k_MyCustomSettingsPath = "Assets/Editor/MyCustomSettings.asset";
-    public MyCustomSettingsProvider(string path, SettingsScope scope = SettingsScope.User)
-        : base(path, scope) { }
-
-    public static bool IsSettingsAvailable()
-    {
-        return File.Exists(k_MyCustomSettingsPath);
-    }
-
-    public override void OnActivate(string searchContext, VisualElement rootElement)
-    {
-        // This function is called when the user clicks on the MyCustom element in the Settings window.
-        m_CustomSettings = MyCustomSettings.GetSerializedSettings();
-    }
-
-    public override void OnGUI(string searchContext)
-    {
-        // Use IMGUI to display UI:
-        EditorGUILayout.PropertyField(m_CustomSettings.FindProperty("m_Number"), Styles.number);
-        EditorGUILayout.PropertyField(m_CustomSettings.FindProperty("m_SomeString"), Styles.someString);
-    }
-
-    // Register the SettingsProvider
-    [SettingsProvider]
-    public static SettingsProvider CreateMyCustomSettingsProvider()
-    {
-        if (IsSettingsAvailable())
+        protected static SerializedObject GetSerializedSettings()
         {
-            var provider = new MyCustomSettingsProvider("Project/MyCustomSettingsProvider", SettingsScope.Project);
+            return new SerializedObject(GetOrCreateSettings());
+        }
+    }
 
-            // Automatically extract all keywords from the Styles.
-            provider.keywords = GetSearchKeywordsFromGUIContentProperties<Styles>();
+    public static class SettingIMGUIRegister
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keywords">Populate the search keywords to enable smart search filtering and label highlighting:</param>
+        public static SettingsProvider Register<T>(string label = null, HashSet<string> keywords = null) where T : SettingObject<T>
+        {
+            // First parameter is the path in the Settings window.
+            // Second parameter is the scope of this setting: it only appears in the Project Settings window.
+            var provider = new SettingsProvider($"Project/{typeof(T).ToString()}", SettingsScope.Project)
+            {
+                // By default the last token of the path is used as display name if no label is provided.
+                label = label,
+
+                // Create the SettingsProvider and initialize its drawing (IMGUI) function in place:
+                guiHandler = (searchContext) =>
+                {
+                    SerializedObject settings = null;
+
+                    var t = typeof(T);
+                    var mi = t.GetMethod("GetSerializedSettings", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.FlattenHierarchy);
+                    if (mi != null)
+                    {
+                        settings = (SerializedObject)mi.Invoke(null, null);
+
+                        var itr = settings.GetIterator();
+                        if (itr.Next(true)) // first element
+                        {
+                            do
+                            {
+                                EditorGUILayout.PropertyField(itr);
+                            }
+                            while (itr.NextVisible(false));
+                        }
+
+                        settings.ApplyModifiedProperties();
+                    }
+                },
+
+                keywords = keywords
+            };
             return provider;
         }
-
-        // Settings Asset doesn't exist yet; no need to display anything in the Settings window.
-        return null;
     }
 }
-*/

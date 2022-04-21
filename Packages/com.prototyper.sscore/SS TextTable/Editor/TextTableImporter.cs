@@ -53,7 +53,7 @@ namespace SS
             if (importedAssets.Length <= 0)
                     return;
 
-            Debug.Log($"Start to process {importedAssets.Length} assets");
+            //Debug.Log($"Start to process {importedAssets.Length} assets");
 
             foreach (var importedAsset in importedAssets)
             {
@@ -79,7 +79,8 @@ namespace SS
 
             if (importedAsset.IndexOf("TextTable", System.StringComparison.InvariantCultureIgnoreCase) >= 0)
             {
-
+                var packageCreated = false;
+                var importedGUID = AssetDatabase.GUIDFromAssetPath(importedAsset).ToString();
                 var spreadSheet = new SpreadSheet();
 
                 spreadSheet.Load(importedAsset);
@@ -220,13 +221,20 @@ namespace SS
                     foreach (var kvp in textPackages)
                     {
                         var tp = kvp.Value;
-                        AssetDatabase.CreateAsset(tp, Path.Combine(outputPath, $"{tp.fileName}.asset"));
+                        var path = Path.Combine(outputPath, $"{tp.fileName}.asset");
+                        AssetDatabase.CreateAsset(tp, path);
+                        tp.AddGUID(importedGUID);
+                        packageCreated = true;
+
                     }
                 }
-
-
-
                 spreadSheet.Clear();
+
+                if (packageCreated)
+                {
+                    TextTableSettings.Instance.Add(importedGUID, importedAsset);
+                    AssetDatabase.Refresh();
+                }
             }
         }
 

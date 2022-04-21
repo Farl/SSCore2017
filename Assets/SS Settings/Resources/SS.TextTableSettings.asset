@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fd82f9dce2ff4f4cb94ca475da3b6ab, type: 3}
-  m_Name: MyCustomSettings
+  m_Script: {fileID: 11500000, guid: db7b9598481365247b2abaff298ea1c8, type: 3}
+  m_Name: SS.TextTableSettings
   m_EditorClassIdentifier: 
-  m_Number: 99
-  m_SomeString: The answer to the universe
+  dataList:
+  - guid: 377a9d0aa7291a14b8ec2f55c152b3eb
+    cacheName: Assets/TextTable/Test.xlsx

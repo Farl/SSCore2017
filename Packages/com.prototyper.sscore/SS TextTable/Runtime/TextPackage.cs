@@ -26,6 +26,18 @@ namespace SS
 
         public List<TextTableData> Value = new List<TextTableData>();
 
+        public void AddGUID(string guid)
+        {
+            if (referenceFileGUIDs.Contains(guid))
+                return;
+            referenceFileGUIDs.Add(guid);
+        }
+
+        public void RemoveGUID(string guid)
+        {
+            referenceFileGUIDs.Remove(guid);
+        }
+
         public void OnBeforeSerialize()
         {
             Value.Clear();

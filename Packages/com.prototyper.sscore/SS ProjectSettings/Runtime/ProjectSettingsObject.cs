@@ -72,7 +72,14 @@ namespace SS
                 return _instance;
             }
         }
-        #endregion
+
+#if UNITY_EDITOR
+        protected static SettingsProvider RegisterSettingsProvider(string label = null, HashSet<string> keywords = null)
+        {
+            return ProjectSettingsUI.Register<T>(label, keywords);
+        }
+#endif
+#endregion
 
     }
 }

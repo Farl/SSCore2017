@@ -31,8 +31,8 @@ class MyCustomSettings : ProjectSettingsObject<MyCustomSettings>
     [SettingsProvider]
     public static SettingsProvider CreateSettingsProvider()
     {
-        //return ProjectSettingsUI.Register<MyCustomSettings>("Custom Setting", new HashSet<string>(new[] { "Number", "Some String" }));
-        return ProjectSettingsUI.Register<MyCustomSettings>(label: null, searchKeywords: null);
+        //return RegisterSettingsProvider("Custom Setting", new HashSet<string>(new[] { "Number", "Some String" }));
+        return RegisterSettingsProvider(label: null, keywords: null);
     }
 #endif
 }

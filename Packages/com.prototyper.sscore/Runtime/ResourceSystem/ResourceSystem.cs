@@ -20,15 +20,22 @@ namespace SS
             {
                 asyncOpHandle = h;
             }
+
+            public bool IsDone => (asyncOpHandle.IsValid()) ? asyncOpHandle.IsDone : false;
         }
-        public static OperationHandle Load<T>(AssetReference assetRef, System.Action<T> onComplete) where T : UnityEngine.Object
+        public static OperationHandle Load<T>(AssetReference assetRef, System.Action<T> onComplete = null) where T : UnityEngine.Object
         {
             AsyncOperationHandle<T> ao = Addressables.LoadAssetAsync<T>(assetRef);
-            ao.Completed += (x) => { onComplete?.Invoke(x.Result); };
+            if (onComplete != null)
+            {
+                ao.Completed += (x) => {
+                    onComplete?.Invoke(x.Result);
+                };
+            }
             return new OperationHandle(ao);
         }
 
-        public static OperationHandle Load<T>(string resourceName, System.Action<T> onComplete) where T : UnityEngine.Object
+        public static OperationHandle Load<T>(string resourceName, System.Action<T> onComplete = null) where T : UnityEngine.Object
         {
             //return Resources.Load<T>(resourceName);
 

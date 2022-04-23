@@ -6,6 +6,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 namespace SS
 {
@@ -28,7 +29,7 @@ namespace SS
         private Transform _sceneButtonRoot;
 
         [SerializeField]
-        private GameObject _stageButtonTemplate;
+        private GameObject _buttonListButtonTemplate;
         private Transform _stageButtonRoot;
 
         bool debugMenuShow = false;
@@ -77,33 +78,32 @@ namespace SS
             World.RegisterOnGUI(DrawGUI, this);
         }
 
-        // stage buttons
-        public void CreateStageButtons(List<Stage> stages)
+        public GameObject CreateButtonList()
         {
-            if (stages != null && _stageButtonTemplate)
+            // TODO: create a new root
+            _stageButtonRoot = _buttonListButtonTemplate.transform.parent;
+            _buttonListButtonTemplate.SetActive(false);
+            return _buttonListButtonTemplate;
+        }
+
+        public void AddButtonListButton(GameObject template, Action onButtonClick, string displayText)
+        {
+            // TODO: 
+            var go = Instantiate(_buttonListButtonTemplate, _stageButtonRoot);
+            UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
+            if (button)
             {
-                _stageButtonRoot = _stageButtonTemplate.transform.parent;
-                _stageButtonTemplate.SetActive(false);
-                foreach (var stage in stages)
+                button.onClick.AddListener(() =>
                 {
-                    var id = stage.name;
-                    GameObject go = Instantiate(_stageButtonTemplate, _stageButtonRoot);
-                    UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
-                    if (button)
-                    {
-                        button.onClick.AddListener(() =>
-                        {
-                            StageSystem.SetNextStage(id);
-                        });
-                    }
-                    UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
-                    if (text)
-                    {
-                        text.text = id;
-                    }
-                    go.SetActive(true);
-                }
+                    onButtonClick();
+                });
             }
+            UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
+            if (text)
+            {
+                text.text = displayText;
+            }
+            go.SetActive(true);
         }
 
         protected override void OnDestroy()

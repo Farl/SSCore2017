@@ -62,14 +62,7 @@ namespace SS
             }
         }
 
-        private static string outputPath
-        {
-            get
-            {
-                return "Assets/TextTable";
-            }
-        }
-
+        private static string outputPath => TextTableSettings.Instance.assetPath;
 
         private static void Import(string importedAsset)
         {
@@ -222,6 +215,7 @@ namespace SS
                     {
                         var tp = kvp.Value;
                         var path = Path.Combine(outputPath, $"{tp.fileName}.asset");
+                        DirectoryUtility.CheckAndCreateDirectory(path);
                         AssetDatabase.CreateAsset(tp, path);
                         tp.AddGUID(importedGUID);
                         packageCreated = true;

@@ -13,6 +13,9 @@ namespace SS
 {
     public static class ResourceSystem
     {
+        private static Dictionary<string, OperationHandle> resourceMap = new Dictionary<string, OperationHandle>();
+        private static HashSet<AssetReference> assetReferences = new HashSet<AssetReference>();
+
         public class OperationHandle
         {
             private AsyncOperationHandle asyncOpHandle;
@@ -22,6 +25,17 @@ namespace SS
             }
 
             public bool IsDone => (asyncOpHandle.IsValid()) ? asyncOpHandle.IsDone : false;
+
+            public void Unload()
+            {
+                if (IsDone)
+                    Addressables.Release(asyncOpHandle);
+            }
+
+            public T Result<T>()
+            {
+                return (T)asyncOpHandle.Result;
+            }
         }
         public static OperationHandle Load<T>(AssetReference assetRef, System.Action<T> onComplete = null) where T : UnityEngine.Object
         {
@@ -32,6 +46,8 @@ namespace SS
                     onComplete?.Invoke(x.Result);
                 };
             }
+            if (!assetReferences.Contains(assetRef))
+                assetReferences.Add(assetRef);
             return new OperationHandle(ao);
         }
 
@@ -39,15 +55,42 @@ namespace SS
         {
             //return Resources.Load<T>(resourceName);
 
-            AsyncOperationHandle<T> ao = Addressables.LoadAssetAsync<T>(resourceName);
 
-            ao.Completed += (x) => { onComplete?.Invoke(x.Result); };
-            return new OperationHandle(ao);
+            if (resourceMap.ContainsKey(resourceName))
+            {
+                var oh = resourceMap[resourceName];
+                onComplete?.Invoke(oh.Result<T>());
+                return oh;
+            }
+            else
+            {
+                AsyncOperationHandle<T> ao = Addressables.LoadAssetAsync<T>(resourceName);
+                ao.Completed += (x) => { onComplete?.Invoke(x.Result); };
+                return new OperationHandle(ao);
+            }
         }
 
         public static T CreateInstance<T>() where T: ScriptableObject
         {
             return ScriptableObject.CreateInstance<T>();
+        }
+
+        public static void Unload<T>(T obj)
+        {
+            Addressables.Release<T>(obj);
+        }
+
+        public static void Unload(string resourceName)
+        {
+            if (resourceMap.TryGetValue(resourceName, out var oh))
+            {
+                oh.Unload();
+            }
+        }
+
+        public static void Unload<T>(OperationHandle oh)
+        {
+            oh.Unload();
         }
 
         public static void CreateAsset<T>(T obj, string fullPathWithoutExt, string ext) where T: Object

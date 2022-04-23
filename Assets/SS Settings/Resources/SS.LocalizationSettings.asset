@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7b9598481365247b2abaff298ea1c8, type: 3}
-  m_Name: SS.TextTableSettings
+  m_Script: {fileID: 11500000, guid: 204ba33c8a0a90143ad67627f08f32b4, type: 3}
+  m_Name: SS.LocalizationSettings
   m_EditorClassIdentifier: 
-  assetPath: Assets/TextTable/Resources/
-  defaultPackages:
-  - Test
-  - Test2
-  dataList:
-  - guid: 377a9d0aa7291a14b8ec2f55c152b3eb
-    cacheName: Assets/TextTable/Test.xlsx
+  textSupportedLanguage: 0a0000002900000016000000
+  audioSupportedLanguage: 0a00000016000000

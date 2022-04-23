@@ -113,4 +113,62 @@ public static class SerializedPropertyUtility
 			enm.MoveNext();
 		return enm.Current;
 	}
+
+	// Ref: https://answers.unity.com/questions/1347203/a-smarter-way-to-get-the-type-of-serializedpropert.html
+	public static object GetValue(this SerializedProperty property)
+	{
+		System.Type parentType = property.serializedObject.targetObject.GetType();
+		System.Reflection.FieldInfo fi = parentType.GetFieldViaPath(property.propertyPath);
+		return fi.GetValue(property.serializedObject.targetObject);
+	}
+
+	// Ref: https://answers.unity.com/questions/1347203/a-smarter-way-to-get-the-type-of-serializedpropert.html
+	public static void SetValue(this SerializedProperty property, object value)
+	{
+		System.Type parentType = property.serializedObject.targetObject.GetType();
+		System.Reflection.FieldInfo fi = parentType.GetFieldViaPath(property.propertyPath);//this FieldInfo contains the type.
+		fi.SetValue(property.serializedObject.targetObject, value);
+	}
+
+	// Ref: https://answers.unity.com/questions/1347203/a-smarter-way-to-get-the-type-of-serializedpropert.html
+	public static System.Type GetType(SerializedProperty property)
+	{
+		System.Type parentType = property.serializedObject.targetObject.GetType();
+		System.Reflection.FieldInfo fi = parentType.GetFieldViaPath(property.propertyPath);
+		return fi.FieldType;
+	}
+
+	// Ref: https://answers.unity.com/questions/1347203/a-smarter-way-to-get-the-type-of-serializedpropert.html
+	public static System.Reflection.FieldInfo GetFieldViaPath(this System.Type type, string path)
+	{
+		System.Type parentType = type;
+		System.Reflection.FieldInfo fi = type.GetField(path);
+		string[] perDot = path.Split('.');
+		foreach (string fieldName in perDot)
+		{
+			// Support array and list
+			if (fieldName == "Array")
+				continue;
+			if (fieldName.StartsWith("data["))
+            {
+				var arrayElementType = parentType.GetElementType();
+				if (arrayElementType == null && parentType.IsGenericType)
+                {
+					// Ref: https://stackoverflow.com/questions/1043755/c-sharp-generic-list-t-how-to-get-the-type-of-t
+					parentType = parentType.GetGenericArguments()[0];
+                }
+            }
+			else
+			{
+				fi = parentType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+				if (fi != null)
+					parentType = fi.FieldType;
+				else
+					return null;
+			}
+		}
+		if (fi != null)
+			return fi;
+		else return null;
+	}
 }

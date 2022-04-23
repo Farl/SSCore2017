@@ -20,11 +20,22 @@ namespace SS
             {
                 var ts = TextTableSettings.Instance;
                 var so = new SerializedObject(ts);
-                EditorGUILayout.PropertyField(so.FindProperty("dataList"));
+
+                // Draw everthing
+                var itr = so.GetIterator();
+                if (itr.Next(true))
+                {
+                    while (itr.Next(false))
+                    {
+                        EditorGUILayout.PropertyField(itr);
+                    }
+                }
+                //EditorGUILayout.PropertyField(so.FindProperty("dataList"));
             }
             else
             {
                 // Don't try to create when in Runtime
+                EditorGUILayout.HelpBox("Application.isPlaying", MessageType.Warning);
             }
         }
     }

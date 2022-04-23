@@ -15,6 +15,28 @@ namespace SS
 
         private static StageSystem _instance;
 
+        private void CreateStageButtons()
+        {
+            if (!DebugMenu.Instance)
+                return;
+
+            if (stages != null)
+            {
+                var templateGO = DebugMenu.Instance.CreateButtonList();
+                foreach (var stage in stages)
+                {
+                    var id = stage.name;
+
+                    DebugMenu.Instance.AddButtonListButton(templateGO, () =>
+                    {
+
+                    },
+                    id);
+                }
+            }
+        }
+
+
         public override void OnInit()
         {
             base.OnInit();
@@ -23,10 +45,8 @@ namespace SS
             {
                 _instance = this;
 
-                if (DebugMenu.Instance)
-                {
-                    DebugMenu.Instance.CreateStageButtons(stages);
-                }
+                // Create debug menu
+                CreateStageButtons();
 
                 foreach (var stage in stages)
                 {

@@ -41,6 +41,10 @@ namespace SS
         }
         public static void CheckAndCreateDirectory(string path)
         {
+            if (!path.StartsWith("Assets/"))
+            {
+                Debug.LogError($"Path shoud start with Assets/. ({path})");
+            }
             CheckParentFolderRecursive(new DirectoryInfo(path));
         }
     }

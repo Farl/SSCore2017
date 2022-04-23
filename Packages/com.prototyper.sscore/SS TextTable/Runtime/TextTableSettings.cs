@@ -15,9 +15,14 @@ namespace SS
         [Serializable]
         public class Data
         {
+            [Guid]
             public string guid;
             public string cacheName;
         }
+
+        public string assetPath = "Assets/TextTable/Resources/";
+
+        public List<string> defaultPackages = new List<string>();
 
         [SerializeField]
         private List<Data> dataList = new List<Data>();
@@ -65,14 +70,11 @@ namespace SS
             dataMap.Clear();
             foreach (var d in dataList)
             {
-                if (dataMap.ContainsKey(d.guid))
+                while (dataMap.ContainsKey(d.guid))
                 {
-                    Debug.LogError($"Duplicate GUID {d.guid}");
+                    d.guid = $"Undefined ({d.guid})";
                 }
-                else
-                {
-                    dataMap.Add(d.guid, d);
-                }
+                dataMap.Add(d.guid, d);
             }
         }
 

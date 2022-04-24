@@ -93,15 +93,15 @@ namespace SS
             oh.Unload();
         }
 
-        public static void CreateAsset<T>(T obj, string fullPathWithoutExt, string ext) where T: Object
+        public static void CreateAsset<T>(T obj, string fullPath) where T: Object
         {
 #if UNITY_EDITOR
-            string groupName = System.IO.Path.GetDirectoryName(fullPathWithoutExt).Replace('/', '-').Replace('\\', '-');
+            string groupName = System.IO.Path.GetDirectoryName(fullPath).Replace('/', '-').Replace('\\', '-');
 
-            AssetDatabase.CreateAsset(obj, fullPathWithoutExt);
-            var guid = AssetDatabase.AssetPathToGUID(fullPathWithoutExt);
+            AssetDatabase.CreateAsset(obj, fullPath);
+            var guid = AssetDatabase.AssetPathToGUID(fullPath);
 
-            Debug.Log(fullPathWithoutExt + " " + guid);
+            //Debug.Log(fullPath + " " + guid);
 
             var settings = AddressableAssetSettingsDefaultObject.Settings;
             List<AddressableAssetGroupSchema> schemas = new List<AddressableAssetGroupSchema>()
@@ -112,8 +112,10 @@ namespace SS
 
             AddressableAssetGroup group = settings.FindGroup(groupName);
             if (group == null)
-                settings.CreateGroup(groupName, false, false, false, schemas,
-                typeof(UnityEditor.AddressableAssets.Settings.AddressableAssetGroupSchema));
+            {
+                group = settings.CreateGroup(groupName, false, false, false, schemas,
+                  typeof(UnityEditor.AddressableAssets.Settings.AddressableAssetGroupSchema));
+            }
             settings.CreateOrMoveEntry(guid, group);
 #endif
         }

@@ -30,7 +30,7 @@ namespace SS
 #if UNITY_EDITOR
             return "MSJH.ttc";
 #elif UNITY_ANDROID
-            return "Roboto";
+            return "NotoSansCJK";
 #elif UNITY_IOS
             return "SF Pro";
 #else
@@ -50,6 +50,7 @@ namespace SS
             foreach (var fp in fontPaths)
             {
                 fontNames.Add(fp);
+                Debug.Log(fp);
             }
             var fontPath = fontNames.Find((x) =>
             {
@@ -84,7 +85,8 @@ namespace SS
                 if (_osDefaultFontAsset != null &&
                     !textCompPro.font.fallbackFontAssetTable.Contains(_osDefaultFontAsset))
                 {
-                    textCompPro.font.fallbackFontAssetTable.Insert(0, _osDefaultFontAsset);
+                    Debug.LogError($"Font {_osDefaultFontAsset.name}");
+                    textCompPro.font.fallbackFontAssetTable.Add(_osDefaultFontAsset);
                 }
             }
 
@@ -109,7 +111,7 @@ namespace SS
             string result = null;
             if (!TextTable.TryGetText(textID, out result))
             {
-                result = $"[textID]";
+                result = $"[{textID}]";
             }
 
             if (textCompPro != null)

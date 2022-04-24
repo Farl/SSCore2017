@@ -47,11 +47,17 @@ namespace SS
                     return _instance;
 
                 // Get
+                if (!Application.isPlaying)
+                {
 #if UNITY_EDITOR
-                _instance = AssetDatabase.LoadAssetAtPath<T>(path);
-#else
-                _instance = Resources.Load<T>(path);
+                    _instance = AssetDatabase.LoadAssetAtPath<T>(path);
 #endif
+                }
+                else
+                {
+                    _instance = Resources.Load<T>(resourceName);
+                }
+
                 if (_instance == null)
                 {
                     // Create

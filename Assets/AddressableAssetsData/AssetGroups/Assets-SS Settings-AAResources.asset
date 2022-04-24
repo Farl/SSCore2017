@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Assets-SSTest-AAResources
+  m_Name: Assets-SS Settings-AAResources
   m_EditorClassIdentifier: 
-  m_GroupName: Assets-SSTest-AAResources
+  m_GroupName: Assets-SS Settings-AAResources
   m_Data:
     m_SerializedData: []
-  m_GUID: 0eb677a4dffc052439e3127e7fc41565
+  m_GUID: 6ba4d0621d255c7468449770637ba709
   m_SerializeEntries:
-  - m_GUID: 317aac975b54349438f2023df39926d7
-    m_Address: Assets/SSTest/AAResources/RuntimePlayerSettings.asset
+  - m_GUID: e60cf288841116d429a328fae4fd0d72
+    m_Address: Assets/SS Settings/AAResources/RuntimePlayerSettings.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: db37b2c01ed566e439dfa0269ddb0887, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 4cd449f12cb72804797812e70dec1788, type: 2}
-    - {fileID: 11400000, guid: 1ef88c51929866043a5265f763e11a9d, type: 2}
-    - {fileID: 11400000, guid: 711904dd51172e845bc3734e684afe13, type: 2}
+    - {fileID: 11400000, guid: 2fd9b67998197e64a9ebd092a04da1d8, type: 2}
+    - {fileID: 11400000, guid: fcf65907307cc7c47a7e3e5ad553969d, type: 2}
+    - {fileID: 11400000, guid: c7be908051e86864799752e15f384c1a, type: 2}

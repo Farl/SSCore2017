@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,40 +22,35 @@ namespace SS
 				return className.Substring(className.LastIndexOf(".") + 1) + settingsAssetExtension;
 			}
 		}
-        const string mainFolder = "SSTest";
-        const string subFolderName = "AAResources";
-		const string settingsParentPath = "Assets" + "/" + mainFolder;
-		const string settingsPath = mainFolder + "/" + subFolderName;
-		const string settingsAssetExtension = ".asset";
-		
-		private static T instance;
 
-
-        static void OnLoadComplete(T loadedInst)
+		private static string settingsPath
         {
-            if (loadedInst != null)
+            get { return DataAssetSettings.Instance.settingPath; }
+        }
+		const string settingsAssetExtension = ".asset";
+        private static string fullPath => $"{settingsPath}/{settingsAssetName}";    // Unity use '/'
+
+        public static bool IsLoading
+        {
+            get
             {
-                if (instance != null)
+                return isLoading.Contains(typeof(T));
+            }
+            private set
+            {
+                if (value)
                 {
-                    instance = loadedInst;
+                    if (!isLoading.Contains(typeof(T)))
+                        isLoading.Add(typeof(T));
+                }
+                else
+                {
+                    isLoading.Remove(typeof(T));
                 }
             }
-            if (instance == null)
-            {
-                // If not found, autocreate the asset object.
-                instance = ResourceSystem.CreateInstance<T>();
-
-#if UNITY_EDITOR
-                string properPath = Path.Combine(DirectoryUtility.ProjectPath, "Assets", mainFolder, subFolderName);
-                DirectoryUtility.CheckParentFolderRecursive(new DirectoryInfo(properPath));
-
-                string fullPathWithoutExt = Path.Combine("Assets", mainFolder, subFolderName, settingsAssetName);
-
-                ResourceSystem.CreateAsset(instance, fullPathWithoutExt, settingsAssetExtension);
-#endif
-            }
         }
-
+        private static HashSet<Type> isLoading = new HashSet<Type>();
+        private static T instance = null;
 
         public static T Instance
 		{
@@ -62,20 +58,41 @@ namespace SS
 			{
 				if (instance == null)
 				{
-#if UNITY_EDITOR
-                    string fullPath = Path.Combine(Path.Combine("Assets", settingsPath),
-                                                   settingsAssetName + settingsAssetExtension
-                                                   );
-                    instance = AssetDatabase.LoadAssetAtPath<T>(fullPath);
-
-                    // Create if doesn't exist
-                    if (instance == null)
+                    if (!Application.isPlaying)
                     {
-                        OnLoadComplete(null);
-                    }
-#else
-                    ResourceSystem.Load<T>(settingsAssetName, OnLoadComplete);
+#if UNITY_EDITOR
+                        // Load from AssetDatabase
+                        instance = AssetDatabase.LoadAssetAtPath<T>(fullPath);
+
+                        // Create if load failed
+                        if (instance == null)
+                        {
+                            instance = ScriptableObject.CreateInstance<T>();
+
+                            // Create asset with addressable group
+                            string properPath = Path.Combine(DirectoryUtility.ProjectPath, settingsPath);
+                            DirectoryUtility.CheckParentFolderRecursive(new DirectoryInfo(properPath));
+                            ResourceSystem.CreateAsset(instance, fullPath);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        // Load from ResourceSystem
+                        if (!IsLoading)
+                        {
+                            IsLoading = true;
+                            var oh = ResourceSystem.Load<T>(fullPath, (inst) =>
+                            {
+                                if (inst == null)
+                                {
+                                    Debug.LogError($"Load {typeof(T).ToString()} failed");
+                                }
+                                instance = inst;
+                                IsLoading = false;
+                            });
+                        }
+                    }
                 }
                 return instance;
 			}

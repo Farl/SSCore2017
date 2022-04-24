@@ -76,11 +76,13 @@ namespace SS
 
             var defaultPackages = TextTableSettings.Instance.defaultPackages;
             var count = defaultPackages.Count;
+
             foreach (var package in defaultPackages)
             {
                 Load(package, (oh) =>
                 {
                     count--;
+                    Debug.Log($"Load TextPackage {package} Completed.");
                     if (count <= 0)
                     {
                         // Load complete

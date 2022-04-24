@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef7207c080a54574b9bfc095d91595aa, type: 3}
-  m_Name: Assets-SSTest-AAResources_AddressableAssetGroupSchema
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Assets-SS Settings-AAResources_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 11400000, guid: 05be188da4e9b664aac6b30db7c42bdb, type: 2}
+  m_StaticContent: 0

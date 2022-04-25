@@ -68,7 +68,7 @@ namespace SS
                     if (_instance != null)
                     {
 #if UNITY_EDITOR
-                        DirectoryUtility.CheckAndCreateDirectory(path);
+                        DirectoryUtility.CheckAndCreateDirectory(path, true);
                         AssetDatabase.CreateAsset(_instance, path);
                         AssetDatabase.SaveAssets();
 #else

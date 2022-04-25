@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd82f9dce2ff4f4cb94ca475da3b6ab, type: 3}
   m_Name: MyCustomSettings
   m_EditorClassIdentifier: 
-  m_Number: 99
+  m_Number: 42
   m_SomeString: The answer to the universe

@@ -18,7 +18,7 @@ namespace SS
 
         }
 
-        public static void CheckParentFolderRecursive(DirectoryInfo directoryInfo)
+        private static void CheckParentFolderRecursive(DirectoryInfo directoryInfo)
         {
             //Debug.Log(directoryInfo);
             if (directoryInfo == null || string.IsNullOrEmpty(directoryInfo.ToString()))
@@ -32,20 +32,26 @@ namespace SS
 
                 //Debug.Log($"{parentPath} create {directoryInfo.Name}");
 #if UNITY_EDITOR
-                AssetDatabase.CreateFolder(parentPath, directoryInfo.Name);
+                if (parentPath.StartsWith("Assets/") || parentPath.StartsWith("Assets\\"))
+                    AssetDatabase.CreateFolder(parentPath, directoryInfo.Name);
+                else
+                    Directory.CreateDirectory(Path.Combine(parentPath, directoryInfo.Name));
 #else
                 Directory.CreateDirectory(Path.Combine(parentPath, directoryInfo.Name));
 #endif
             }
 
         }
-        public static void CheckAndCreateDirectory(string path)
+        public static void CheckAndCreateDirectory(string path, bool withFileName)
         {
-            if (!path.StartsWith("Assets/"))
+            if (withFileName)
             {
-                Debug.LogError($"Path shoud start with Assets/. ({path})");
+                CheckParentFolderRecursive(new DirectoryInfo(path).Parent);
             }
-            CheckParentFolderRecursive(new DirectoryInfo(path));
+            else
+            {
+                CheckParentFolderRecursive(new DirectoryInfo(path));
+            }
         }
     }
 }

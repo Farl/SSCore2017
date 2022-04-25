@@ -215,7 +215,7 @@ namespace SS
                     {
                         var tp = kvp.Value;
                         var path = Path.Combine(outputPath, $"{tp.fileName}.asset");
-                        DirectoryUtility.CheckAndCreateDirectory(path);
+                        DirectoryUtility.CheckAndCreateDirectory(path, true);
                         AssetDatabase.CreateAsset(tp, path);
                         tp.AddGUID(importedGUID);
                         packageCreated = true;

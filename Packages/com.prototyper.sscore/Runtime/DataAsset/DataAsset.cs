@@ -71,7 +71,7 @@ namespace SS
 
                             // Create asset with addressable group
                             string properPath = Path.Combine(DirectoryUtility.ProjectPath, settingsPath);
-                            DirectoryUtility.CheckParentFolderRecursive(new DirectoryInfo(properPath));
+                            DirectoryUtility.CheckAndCreateDirectory(properPath, false);
                             ResourceSystem.CreateAsset(instance, fullPath);
                         }
 #endif

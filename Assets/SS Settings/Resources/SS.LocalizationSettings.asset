@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204ba33c8a0a90143ad67627f08f32b4, type: 3}
   m_Name: SS.LocalizationSettings
   m_EditorClassIdentifier: 
-  textSupportedLanguage: 0a0000002900000016000000
+  textSupportedLanguage: 0a00000029000000160000000e000000
   audioSupportedLanguage: 0a00000016000000

@@ -1,5 +1,5 @@
 
-namespace JetGen
+namespace SS
 {
     using System.Collections.Generic;
     using UnityEngine;

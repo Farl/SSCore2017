@@ -50,19 +50,26 @@ namespace SS
             if (scenes == null || scenes.Count == 0)
             {
                 scenes = new List<string>();
-                var sceneCount = SceneManager.sceneCountInBuildSettings;
-                //Debug.LogError(sceneCount);
-                for (var i = 0; i < sceneCount; i++)
+
+                var editorScenes = EditorBuildSettings.scenes;
+
+                //var sceneArray = EditorBuildSettingsScene.GetActiveSceneList(editorScenes);
+                //var sceneCount = sceneArray.Length;
+                //Debug.Log(sceneArray.Length);
+
+                foreach (var es in editorScenes)
                 {
-                    var scene = SceneManager.GetSceneByBuildIndex(i);
-                    if (scene.IsValid())
+                    if (es.enabled)
                     {
-                        scenes.Add(scene.path);
+                        //Debug.Log(es.path);
+                        scenes.Add(es.path);
                     }
                 };
             }
-            Assert.IsFalse(scenes == null || scenes.Count == 0, "Nothing to build.");
-            if (scenes == null || scenes.Count == 0)
+            var check = scenes == null || scenes.Count == 0;
+            Assert.IsFalse(check, "Nothing to build.");
+
+            if (check)
             {
                 return;
             }
@@ -74,6 +81,7 @@ namespace SS
 
             buildPlayerOptions.target = buildTarget;
             buildPlayerOptions.options = options;
+            buildPlayerOptions.targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
 
             BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
             BuildSummary summary = report.summary;
@@ -86,6 +94,23 @@ namespace SS
             if (summary.result == BuildResult.Failed)
             {
                 Debug.Log("Build failed");
+            }
+        }
+
+        public class BuildPreprocess : IPreprocessBuildWithReport
+        {
+            public int callbackOrder => 0;
+
+            public void OnPreprocessBuild(BuildReport report)
+            {
+            }
+        }
+        public class BuildPostprocess : IPostprocessBuildWithReport
+        {
+            public int callbackOrder => 0;
+
+            public void OnPostprocessBuild(BuildReport report)
+            {
             }
         }
 

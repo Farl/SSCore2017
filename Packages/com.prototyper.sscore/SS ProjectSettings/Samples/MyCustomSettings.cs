@@ -7,6 +7,9 @@ using SS;
 using UnityEditor;
 #endif
 
+// Never used variable
+#pragma warning disable 0414
+
 // Create a new type of Settings Asset.
 class MyCustomSettings : ProjectSettingsObject<MyCustomSettings>
 {

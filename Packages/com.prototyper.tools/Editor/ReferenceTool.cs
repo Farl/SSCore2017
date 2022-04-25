@@ -19,7 +19,7 @@ public class ReferenceTool : EditorWindow
     private string replacePath;
     private string extFilters = "mat;prefab;unity;asset";
     private HashSet<string> extToggles = new HashSet<string>(new string[] { "mat", "prefab", "unity" });
-    private int sizeLimit = -1;
+    private int sizeLimit = -1; // file size check
     private int currPage;
     private int elementPerPage = 10;
 
@@ -205,6 +205,9 @@ public class ReferenceTool : EditorWindow
         extFilters = EditorGUILayout.DelayedTextField("Extension filters", extFilters);
         var exts = extFilters.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
+        // File size check
+        sizeLimit = EditorGUILayout.IntField("(TODO) File size limit", sizeLimit);
+
         if (EditorGUI.EndChangeCheck())
         {
             extToggles.Clear();
@@ -236,7 +239,7 @@ public class ReferenceTool : EditorWindow
             var assetDir = Application.dataPath;
             var assetFiles = Directory.GetFiles(assetDir, "*.*", SearchOption.AllDirectories);
 
-            var projectDir = (new DirectoryInfo(assetDir)).Parent.ToString();
+            var projectDir = (new DirectoryInfo(assetDir)).Parent.ToString().Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             var packageDir = Path.Combine(projectDir, "Packages");
             var packageFiles = Directory.GetFiles(packageDir, "*.*", SearchOption.AllDirectories);
 
@@ -262,18 +265,30 @@ public class ReferenceTool : EditorWindow
                 var modCount = Math.Max(1, matchCount / 100);
                 if (matchIdx % (modCount) == 0 && EditorUtility.DisplayCancelableProgressBar($"Scan {matchIdx}/{matchCount}", file, (float)matchIdx / matchCount))
                 {
+                    // Interrupt
                     break;
                 }
 
-                var relPath = file.Replace(projectDir, "").TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                var relPath = file.Replace(projectDir, "")
+                    .Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                    .TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
                 var guid = AssetDatabase.AssetPathToGUID(relPath);
-                var text = File.ReadAllText(file);
-                Regex regex = new Regex("guid: [0-9a-f]{32}", RegexOptions.None);
-                var matchCollection = regex.Matches(text);
-                foreach (Match m in matchCollection)
+
+                if (!string.IsNullOrEmpty(guid))
                 {
-                    var refGUID = m.Value.Replace("guid: ", string.Empty);
-                    AddReference(refGUID, guid);
+                    var text = File.ReadAllText(file);
+                    Regex regex = new Regex("guid: [0-9a-f]{32}", RegexOptions.None);
+                    var matchCollection = regex.Matches(text);
+                    foreach (Match m in matchCollection)
+                    {
+                        var refGUID = m.Value.Replace("guid: ", string.Empty);
+                        AddReference(refGUID, guid);
+                    }
+                }
+                else
+                {
+                    // Can ignore in Samples~ folder
+                    Debug.LogWarning($"{relPath} can't get GUID from AssetDatabase");
                 }
                 matchIdx++;
             }

@@ -21,6 +21,14 @@ MonoBehaviour:
     m_Address: Assets/SS Settings/AAResources/RuntimePlayerSettings.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: de444b80331a4a54ebca83698a795adf
+    m_Address: Assets/SS Settings/AAResources/DialogSettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d45de8d564fe8b8429d29a48b304946c
+    m_Address: Assets/SS Settings/AAResources/UISettings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: db37b2c01ed566e439dfa0269ddb0887, type: 2}
   m_SchemaSet:

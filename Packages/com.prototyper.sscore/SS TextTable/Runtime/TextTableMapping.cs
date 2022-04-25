@@ -79,7 +79,7 @@ namespace SS
 
         private void CheckCompoenent()
         {
-            if (textCompPro != null)
+            if (textCompPro != null && enableOSFallback)
             {
                 GetOSDefaultFontAsset();
                 if (_osDefaultFontAsset != null &&

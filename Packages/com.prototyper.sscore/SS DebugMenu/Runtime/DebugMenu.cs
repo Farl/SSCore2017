@@ -54,25 +54,31 @@ namespace SS
             {
                 _sceneButtonRoot = _sceneButtonTemplate.transform.parent;
                 _sceneButtonTemplate.SetActive(false);
-                foreach (string scenePath in RuntimePlayerSettings.Instance.scenes)
+                RuntimePlayerSettings.GetInstance((playerSettings) =>
                 {
-                    var id = System.IO.Path.GetFileNameWithoutExtension(scenePath);
-                    GameObject go = Instantiate(_sceneButtonTemplate, _sceneButtonRoot);
-                    UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
-                    if (button)
+                    if (playerSettings != null)
                     {
-                        button.onClick.AddListener(() =>
+                        foreach (string scenePath in playerSettings.scenes)
                         {
-                            UnityEngine.SceneManagement.SceneManager.LoadScene(id);
-                        });
+                            var id = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+                            GameObject go = Instantiate(_sceneButtonTemplate, _sceneButtonRoot);
+                            UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
+                            if (button)
+                            {
+                                button.onClick.AddListener(() =>
+                                {
+                                    UnityEngine.SceneManagement.SceneManager.LoadScene(id);
+                                });
+                            }
+                            UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
+                            if (text)
+                            {
+                                text.text = id;
+                            }
+                            go.SetActive(true);
+                        }
                     }
-                    UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
-                    if (text)
-                    {
-                        text.text = id;
-                    }
-                    go.SetActive(true);
-                }
+                });
             }
 
             World.RegisterOnGUI(DrawGUI, this);

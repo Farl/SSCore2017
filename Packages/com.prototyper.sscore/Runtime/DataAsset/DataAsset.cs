@@ -52,6 +52,27 @@ namespace SS
         private static HashSet<Type> isLoading = new HashSet<Type>();
         private static T instance = null;
 
+        public static void GetInstance(Action<T> onComplete)
+        {
+            if (instance != null)
+            {
+                onComplete?.Invoke(instance);
+            }
+            else
+            {
+                // Load from ResourceSystem
+                var oh = ResourceSystem.Load<T>(fullPath, (inst) =>
+                {
+                    if (inst == null)
+                    {
+                        Debug.LogError($"Load {typeof(T).ToString()} failed");
+                    }
+                    instance = inst;
+                    onComplete?.Invoke(instance);
+                });
+            }
+        }
+
         public static T Instance
 		{
 			get
@@ -82,13 +103,8 @@ namespace SS
                         if (!IsLoading)
                         {
                             IsLoading = true;
-                            var oh = ResourceSystem.Load<T>(fullPath, (inst) =>
+                            GetInstance((inst) =>
                             {
-                                if (inst == null)
-                                {
-                                    Debug.LogError($"Load {typeof(T).ToString()} failed");
-                                }
-                                instance = inst;
                                 IsLoading = false;
                             });
                         }

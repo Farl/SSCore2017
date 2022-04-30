@@ -1,10 +1,8 @@
 {
-    "name": "SS.Prototype",
+    "name": "SS.Camera",
     "rootNamespace": "SS",
     "references": [
-        "GUID:3d1d65fc5a0f441459b5110783a0cfe0",
-        "GUID:59751dd092bd5400292e9a198b4427b6",
-        "GUID:69c5e91c12eaea043848e68ce27134db"
+        "GUID:3d1d65fc5a0f441459b5110783a0cfe0"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

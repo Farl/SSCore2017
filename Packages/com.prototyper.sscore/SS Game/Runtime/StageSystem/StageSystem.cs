@@ -29,7 +29,7 @@ namespace SS
 
                     DebugMenu.Instance.AddButtonListButton(templateGO, () =>
                     {
-
+                        SetNextStage(id);
                     },
                     id);
                 }

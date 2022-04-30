@@ -5,12 +5,27 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Packages/com.prototyper.sscore/SS TextTable/Samples/TextTableSample.unity
     guid: 624a817a266dbdd42b9b56283320222d
-  - enabled: 1
+  - enabled: 0
     path: Packages/com.prototyper.sscore/Samples/RuntimePlayerSettingsTest.unity
     guid: c8b03109bc7683244846bf27461962d8
+  - enabled: 1
+    path: Packages/com.prototyper.sscore/SS Game/Samples/StageSystem/Scenes/Main.unity
+    guid: a0a004a913d0a462996fec6eedbb3de4
+  - enabled: 1
+    path: Packages/com.prototyper.sscore/SS Game/Samples/StageSystem/Scenes/InitStage.unity
+    guid: 469e81dae252342c78dd5c8d71f3fe79
+  - enabled: 1
+    path: Packages/com.prototyper.sscore/SS Game/Samples/StageSystem/Scenes/LevelStage.unity
+    guid: b56cc78d6f4ee4ec181f318ce7857ad9
+  - enabled: 1
+    path: Packages/com.prototyper.sscore/SS Game/Samples/StageSystem/Scenes/TitleStage.unity
+    guid: 93e1ce0b6b78847d5ab76ccae3a16382
+  - enabled: 1
+    path: Packages/com.prototyper.sscore/SS Game/Samples/StageSystem/Scenes/Empty.unity
+    guid: 24ca43d3fe4b46746bbdc364c16d9de1
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e1225c919dcc2e141a8d23f9d003d60b,
       type: 2}

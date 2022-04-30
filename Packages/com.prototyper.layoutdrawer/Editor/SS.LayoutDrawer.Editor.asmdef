@@ -1,6 +1,6 @@
 {
     "name": "SS.LayoutDrawer.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:edc61934e843c0b4088a0495f67e5395"
     ],

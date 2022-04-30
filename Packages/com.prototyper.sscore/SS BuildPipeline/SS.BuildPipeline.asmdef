@@ -1,6 +1,6 @@
 {
     "name": "SS.BuildPipeline",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,6 @@
 {
     "name": "TimelineCinemachine",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:4307f53044263cf4b835bd812fc161a4",
         "GUID:af4e4e6675422b147835a4d750f188db",

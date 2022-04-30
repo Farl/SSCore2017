@@ -1,18 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace SS
 {
 
 	[DisallowMultipleComponent]
 	public class UIBase : MonoBehaviour
-    {
-        public bool startEnabled;
+	{
+		public enum ActivateMethod
+		{
+			Auto = 0,
+			Legacy = 1,
+		}
+
+		[SerializeField]
+		private ActivateMethod m_ActivateMethod;
+
+		public bool startEnabled;
 
         public bool destroyWhenClose;
 
-        private bool active;
+		public bool IsActive { get; private set; } = false;
+		public bool IsShow { get; private set; } = false;
+		public bool IsShowing { get; private set; } = false;
+		public bool IsHiding { get; private set; } = false;
 
         private bool isRegisterEventListener;
 
@@ -22,33 +35,55 @@ namespace SS
 
         private StringFlag lockFlag = new StringFlag();
 
-        private CanvasGroup canvasGroup;
+		private CanvasGroup _canvasGroup;
+        private CanvasGroup canvasGroup
+        {
+            get
+            {
+				if (_canvasGroup == null)
+					_canvasGroup = GetComponent<CanvasGroup>();
+				if (_canvasGroup == null)
+					_canvasGroup = gameObject.AddComponent<CanvasGroup>();
+				return _canvasGroup;
+            }
+			set
+            {
+				_canvasGroup = value;
+            }
+        }
 
         private UIBlocker blocker;
 
         private int destroyCount;
 
-        private static bool _isInitializing;
-        public bool IsInitializing
+		private Transform currTransform;
+		public Transform GetTransform()
+        {
+			if (currTransform == null)
+				currTransform = transform;
+			return currTransform;
+        }
+
+
+        private bool IsInitializing { get; set; }
+
+		public string UIType
         {
             get
             {
-                return _isInitializing;
-            }
-            set
-            {
-                _isInitializing = value;
+				if (Application.isPlaying)
+				{
+					if (string.IsNullOrEmpty(uiType))
+						uiType = gameObject.name;
+				}
+				return uiType;
             }
         }
 
-        public string uiType;
+		[SerializeField]
+        private string uiType;
 
-        private bool _isInit;
-        public bool IsInit
-        {
-            get { return _isInit; }
-            set { _isInit = value; }
-        }
+        public bool IsInit { get; private set; }
 
         protected virtual void OnEnable()
         {
@@ -62,23 +97,29 @@ namespace SS
 
         public virtual void Init()
         {
-            if (_isInit)
+            if (!IsInit && !IsInitializing)
             {
+				IsInitializing = true;
+
                 // Force awake
                 gameObject.SetActive(false);
                 gameObject.SetActive(true);
-            }
-            else
-            {
 
-            }
+				SetActive(startEnabled);
+
+				IsInitializing = false;
+				IsInit = true;
+			}
         }
 
         public void Show()
         {
+			IsShow = true;
+			IsShowing = true;
             ShowImmediately();
             OnShow();
-        }
+			IsShowing = false; // TODO:
+		}
 
         protected virtual void OnShow()
         {
@@ -86,9 +127,12 @@ namespace SS
         }
 
         public void Hide()
-        {
-            HideImmediately();
-            OnHide();
+		{
+			IsShow = false;
+			IsHiding = true;
+			HideImmediately(); // TODO:
+			OnHide();
+			IsHiding = false; // TODO:
         }
 
         protected virtual void OnHide()
@@ -134,13 +178,12 @@ namespace SS
 
 		protected virtual void Awake()
 		{
-			SetActive(startEnabled);
-
 			Register();
 
-			canvasGroup = GetComponent<CanvasGroup>();
-			if (!canvasGroup)
-				canvasGroup = gameObject.AddComponent<CanvasGroup>();
+			if (canvasGroup)
+            {
+				// TODO
+            }
 
 			// UI blocker
 			blocker = GetComponent<UIBlocker>();
@@ -167,17 +210,12 @@ namespace SS
 			Register();
 		}
 
-		public bool IsActive()
-		{
-			return active;
-		}
-
 		private void Register()
 		{
 			if (!isRegisterEventListener)
 			{
 				name = name.Replace("(Clone)", "");
-				UISystem.RegisterObject(gameObject, name);
+				UISystem.Register(this);
 				EventManager.AddEventListener(UISystem.GetPageEventID(name), OnEvent);
 				isRegisterEventListener = true;
 			}
@@ -187,7 +225,7 @@ namespace SS
 		{
 			if (isRegisterEventListener)
 			{
-				UISystem.UnregisterObject(gameObject, name);
+				UISystem.Unregister(this);
 				EventManager.RemoveEventListener(UISystem.GetPageEventID(name), OnEvent);
 			}
 		}
@@ -205,16 +243,16 @@ namespace SS
 
 		private void InTransition()
 		{
-			active = true;
+			IsActive = true;
 
 			if (blocker)
 			{
 				blocker.Lock();
 			}
 
-			for (int i = 0; i < transform.childCount; i++)
+			for (int i = 0; i < GetTransform().childCount; i++)
 			{
-				Transform trans = transform.GetChild(i);
+				Transform trans = GetTransform().GetChild(i);
 				if (trans)
 				{
 					QuickShelf comp = trans.GetOrAddComponent<QuickShelf>();
@@ -230,9 +268,9 @@ namespace SS
 		private void OutTransition()
 		{
 			destroyCount = 0;
-			for (int i = 0; i < transform.childCount; i++)
+			for (int i = 0; i < GetTransform().childCount; i++)
 			{
-				Transform trans = transform.GetChild(i);
+				Transform trans = GetTransform().GetChild(i);
 				if (trans)
 				{
 					QuickShelf comp = trans.GetOrAddComponent<QuickShelf>();
@@ -252,7 +290,7 @@ namespace SS
 
 		private void Closed()
 		{
-			active = false;
+			IsActive = false;
 
 			if (blocker)
 			{
@@ -292,16 +330,27 @@ namespace SS
 
 		private void SetActive(bool activate)
 		{
-			active = activate;
+			IsActive = activate;
 
-			for (int i = 0; i < transform.childCount; i++)
-			{
-				Transform trans = transform.GetChild(i);
-				if (trans)
-				{
-					trans.gameObject.SetActive(active);
-				}
-			}
+			switch (m_ActivateMethod)
+            {
+				default:
+				case ActivateMethod.Auto:
+					gameObject.SetActive(IsActive);
+					break;
+
+				case ActivateMethod.Legacy:
+
+					for (int i = 0; i < GetTransform().childCount; i++)
+					{
+						Transform trans = GetTransform().GetChild(i);
+						if (trans)
+						{
+							trans.gameObject.SetActive(IsActive);
+						}
+					}
+					break;
+            }
 		}
 
 		public void ShelfClosed(QuickShelf shelf)

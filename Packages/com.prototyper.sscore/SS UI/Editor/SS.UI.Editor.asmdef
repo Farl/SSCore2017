@@ -1,6 +1,6 @@
 {
     "name": "SS.UI.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:dace365e2fed2d544a51141a431a62ed"
     ],

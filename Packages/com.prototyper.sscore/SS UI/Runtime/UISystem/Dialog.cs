@@ -95,7 +95,7 @@ namespace SS
 			if (dialogObj)
 			{
 				UIBase page = dialogObj.GetComponent<UIBase>();
-				if (page && page.IsActive())
+				if (page && page.IsActive)
 				{
 					dialogObj = null;
 				}
@@ -234,7 +234,7 @@ namespace SS
 			else
 			{
 				UIBase page = dialogObj.GetComponent<UIBase>();
-				if (page && !page.IsActive())
+				if (page && !page.IsActive)
 				{
 					return null;
 				}

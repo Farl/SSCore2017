@@ -1,6 +1,6 @@
 {
     "name": "SS.Playable.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:0198eeedc613bae46b71572b5dff7cc8",
         "GUID:d8e7b33ba1e4a89fc8a64b6b1e97a6ac"

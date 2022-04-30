@@ -1,1 +1,16 @@
-{"name":"SS.Tools.Editor","rootNamespace":"","includePlatforms":["Editor"]}
+{
+    "name": "SS.Tools.Editor",
+    "rootNamespace": "SS",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -56,7 +56,8 @@ namespace SS
 			}
 		}
 		
-		static Hashtable panelMap = new Hashtable();
+		private static Hashtable panelMap = new Hashtable();
+		private static Dictionary<string, UIBase> uiBaseMap = new Dictionary<string, UIBase>();
 		
 		public static UIPanelInfo GetOrAddUIPanelInfo(string name)
 		{
@@ -78,6 +79,45 @@ namespace SS
 				return null;
 		}
 	
+		public static void Register(UIBase uiBase)
+        {
+			if (uiBase == null)
+				return;
+			if (!uiBaseMap.ContainsKey(uiBase.UIType))
+            {
+				uiBaseMap.Add(uiBase.UIType, uiBase);
+            }
+			else
+            {
+				Debug.LogError($"Duplicate UIBase {uiBase.UIType}");
+            }
+			RegisterObject(uiBase.gameObject, uiBase.UIType);
+        }
+
+		public static void Unregister(UIBase uiBase)
+		{
+			if (uiBase == null)
+				return;
+			if (uiBaseMap.ContainsKey(uiBase.UIType))
+            {
+				uiBaseMap.Remove(uiBase.UIType);
+			}
+			else
+			{
+				Debug.LogError($"There is no UIBase {uiBase.UIType}");
+			}
+			UnregisterObject(uiBase.gameObject, uiBase.UIType);
+		}
+
+		public static T Get<T>(string uiType) where T : UIBase
+        {
+			if (uiBaseMap.TryGetValue(uiType, out var uiBase))
+            {
+				return uiBase as T;
+            }
+			return null;
+        }
+
 		public static void RegisterObject(GameObject panelObj, string UIID)
 		{
 			UIPanelInfo info = GetOrAddUIPanelInfo(UIID);

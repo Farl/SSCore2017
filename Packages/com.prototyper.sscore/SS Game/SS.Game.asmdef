@@ -1,6 +1,6 @@
 {
     "name": "SS.Todo",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:6ee8d2f798a8e484ea3ab855154d2e2d",
         "GUID:3d1d65fc5a0f441459b5110783a0cfe0",

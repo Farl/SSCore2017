@@ -1,1 +1,16 @@
-{"name":"SS.URP.Editor","rootNamespace":"","includePlatforms":["Editor"]}
+{
+    "name": "SS.URP.Editor",
+    "rootNamespace": "SS",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

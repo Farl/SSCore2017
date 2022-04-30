@@ -25,7 +25,7 @@ namespace SS
 
         public override void OnInit()
         {
-            UIBase[] uiBases = GetComponentsInChildren<UIBase>();
+            UIBase[] uiBases = GetComponentsInChildren<UIBase>(includeInactive:true);
             List<UIBase> uiList = new List<UIBase>();
 
             foreach (UIBase uiBase in uiBases)
@@ -37,10 +37,10 @@ namespace SS
             // OrderSetting
             if (UIManager.IsAlive)
             {
-                uiList.Sort((x, y) => UIManager.Instance.GetOrder(x.uiType).CompareTo(UIManager.Instance.GetOrder(y.uiType)));
+                uiList.Sort((x, y) => UIManager.Instance.GetOrder(x.UIType).CompareTo(UIManager.Instance.GetOrder(y.UIType)));
                 foreach (UIBase uiBase in uiList)
                 {
-                    uiBase.transform.SetAsLastSibling();
+                    uiBase.GetTransform().SetAsLastSibling();
                 }
             }
         }

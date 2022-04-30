@@ -1,6 +1,6 @@
 {
     "name": "SS.TextTable.Samples",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:742253e3a4963e640ae8c0624ce2dc34",
         "GUID:3d1d65fc5a0f441459b5110783a0cfe0"

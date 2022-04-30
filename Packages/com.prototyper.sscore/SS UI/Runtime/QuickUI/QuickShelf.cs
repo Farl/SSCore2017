@@ -202,8 +202,12 @@ namespace SS
 			Lock();
 
 			isInTransition = true;
-			
-			curve = UISettings.Instance.GetCurve((!string.IsNullOrEmpty(transitionInCurveID))? transitionInCurveID: "in");
+
+			var uiSettings = UISettings.Instance;
+			if (uiSettings != null)
+			{
+				curve = UISettings.Instance.GetCurve((!string.IsNullOrEmpty(transitionInCurveID)) ? transitionInCurveID : "in");
+			}
 			
 			goOut = false;
 			
@@ -251,7 +255,11 @@ namespace SS
 
 			isInTransition = true;
 			
-			curve = UISettings.Instance.GetCurve((!string.IsNullOrEmpty(transitionOutCurveID))? transitionOutCurveID: "out");
+			var uiSettings = UISettings.Instance;
+			if (uiSettings)
+			{
+				curve = UISettings.Instance.GetCurve((!string.IsNullOrEmpty(transitionOutCurveID)) ? transitionOutCurveID : "out");
+			}
 			
 			goOut = true;
 			

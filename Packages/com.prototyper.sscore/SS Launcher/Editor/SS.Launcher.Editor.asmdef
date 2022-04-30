@@ -1,8 +1,10 @@
 {
-    "name": "SS.Spreadsheet",
+    "name": "SS.Launcher.Editor",
     "rootNamespace": "SS",
     "references": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -1,6 +1,6 @@
 {
     "name": "SS.Prototype",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:3d1d65fc5a0f441459b5110783a0cfe0",
         "GUID:59751dd092bd5400292e9a198b4427b6"

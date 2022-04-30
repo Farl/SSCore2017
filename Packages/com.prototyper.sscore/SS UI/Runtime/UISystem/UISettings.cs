@@ -82,7 +82,11 @@ namespace SS
 		public static UIPageData GetPageData(string id)
 		{
 			UIPageData data = null;
-			UISettings.Instance.dictionary.TryGetValue(id, out data);
+			var uiSettings = UISettings.Instance;
+			if (uiSettings)
+			{
+				uiSettings.dictionary.TryGetValue(id, out data);
+			}
 			return data;
 		}
 		

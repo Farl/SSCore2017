@@ -1,6 +1,6 @@
 {
     "name": "SS.Todo.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [],
     "includePlatforms": [
         "Editor"

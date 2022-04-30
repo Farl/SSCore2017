@@ -1,1 +1,16 @@
-{"name":"SS.Addressable.Editor","rootNamespace":"","includePlatforms":["Editor"]}
+{
+    "name": "SS.Addressable.Editor",
+    "rootNamespace": "SS",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

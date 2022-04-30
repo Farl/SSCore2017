@@ -1,6 +1,6 @@
 {
     "name": "SS.DebugMenu",
-    "rootNamespace": "",
+    "rootNamespace": "SS",
     "references": [
         "GUID:dace365e2fed2d544a51141a431a62ed",
         "GUID:3d1d65fc5a0f441459b5110783a0cfe0",

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using SS;
 
-public class Example_InitBehaviour : InitBehaviour {
+public class Example_InitBehaviour_WaitSeconds : InitBehaviour {
+
+    public float waitSeconds = 5;
+    public bool toggle = false;
 
     public override int InitOrder
     {
@@ -23,7 +26,9 @@ public class Example_InitBehaviour : InitBehaviour {
 
     IEnumerator Start()
     {
-        yield return new WaitForSecondsRealtime(5);
+        toggle = false;
+        yield return new WaitForSecondsRealtime(waitSeconds);
+        toggle = true;
         Finish();
     }
 }

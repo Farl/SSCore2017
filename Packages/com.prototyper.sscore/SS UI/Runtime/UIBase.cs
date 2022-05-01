@@ -95,7 +95,12 @@ namespace SS
 
         }
 
-        public virtual void Init()
+		protected virtual void OnInit()
+        {
+
+        }
+
+        public void Init()
         {
             if (!IsInit && !IsInitializing)
             {
@@ -106,6 +111,7 @@ namespace SS
                 gameObject.SetActive(true);
 
 				SetActive(startEnabled);
+				OnInit();
 
 				IsInitializing = false;
 				IsInit = true;

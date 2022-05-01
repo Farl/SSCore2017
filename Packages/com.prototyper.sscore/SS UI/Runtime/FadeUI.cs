@@ -43,6 +43,7 @@ namespace SS
             public void Resume()
             {
                 pause = false;
+                pauseAt = 0;
             }
 
             public void SetPauseAt(params State[] pauseState)

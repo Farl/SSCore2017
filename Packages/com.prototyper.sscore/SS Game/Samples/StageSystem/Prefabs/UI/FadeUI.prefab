@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ActivateMethod: 1
-  startEnabled: 0
+  startEnabled: 1
   destroyWhenClose: 0
   inSound: UI_In
   outSound: UI_Out

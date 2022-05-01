@@ -7,11 +7,6 @@ namespace SS
 
 	public class LoadingUI : UIBaseSingleton<LoadingUI>
 	{
-
-        public static bool IsFinished()
-        {
-            return InitManager.IsEmpty();
-        }
 	}
 
 }

@@ -15,6 +15,8 @@ namespace SS
 
         private static StageSystem _instance;
 
+        public override int InitOrder => 1; // After DebugMenu
+
         private void CreateStageButtons()
         {
             if (!DebugMenu.Instance)
@@ -22,16 +24,19 @@ namespace SS
 
             if (stages != null)
             {
-                var templateGO = DebugMenu.Instance.CreateButtonList();
-                foreach (var stage in stages)
+                var bl = DebugMenu.Instance.GetButtonList("Stage");
+                if (bl != null)
                 {
-                    var id = stage.name;
-
-                    DebugMenu.Instance.AddButtonListButton(templateGO, () =>
+                    foreach (var stage in stages)
                     {
-                        SetNextStage(id);
-                    },
-                    id);
+                        var id = stage.name;
+
+                        bl.AddButtonListButton(() =>
+                        {
+                            SetNextStage(id);
+                        },
+                        id);
+                    }
                 }
             }
         }
@@ -114,12 +119,26 @@ namespace SS
             // Start
             _nextStageName = nextStage.name;
 
-            // Test
-            FadeUI.FadeTask fadeTask = FadeUI.StartFade(Color.black, 3f, 0f, 3f, false);
-            fadeTask.SetPauseAt(FadeUI.State.Remain);
-            yield return new WaitForSecondsRealtime(3.0f);
+            var fadeTime = (currStage) ? currStage.leaveBlackOutTime : 3.0f;
 
+            // (Testing) Black out begin
+            var fadeTask = FadeUI.StartFade(Color.black,
+                fadeTime, 0f, fadeTime, false);
+            fadeTask.SetPauseAt(FadeUI.State.Remain);
+
+            yield return new WaitForSecondsRealtime(fadeTime);
+
+            // Open loading UI
             EventManager.Broadcast(new EventMessage("UISystem.Open(LoadingUI)", this, true));
+
+            // TODO: Check loading UI state
+            while (LoadingUI.Instance && (!LoadingUI.Instance.IsShow && !LoadingUI.Instance.IsActive))
+            {
+                yield return null;
+            }
+
+            // (Testing) Black out end
+            fadeTask.Resume();
 
             // Leave
             if (currStage)
@@ -130,6 +149,8 @@ namespace SS
                     yield return null;
                 }
             }
+
+            fadeTime = (nextStage) ? nextStage.enterBlackOutTime : 3.0f;
 
             // Enter
             if (nextStage)
@@ -142,15 +163,29 @@ namespace SS
                 currStage = nextStage;
             }
 
-            while (!LoadingUI.IsFinished())
+            // Magic number. Wait InitBehaviour.Awake()
+            for (var i = 0; i < 5; i++)
             {
                 yield return null;
             }
 
-            EventManager.Broadcast(new EventMessage("UISystem.Open(LoadingUI)", this, false));
+            while (!InitManager.IsEmpty())
+            {
+                yield return null;
+            }
 
-            // Fade
+            // (Testing) Black out begin
+            fadeTask = FadeUI.StartFade(Color.white,
+                fadeTime, 0f, fadeTime, false);
+            fadeTask.SetPauseAt(FadeUI.State.Remain);
+
+            yield return new WaitForSecondsRealtime(fadeTime);
+
+            // (Testing) Black out end
             fadeTask.Resume();
+
+            // Close loding UI
+            EventManager.Broadcast(new EventMessage("UISystem.Open(LoadingUI)", this, false));
 
             _nextStageName = null;
         }

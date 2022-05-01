@@ -25,12 +25,57 @@ namespace SS
     public class DebugMenu : UIBaseSingleton<DebugMenu>
     {
         [SerializeField]
-        private GameObject _sceneButtonTemplate;
-        private Transform _sceneButtonRoot;
+        KeyCode toggleKeyCode = KeyCode.Backspace;
+
+        [SerializeField]
+        int toggleTouchCount = 3;
 
         [SerializeField]
         private GameObject _buttonListButtonTemplate;
-        private Transform _stageButtonRoot;
+        private bool _buttonListIsInit { get; set; }
+
+        [Serializable]
+        public class ButtonList
+        {
+            public string name;
+            public Transform buttonRoot;
+            public GameObject buttonTemplate;
+
+            private bool IsInit { get; set; }
+            public void Init(GameObject template)
+            {
+                if (!IsInit)
+                {
+                    if (buttonTemplate == null)
+                        buttonTemplate = template;
+                    if (buttonTemplate)
+                        buttonTemplate.SetActive(false);
+                    IsInit = true;
+                }
+            }
+
+            public void AddButtonListButton(Action onButtonClick, string displayText)
+            {
+                var go = Instantiate(buttonTemplate, buttonRoot);
+                UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
+                if (button)
+                {
+                    button.onClick.AddListener(() =>
+                    {
+                        onButtonClick();
+                    });
+                }
+                UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
+                if (text)
+                {
+                    text.text = displayText;
+                }
+                go.SetActive(true);
+            }
+        }
+
+        [SerializeField]
+        private List<ButtonList> buttonLists = new List<ButtonList>();
 
         bool debugMenuShow = false;
 
@@ -43,17 +88,32 @@ namespace SS
         [Auto]
         public DebugEventInfo[] debugEvent;
 
-        protected override void Awake()
+        private void InitializeButtonList()
         {
-            base.Awake();
+            if (_buttonListIsInit)
+                return;
+            // Initalize button list
+            if (_buttonListButtonTemplate)
+                _buttonListButtonTemplate.SetActive(false);
+            foreach (var bl in buttonLists)
+            {
+                bl.Init(_buttonListButtonTemplate);
+            }
+            _buttonListIsInit = true;
+        }
+
+        protected override void OnInit()
+        {
+            base.OnInit();
 
             panel = GetComponent<UIBase>();
 
+            InitializeButtonList();
+
             // scene buttons
-            if (_sceneButtonTemplate)
+            var bl = GetButtonList("Scene");
+            if (bl != null)
             {
-                _sceneButtonRoot = _sceneButtonTemplate.transform.parent;
-                _sceneButtonTemplate.SetActive(false);
                 RuntimePlayerSettings.GetInstance((playerSettings) =>
                 {
                     if (playerSettings != null)
@@ -61,21 +121,12 @@ namespace SS
                         foreach (string scenePath in playerSettings.scenes)
                         {
                             var id = System.IO.Path.GetFileNameWithoutExtension(scenePath);
-                            GameObject go = Instantiate(_sceneButtonTemplate, _sceneButtonRoot);
-                            UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
-                            if (button)
+
+                            bl.AddButtonListButton(() =>
                             {
-                                button.onClick.AddListener(() =>
-                                {
-                                    UnityEngine.SceneManagement.SceneManager.LoadScene(id);
-                                });
-                            }
-                            UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
-                            if (text)
-                            {
-                                text.text = id;
-                            }
-                            go.SetActive(true);
+                                UnityEngine.SceneManagement.SceneManager.LoadScene(id);
+                            },
+                            id);
                         }
                     }
                 });
@@ -84,32 +135,25 @@ namespace SS
             World.RegisterOnGUI(DrawGUI, this);
         }
 
-        public GameObject CreateButtonList()
+        protected override void Awake()
         {
-            // TODO: create a new root
-            _stageButtonRoot = _buttonListButtonTemplate.transform.parent;
-            _buttonListButtonTemplate.SetActive(false);
-            return _buttonListButtonTemplate;
+            base.Awake();
         }
 
-        public void AddButtonListButton(GameObject template, Action onButtonClick, string displayText)
+        public ButtonList GetButtonList(string name)
         {
-            // TODO: 
-            var go = Instantiate(_buttonListButtonTemplate, _stageButtonRoot);
-            UnityEngine.UI.Button button = go.GetComponentInChildren<UnityEngine.UI.Button>();
-            if (button)
+            if (!_buttonListIsInit)
             {
-                button.onClick.AddListener(() =>
-                {
-                    onButtonClick();
-                });
+                Debug.LogError("DebugMenu is not intialize yet");
+                return null;
             }
-            UnityEngine.UI.Text text = go.GetComponentInChildren<UnityEngine.UI.Text>();
-            if (text)
+            var bl = buttonLists.Find(x => x.name == name);
+            if (bl == null)
             {
-                text.text = displayText;
+                Debug.LogError($"Can't find {name} in button list");
             }
-            go.SetActive(true);
+
+            return bl;
         }
 
         protected override void OnDestroy()
@@ -128,7 +172,7 @@ namespace SS
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Backspace) || Input.touchCount == 3)
+                if (Input.GetKeyDown(toggleKeyCode) || Input.touchCount == toggleTouchCount)
                 {
                     debugMenuShow = !debugMenuShow;
                     if (debugMenuShow)

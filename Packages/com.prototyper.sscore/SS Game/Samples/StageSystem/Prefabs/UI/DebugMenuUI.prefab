@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7971698, g: 1, b: 0.9645736, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -565,8 +565,16 @@ MonoBehaviour:
   inSound: UI_In
   outSound: UI_Out
   uiType: DebugMenu
-  _sceneButtonTemplate: {fileID: 1262613352711052}
+  toggleKeyCode: 8
+  toggleTouchCount: 3
   _buttonListButtonTemplate: {fileID: 1590482215347372}
+  buttonLists:
+  - name: Scene
+    buttonRoot: {fileID: 224129099944887198}
+    buttonTemplate: {fileID: 1262613352711052}
+  - name: Stage
+    buttonRoot: {fileID: 224066497216439306}
+    buttonTemplate: {fileID: 0}
   drawOnGUI: 0
   debugEvent: []
 --- !u!1 &1891614962354808

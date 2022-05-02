@@ -163,11 +163,15 @@ namespace SS
                 currStage = nextStage;
             }
 
+            yield return StageBehaviour.CheckStageAwake();
+
+            /*
             // Magic number. Wait InitBehaviour.Awake()
             for (var i = 0; i < 5; i++)
             {
                 yield return null;
             }
+            */
 
             while (!InitManager.IsEmpty())
             {

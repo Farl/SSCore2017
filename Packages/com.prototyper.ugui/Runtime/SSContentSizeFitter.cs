@@ -29,7 +29,11 @@ namespace UnityEngine.UI
             /// <summary>
             /// Resize to the preferred size of the content.
             /// </summary>
-            PreferredSize
+            PreferredSize,
+            /// <summary>
+            /// Resize to the clamped size of the content.
+            /// </summary>
+            PreferredClamp,
         }
 
         [SerializeField] protected FitMode m_HorizontalFit = FitMode.Unconstrained;
@@ -39,12 +43,18 @@ namespace UnityEngine.UI
         /// </summary>
         public FitMode horizontalFit { get { return m_HorizontalFit; } set { if (SSSetPropertyUtility.SetStruct(ref m_HorizontalFit, value)) SetDirty(); } }
 
+        [Tooltip("Negative value means no constraint")]
+        [SerializeField] Vector2 m_HorizontalPreferredClamp = new Vector2(-1, -1);
+
         [SerializeField] protected FitMode m_VerticalFit = FitMode.Unconstrained;
 
         /// <summary>
         /// The fit mode to use to determine the height.
         /// </summary>
         public FitMode verticalFit { get { return m_VerticalFit; } set { if (SSSetPropertyUtility.SetStruct(ref m_VerticalFit, value)) SetDirty(); } }
+
+        [Tooltip("Negative value means no constraint")]
+        [SerializeField] Vector2 m_VerticalPreferredClamp = new Vector2(-1, -1);
 
         [System.NonSerialized] private RectTransform m_Rect;
         private RectTransform rectTransform
@@ -95,6 +105,16 @@ namespace UnityEngine.UI
             // Set size to min or preferred size
             if (fitting == FitMode.MinSize)
                 rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, LayoutUtility.GetMinSize(m_Rect, axis));
+            else if (fitting == FitMode.PreferredClamp)
+            {
+                var clampRange = (axis == 0 ? m_HorizontalPreferredClamp : m_VerticalPreferredClamp);
+                if (clampRange[0] < 0)
+                    clampRange[0] = float.NegativeInfinity;
+                if (clampRange[1] < 0)
+                    clampRange[1] = float.PositiveInfinity;
+                var preferredSize = LayoutUtility.GetPreferredSize(m_Rect, axis);
+                rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, Mathf.Clamp(preferredSize, clampRange[0], clampRange[1]));
+            }
             else
                 rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, LayoutUtility.GetPreferredSize(m_Rect, axis));
         }

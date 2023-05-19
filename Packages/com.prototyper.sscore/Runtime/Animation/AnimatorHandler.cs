@@ -41,7 +41,7 @@ public class AnimatorHandler : MonoBehaviour
 
             RecursiveDump(animator.playableGraph);
 
-            animator.keepAnimatorControllerStateOnDisable = keepAnimatorControllerStateOnDisable;
+            animator.keepAnimatorStateOnDisable = keepAnimatorControllerStateOnDisable;
 
         }
     }

@@ -27,14 +27,25 @@ public class RFCharacter : MonoBehaviour
     Vector3 moveVec = Vector3.zero;
     Animator animator;
     new Rigidbody rigidbody;
-    RFAIController aiController;
+    private Transform _cachedTransform;
+    private Transform cachedTransform
+    {
+        get
+        {
+            if (_cachedTransform == null)
+                _cachedTransform = transform;
+            return _cachedTransform;
+        }
+    }
+
+    private IRFController controller;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
-        aiController = GetComponent<RFAIController>();
+        controller = GetComponent<IRFController>();
 
         stateMachine.AddState(State.Idle, OnEnterState, OnLeaveState, OnUpdateState);
         stateMachine.AddState(State.HardAttack, OnEnterState, OnLeaveState, OnUpdateState);
@@ -61,6 +72,16 @@ public class RFCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Kill height
+        if (cachedTransform.position.y < -2)
+        {
+            if (controller == null)
+            {
+
+                // Reload scene
+                UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            }
+        }
         UpdateInput();
         
         stateMachine.Update();
@@ -71,37 +92,33 @@ public class RFCharacter : MonoBehaviour
     {
 
         RFCharacter enemy = RhythmFight.Instance.GetNearestEnemy(this);
-
-        if (aiController)
+        if (controller != null)
         {
-
-            aiController.UpdateInput(out State targetState, out moveVec);
+            controller.SetEnemy(enemy);
+            controller.UpdateInput(out State targetState, out moveVec);
             if (targetState != State.None)
                 stateMachine.SetNextState(targetState);
 
-            if (enemy)
-            {
-                Vector3 targetVec = enemy.transform.position - transform.position;
-                Debug.DrawLine(enemy.transform.position, transform.position);
-
-                moveVec = Vector3.ClampMagnitude(targetVec, 1);
-            }
             return;
         }
+        else
+        {
+            // Player
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                stateMachine.SetNextState(State.HardAttack);
+            }
+            else if (Input.GetKeyDown(KeyCode.J))
+            {
+                stateMachine.SetNextState(State.Attack);
+            }
+            else if (Input.GetKeyDown(KeyCode.L))
+            {
+                stateMachine.SetNextState(State.Defense);
+            }
+            moveAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }
 
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            stateMachine.SetNextState(State.HardAttack);
-        }
-        else if (Input.GetKeyDown(KeyCode.J))
-        {
-            stateMachine.SetNextState(State.Attack);
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            stateMachine.SetNextState(State.Defense);
-        }
-        moveAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
 
     void OnEnterState()
@@ -179,7 +196,7 @@ public class RFCharacter : MonoBehaviour
 
     void OnUpdateLocomotion()
     {
-        if (!aiController)
+        if (controller == null)
             moveVec = Vector3.zero;
 
         switch (locomotionStateMachine.GetNextState())
@@ -187,7 +204,7 @@ public class RFCharacter : MonoBehaviour
             case LocomotionState.Idle:
             case LocomotionState.Move:
                 {
-                    if (aiController)
+                    if (controller != null)
                     {
                         
                     }
@@ -224,9 +241,9 @@ public class RFCharacter : MonoBehaviour
 
     public void Beat()
     {
-        if (aiController)
+        if (controller != null)
         {
-            aiController.Beat();
+            controller.Beat();
         }    
     }
 }

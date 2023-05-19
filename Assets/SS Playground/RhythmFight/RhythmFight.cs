@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class RhythmFight : MonoBehaviour
 {
     public static RhythmFight Instance;
 
+    public Image beatImage;
+
     List<RFCharacter> characters = new List<RFCharacter>();
 
-    public float period = 3;
+    public int bpm = 60;
 
     [System.NonSerialized]
     public float timer = 0;
@@ -17,6 +19,8 @@ public class RhythmFight : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+        if (beatImage)
+            beatImage.enabled = false;
     }
 
     private void OnDestroy()
@@ -25,9 +29,13 @@ public class RhythmFight : MonoBehaviour
             Instance = null;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
-        InvokeRepeating("Call", period, period);
+        while (true)
+        {
+            Call();
+            yield return new WaitForSeconds(bpm / 60f);
+        }
     }
 
     public void Register(RFCharacter ch)
@@ -55,8 +63,19 @@ public class RhythmFight : MonoBehaviour
         return null;
     }
 
+    private IEnumerator BeatCoroutine()
+    {
+        if (beatImage)
+        {
+            beatImage.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            beatImage.enabled = false;
+        }
+    }
+
     private void Call()
     {
+        StartCoroutine(BeatCoroutine());
         foreach (var ch in characters)
         {
             ch.Beat();

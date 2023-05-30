@@ -263,8 +263,8 @@ namespace SS.PackageHelper
 
         private void OnEnable()
         {
-            packageImportTool = new PackageImportTool();
-            packageCreateTool = new PackageCreateTool();
+            packageImportTool = ScriptableObject.CreateInstance<PackageImportTool>();
+            packageCreateTool = ScriptableObject.CreateInstance<PackageCreateTool>();
         }
 
         private void OnGUI()

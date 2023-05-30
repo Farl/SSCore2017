@@ -3,23 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.EditorTools;
+using UnityEditor.PackageManager;
+using UnityEditor.PackageManager.Requests;
 using System.IO;
 using UnityEditor.Scripting;
 
 namespace SS.PackageHelper
 {
+    /**
+     * Package Helper
+     * 
+     * A tool to help create and import packages
+     * 
+     * @version 0.1.0
+     * @package SS.PackageHelper
+     * @author Farl
+     *
+     * Change log:
+     *  0.0.1: initial version
+     *  0.1.0: add import tool
+     */
     public class PackageHelper: EditorWindow
     {
 
         #region Static
-        private const string version = "0.0.1";
+        private const string version = "0.1.0";
         private static string packageName;
         private static string organizationName = "Prototyper";
         private static string prefixName = "SS";
         private static bool addEditorFolder = true;
         private static bool addRuntimeFolder = true;
         #endregion
-        
+
         #region Enums & Classes
         private class PackageData
         {
@@ -80,6 +95,8 @@ namespace SS.PackageHelper
 
             private string prefix = "";
 
+            private AddRequest request;
+
             public override void OnToolGUI(EditorWindow window)
             {
                 if (!isActivated)
@@ -122,13 +139,28 @@ namespace SS.PackageHelper
                     EditorGUILayout.TextField(outputUrl);
                     if (GUILayout.Button("Import package"))
                     {
-                        UnityEditor.PackageManager.Client.Add(outputUrl);
+                        request = UnityEditor.PackageManager.Client.Add(outputUrl);
+                        EditorApplication.update += Progress;
+
                     }
                     // Button to copy url to clipboard (button with icon)
                     if (GUILayout.Button(EditorGUIUtility.IconContent("Clipboard").image))
                     {
                         EditorGUIUtility.systemCopyBuffer = outputUrl;
                     }
+                }
+            }
+
+            void Progress()
+            {
+                if (request.IsCompleted)
+                {
+                    if (request.Status == StatusCode.Success)
+                        Debug.Log("Installed: " + request.Result.packageId);
+                    else if (request.Status >= StatusCode.Failure)
+                        Debug.Log(request.Error.message);
+
+                    EditorApplication.update -= Progress;
                 }
             }
         }

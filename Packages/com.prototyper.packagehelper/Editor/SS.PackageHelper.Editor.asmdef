@@ -1,6 +1,6 @@
 {
     "name": "SS.PackageHelper",
-    "rootNamespace": "SS",
+    "rootNamespace": "SS.PackageHelper",
     "references": [],
     "includePlatforms": [
         "Editor"

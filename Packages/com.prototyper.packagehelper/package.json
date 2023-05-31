@@ -1,24 +1,23 @@
 {
   "name": "com.prototyper.packagehelper",
-  "version": "0.1.0",
-  "description": "Helper to create package",
+  "version": "0.2.0",
   "displayName": "SS Package Helper",
+  "description": "Tool for create, add and editor package",
   "unity": "2020.3",
   "unityRelease": "18f1",
   "documentationUrl": "",
   "changelogUrl": "",
-  "license": "",
   "licensesUrl": "",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.2"
+  },
   "keywords": [],
   "author": {
     "name": "Farl Lee",
     "email": "spring_snow@hotmail.com",
-    "url": ""
+    "url": "https://farllee.weebly.com/"
   },
-  "samples": {
-    "displayName": "Sample",
-    "description": "Sample description",
-    "path": "Samples~/Sample"
-  },
-  "type": "sample"
+  "hideInEditor": false,
+  "license": "",
+  "hideFlags": 0
 }

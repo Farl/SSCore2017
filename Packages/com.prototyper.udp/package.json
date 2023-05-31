@@ -1,13 +1,21 @@
 {
   "name": "com.prototyper.udp",
   "version": "0.0.1",
-  "description": "Description",
   "displayName": "SS UDP",
-  "samples": [
-	  {
-		  "displayName": "UDP Example",
-		  "description": "",
-		  "path": "Samples~/UDP Sample"
-	  }
-  ]
+  "description": "Network UDP",
+  "unity": "",
+  "unityRelease": "",
+  "documentationUrl": "localhost",
+  "changelogUrl": "localhost",
+  "licensesUrl": "localhost",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl",
+    "email": "spring_snow@hotmail.com",
+    "url": "localhost"
+  },
+  "hideInEditor": false,
+  "license": "",
+  "hideFlags": 0
 }

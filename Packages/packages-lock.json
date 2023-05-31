@@ -29,13 +29,17 @@
       "version": "file:com.prototyper.localpackage",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.2d.sprite": "1.0.0"
+      }
     },
     "com.prototyper.packagehelper": {
       "version": "file:com.prototyper.packagehelper",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      }
     },
     "com.prototyper.playable": {
       "version": "file:com.prototyper.playable",
@@ -182,7 +186,7 @@
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.0.2",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

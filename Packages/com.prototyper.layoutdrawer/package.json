@@ -1,6 +1,33 @@
 {
   "name": "com.prototyper.layoutdrawer",
   "version": "0.0.1",
+  "displayName": "SS LayoutDrawer",
   "description": "Description",
-  "displayName": "SS LayoutDrawer"
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [
+    {
+      "displayName": "LayoutDrawer Example",
+      "description": "",
+      "path": "Samples~/LayoutDrawer Example"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
 }

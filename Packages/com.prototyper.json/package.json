@@ -1,6 +1,27 @@
 {
   "name": "com.prototyper.json",
   "version": "0.0.1",
+  "displayName": "SS JSON",
   "description": "Description",
-  "displayName": "SS JSON"
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
 }

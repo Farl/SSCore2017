@@ -3,19 +3,31 @@
   "version": "0.0.1",
   "displayName": "SS UDP",
   "description": "Network UDP",
-  "unity": "",
-  "unityRelease": "",
-  "documentationUrl": "localhost",
-  "changelogUrl": "localhost",
-  "licensesUrl": "localhost",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
   "dependencies": {},
   "keywords": [],
   "author": {
-    "name": "Farl",
+    "name": "Farl Lee",
     "email": "spring_snow@hotmail.com",
-    "url": "localhost"
+    "url": ""
   },
   "hideInEditor": false,
   "license": "",
+  "samples": [
+    {
+      "displayName": "UDP Sample",
+      "description": "",
+      "path": "Samples~/UDP Sample"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
   "hideFlags": 0
 }

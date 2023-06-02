@@ -1,9 +1,70 @@
 {
   "name": "com.prototyper.sscore",
   "version": "0.0.1",
-  "description": "Description",
   "displayName": "SS Core",
+  "description": "Core function",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
   "dependencies": {
     "com.prototyper.stringevent": ""
-  }
+  },
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [
+    {
+      "displayName": "AnimatorHandler Example",
+      "description": "",
+      "path": "Samples~/AnimatorHandler Example"
+    },
+    {
+      "displayName": "FiniteStateMachine Example",
+      "description": "",
+      "path": "Samples~/FiniteStateMachine Example"
+    },
+    {
+      "displayName": "RuntimePlayerSettings Example",
+      "description": "",
+      "path": "Samples~/RuntimePlayerSettings Example"
+    },
+    {
+      "displayName": "StageSystem",
+      "description": "",
+      "path": "SS Game/Samples~/StageSystem"
+    },
+    {
+      "displayName": "Custom ProjectSettings Example",
+      "description": "",
+      "path": "SS ProjectSettings/Samples~/Custom ProjectSettings Example"
+    },
+    {
+      "displayName": "SpreadSheet Example",
+      "description": "",
+      "path": "SS Spreadsheet/Samples~/SpreadSheet Example"
+    },
+    {
+      "displayName": "TextTable Example",
+      "description": "",
+      "path": "SS TextTable/Samples~/TextTable Example"
+    },
+    {
+      "displayName": "UIManager Example",
+      "description": "",
+      "path": "SS UI/Samples~/UIManager Example"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
 }

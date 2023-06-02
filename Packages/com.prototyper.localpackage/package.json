@@ -22,5 +22,17 @@
   },
   "hideInEditor": false,
   "license": "",
+  "samples": [
+    {
+      "displayName": "Sample1",
+      "description": "",
+      "path": "Samples~/Sample1"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
   "hideFlags": 0
 }

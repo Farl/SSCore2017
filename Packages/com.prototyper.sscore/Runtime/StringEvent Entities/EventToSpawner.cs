@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using SS;
+#if USE_ADDRESSABLES
 using UnityEngine.AddressableAssets;
+#endif
 
 public class EventToSpawner : EventListener {
 

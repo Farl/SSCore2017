@@ -1,0 +1,21 @@
+{
+  "name": "com.prototyper.buildpipeline",
+  "version": "0.0.1",
+  "displayName": "SS BuildPipeline",
+  "description": "Build pipeline for build player, addressable, ... etc",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": "https://farllee.weebly.com/"
+  },
+  "hideInEditor": false,
+  "license": "",
+  "hideFlags": 0
+}

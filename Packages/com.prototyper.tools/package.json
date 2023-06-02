@@ -1,1 +1,27 @@
-{"name":"com.prototyper.tools","displayName":"SS Tools","version":"0.0.1","description":"Description"}
+{
+  "name": "com.prototyper.tools",
+  "version": "0.0.1",
+  "displayName": "SS Tools",
+  "description": "Description",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
+}

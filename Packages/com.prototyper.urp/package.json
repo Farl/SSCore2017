@@ -1,1 +1,33 @@
-{"name":"com.prototyper.urp","displayName":"SS URP","version":"0.0.1","description":"Description"}
+{
+  "name": "com.prototyper.urp",
+  "version": "0.0.1",
+  "displayName": "SS URP",
+  "description": "Description",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [
+    {
+      "displayName": "Replace Standard by Lit Example",
+      "description": "",
+      "path": "Samples~/Replace Standard by Lit Example"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
+}

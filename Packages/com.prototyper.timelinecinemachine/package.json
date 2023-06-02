@@ -1,0 +1,33 @@
+{
+  "name": "com.prototyper.timelinecinemachine",
+  "version": "0.0.1",
+  "displayName": "SS TimelineCinemachine",
+  "description": "TimelineCinemachine",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [
+    {
+      "displayName": "A to B Example",
+      "description": "",
+      "path": "Samples~/A to B Example"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
+}

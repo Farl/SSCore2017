@@ -13,6 +13,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.prototyper.buildpipeline": {
+      "version": "file:com.prototyper.buildpipeline",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.prototyper.json": {
       "version": "file:com.prototyper.json",
       "depth": 0,
@@ -63,6 +69,12 @@
     },
     "com.prototyper.stringevent": {
       "version": "file:com.prototyper.stringevent",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.prototyper.timelinecinemachine": {
+      "version": "file:com.prototyper.timelinecinemachine",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

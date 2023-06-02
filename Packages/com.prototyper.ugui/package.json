@@ -1,11 +1,33 @@
 {
   "name": "com.prototyper.ugui",
   "version": "0.0.1",
-  "description": "Description",
   "displayName": "SS UGUI",
-  "samples": [{
-    "displayName": "Content Size Fitter",
-    "description": "Custom Content Size Fitter sample",
-    "path": "Samples~/ContentSizeFitter"
-  }]
+  "description": "Description",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [
+    {
+      "displayName": "UGUI LayoutGroup Example",
+      "description": "",
+      "path": "Samples~/UGUI LayoutGroup Example"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
 }

@@ -1,0 +1,18 @@
+{
+    "name": "SS.BuildPipeline.Editor",
+    "rootNamespace": "SS",
+    "references": [
+        "GUID:011f41291280f45e290fd8281fb123a5"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

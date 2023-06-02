@@ -6,9 +6,16 @@ using UnityEditor.Build;
 using System.IO;
 using UnityEditor.Rendering;
 
+/// <summary>
+/// Replace built-in Standard shader by URP Lit shader
+/// Prevent some asset use default material that still use Standard shader
+/// by Farl
+/// </summary>
+
 [InitializeOnLoad]
 public class URPProcess : IPreprocessShaders
 {
+    private static bool showDebugInfo = false;
     static URPProcess()
     {
         // UniversalRenderPipeline.cs editorResource, our own UniversalRenderPipelineEditorResources
@@ -16,7 +23,6 @@ public class URPProcess : IPreprocessShaders
         // ShaderUtil.cs shader s_ShaderGUIDs[0](Lit) s_ShaderGUIDs[1](SimpleLit)
         FindAndReplace("a59ed397e0917cd4aa1de2bb1495fead", "933532a4fcc9baf4fa0491de14d08ed7", "8d2bb70cbf9db8d4da26e15b26e74248");
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-
     }
 
     public int callbackOrder => 0;
@@ -26,8 +32,11 @@ public class URPProcess : IPreprocessShaders
         if (AssetDatabase.GUIDFromAssetPath(AssetDatabase.GetAssetPath(shader)).ToString().Equals("933532a4fcc9baf4fa0491de14d08ed7"))
         //if (shader.name.Contains("Universal Render Pipeline/Lit"))
         {
-            Debug.LogWarning(AssetDatabase.GetAssetPath(shader));
-            Debug.LogWarning(AssetDatabase.GUIDFromAssetPath(AssetDatabase.GetAssetPath(shader)));
+            if (showDebugInfo)
+            {
+                Debug.LogWarning(AssetDatabase.GetAssetPath(shader));
+                Debug.LogWarning(AssetDatabase.GUIDFromAssetPath(AssetDatabase.GetAssetPath(shader)));
+            }
    
             data.Clear();
         }
@@ -36,9 +45,11 @@ public class URPProcess : IPreprocessShaders
     static void FindAndReplace(string guid, string find, string replace)
     {
         var p = AssetDatabase.GUIDToAssetPath(guid);
-        Debug.Log(p);
+        if (showDebugInfo)
+            Debug.Log(p);
         var fp = Path.GetFullPath(p);
-        Debug.Log(fp);
+        if (showDebugInfo)
+            Debug.Log(fp);
 
         var text = File.ReadAllText(fp);
         text = text.Replace(find, replace);

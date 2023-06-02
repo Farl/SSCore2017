@@ -1,1 +1,33 @@
-{"name":"com.prototyper.addressable","displayName":"SS Addressable","version":"0.0.1","description":"Description"}
+{
+  "name": "com.prototyper.addressable",
+  "version": "0.0.1",
+  "displayName": "SS Addressable",
+  "description": "Addressable",
+  "unity": null,
+  "unityRelease": null,
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {},
+  "keywords": [],
+  "author": {
+    "name": "Farl Lee",
+    "email": "spring_snow@hotmail.com",
+    "url": ""
+  },
+  "hideInEditor": false,
+  "license": "",
+  "samples": [
+    {
+      "displayName": "Addressable Examples",
+      "description": "",
+      "path": "Samples~/Addressable Examples"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "",
+    "revision": ""
+  },
+  "hideFlags": 0
+}

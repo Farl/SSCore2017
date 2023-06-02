@@ -3,117 +3,81 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace SS.PackageHelper
 {
     /**
      * Input a json file, and read it as a package description object
+        * 2023-06-02: fix minimal unity version issue.
      */
     public class PackageEditTool : PackageTool
     {
-        [System.Serializable]
-        public class Author
-        {
-            public string name = "";
-            public string email = "";
-            public string url = "";
-        }
-
-        [System.Serializable]
-        public class PackageData : UnityEngine.ScriptableObject, ISerializationCallbackReceiver
-        {
-            /* Package example
-                {
-                    "name": "com.[company-name].[package-name]",
-                    "version": "1.2.3",
-                    "displayName": "Package Example",
-                    "description": "This is an example package",
-                    "unity": "2019.1",
-                    "unityRelease": "0b5",
-                    "documentationUrl": "https://example.com/",
-                    "changelogUrl": "https://example.com/changelog.html",
-                    "licensesUrl": "https://example.com/licensing.html",
-                    "dependencies": {
-                        "com.[company-name].some-package": "1.0.0",
-                        "com.[company-name].other-package": "2.0.0"
-                    },
-                    "keywords": [
-                        "keyword1",
-                        "keyword2",
-                        "keyword3"
-                    ],
-                    "author": {
-                        "name": "Unity",
-                        "email": "unity@example.com",
-                        "url": "https://www.unity3d.com"
-                    }
-                }
-            */
-            public new string name = "";
-            public string version = "";
-            public string displayName = "";
-            public string description = "";
-            public string unity = "";
-            public string unityRelease = "";
-            public string documentationUrl = "";
-            public string changelogUrl = "";
-            public string licensesUrl = "";
-            public Dictionary<string, string> dependencies = new Dictionary<string, string>();
-
-            [System.NonSerialized]
-            public string[] _dependencies_keys = new string[] { };
-
-            [System.NonSerialized]
-            public string[] _dependencies_values = new string[] { };
-
-            public string[] keywords = new string[] { };
-            public Author author = new Author();
-            public bool hideInEditor = false;
-            public string license;
-
-            public void OnAfterDeserialize()
-            {
-                //Debug.Log("OnAfterDeserialize");
-                _dependencies_keys = new string[dependencies.Count];
-                _dependencies_values = new string[dependencies.Count];
-                int i = 0;
-                foreach (var kvp in dependencies)
-                {
-                    _dependencies_keys[i] = kvp.Key;
-                    _dependencies_values[i] = kvp.Value;
-                    i++;
-                }
-            }
-
-            public void OnBeforeSerialize()
-            {
-                //Debug.Log("OnBeforeSerialize");
-                dependencies.Clear();
-                for (int i = 0; i < _dependencies_keys.Length; i++)
-                {
-                    dependencies.Add(_dependencies_keys[i], _dependencies_values[i]);
-                }
-            }
-        }
-
         TextAsset jsonFile;
         PackageData packageData;
         SerializedObject serializedObject;
+        private string[] packageFolders;
+
+        override public GUIContent toolbarIcon
+        {
+            // use icon In-Development
+            get { return new GUIContent("", EditorGUIUtility.IconContent("CustomTool").image, "List and Edit"); }
+
+        }
+
+        private void ListAllLocalPackages()
+        {
+            if (GUILayout.Button("List all local packages"))
+            {
+                var packagesFolder = Application.dataPath + "/../Packages";
+                packageFolders = Directory.GetDirectories(packagesFolder, "*", SearchOption.TopDirectoryOnly);
+            }
+            EditorGUILayout.Separator();
+
+            if (packageFolders == null)
+                return;
+
+            foreach (var folder in packageFolders)
+            {
+                var filename = Path.GetFileName(folder);
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button(filename))
+                {
+                    // Select packageJson file in Project window
+                    var packageJson = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>($"Packages/{filename}/package.json");
+                    if (packageJson != null)
+                    {
+                        jsonFile = packageJson as TextAsset;
+                        ReadJson();
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+        }
 
         public override void OnToolGUI(EditorWindow window)
         {
-            if (!isActivated)
-                return;
-                
             base.OnToolGUI(window);
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUI.BeginChangeCheck();
             jsonFile = EditorGUILayout.ObjectField("Json File", jsonFile, typeof(TextAsset), false) as TextAsset;
-            if (jsonFile != null && GUILayout.Button("Read"))
+            if (jsonFile != null && EditorGUI.EndChangeCheck())
             {
                 ReadJson();
             }
+            if (GUILayout.Button("X", GUILayout.Width(20)))
+            {
+                jsonFile = null;
+            }
+            EditorGUILayout.EndHorizontal();
 
-            if (packageData == null || serializedObject == null)
+            if (jsonFile == null || packageData == null || serializedObject == null)
+            {
+                ListAllLocalPackages();
                 return;
+            }
+
             var prop = serializedObject.GetIterator();
             prop.NextVisible(true);
             do
@@ -148,11 +112,44 @@ namespace SS.PackageHelper
                 list.Add("");
                 packageData._dependencies_values = list.ToArray();
             }
+            EditorGUILayout.Space();
+
+            // Detect all folders in Samples~ folder in current package (by package json file)
+            EditorGUILayout.LabelField("Samples in Samples~ folder:");
+            var packageFolder = Path.GetDirectoryName(AssetDatabase.GetAssetPath(jsonFile));
+            var allSamplesInPackage = Directory.GetDirectories(packageFolder, "Samples~", SearchOption.AllDirectories);
+            foreach (var samplesFolder in allSamplesInPackage)
+            {
+                var samples = Directory.GetDirectories(samplesFolder, "*", SearchOption.TopDirectoryOnly);
+                foreach (var samplePath in samples)
+                {
+                    var relativeSamplePath = samplePath.Replace(packageFolder + "/", "");
+                    var sampleName = Path.GetFileName(samplePath);
+                    EditorGUI.indentLevel = 1;
+                    EditorGUILayout.BeginHorizontal();
+                    if (GUILayout.Button("+", GUILayout.Width(20)))
+                    {
+                        ArrayUtility.Add<Sample>(ref packageData.samples,
+                            new Sample()
+                            {
+                                path = $"{relativeSamplePath}",
+                                displayName = $"{sampleName}"
+                            }
+                        );
+                        serializedObject.Update();
+                    }
+                    EditorGUILayout.LabelField(Path.GetFileName(samplePath));
+                    EditorGUILayout.EndHorizontal();
+                }
+            }
+
+            EditorGUI.indentLevel = 0;
 
             if (serializedObject.ApplyModifiedProperties())
             {
-                serializedObject.Update();
             }
+
+            EditorGUILayout.Separator();
 
             if (GUILayout.Button("Save"))
             {
@@ -167,14 +164,10 @@ namespace SS.PackageHelper
             if (packageData == null)
                 return;
 
-            packageData.OnBeforeSerialize();
-            var json = JsonConvert.SerializeObject(packageData, Formatting.Indented);
-            
-            Debug.Log(json);
-            System.IO.File.WriteAllText(AssetDatabase.GetAssetPath(jsonFile), json);
-            
+            System.IO.File.WriteAllText(AssetDatabase.GetAssetPath(jsonFile), packageData.SerializeObject());
+
             // refresh packages
-            UnityEditor.PackageManager.Client.Resolve();
+            RefreshPackages();
         }
 
         void ReadJson()
@@ -182,12 +175,8 @@ namespace SS.PackageHelper
             if (jsonFile == null)
                 return;
             packageData = null;
-            packageData = CreateInstance<PackageData>();
-
-            Debug.Log(jsonFile.text);
-
-            JsonConvert.PopulateObject(jsonFile.text, packageData);
-            packageData.OnAfterDeserialize();
+            packageData = ScriptableObject.CreateInstance<PackageData>();
+            packageData.PopulateObject(jsonFile.text);
 
             serializedObject = new SerializedObject(packageData);
             serializedObject.Update();

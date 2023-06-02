@@ -15,20 +15,22 @@ namespace SS.PackageHelper
      * 
      * A tool to help create and import packages
      * 
-     * @version 0.2.0
+     * @version 0.3.0
      * @package SS.PackageHelper
      * @author Farl
      *
      * Change log:
-        *  0.0.1: initial version
-        *  0.1.0: add import tool
-        *  0.2.0: add edit tool
+        * 0.0.1: initial version
+        * 0.1.0: add import tool
+        * 0.2.0: add edit tool
+        * 0.2.1: fix minimal unity version issue.
+        * 0.3.0: Support for manage samples
      */
     public class PackageHelper: EditorWindow
     {
 
         #region Static
-        private const string version = "0.2.0";
+        private const string version = "0.3.0";
         private static Vector2 scrollVec = Vector2.zero;
         #endregion
 
@@ -40,21 +42,27 @@ namespace SS.PackageHelper
         public static void CreateNewPackage()
         {
             var window = EditorWindow.CreateWindow<PackageHelper>();
-            window.titleContent = new GUIContent($"Package {version}");
         }
         #endregion
 
         #region Private & Protected
+        private int toolbarIndex = 0;
 
-        private PackageImportTool packageImportTool;
-        private PackageCreateTool packageCreateTool;
-        private PackageEditTool packageEditTool;
+        private PackageImportTool packageImportTool = new PackageImportTool();
+        private PackageCreateTool packageCreateTool = new PackageCreateTool();
+        private PackageEditTool packageEditTool = new PackageEditTool();
+        private PackageSampleTool packageSampleTool = new PackageSampleTool();
 
         private void OnEnable()
         {
-            packageImportTool = ScriptableObject.CreateInstance<PackageImportTool>();
-            packageCreateTool = ScriptableObject.CreateInstance<PackageCreateTool>();
-            packageEditTool = ScriptableObject.CreateInstance<PackageEditTool>();
+            titleContent = new GUIContent($"Package {version}");
+            switch (toolbarIndex)
+            {
+                case 0: packageCreateTool.OnEnable(); break;
+                case 1: packageImportTool.OnEnable(); break;
+                case 2: packageEditTool.OnEnable(); break;
+                case 3: packageSampleTool.OnEnable(); break;
+            }
         }
 
         private void OnGUI()
@@ -62,13 +70,22 @@ namespace SS.PackageHelper
             EditorGUILayout.HelpBox($"Package Helper {version}", MessageType.Info);
 
             // Select a tool by EditorToolbar and draw that tool
-            EditorGUILayout.EditorToolbar(packageCreateTool, packageImportTool, packageEditTool);
+            toolbarIndex = GUILayout.Toolbar(toolbarIndex, new GUIContent[] {
+                packageCreateTool.toolbarIcon,
+                packageImportTool.toolbarIcon,
+                packageEditTool.toolbarIcon,
+                packageSampleTool.toolbarIcon
+            });
 
             scrollVec = EditorGUILayout.BeginScrollView(scrollVec);
 
-            packageCreateTool.OnToolGUI(this);
-            packageImportTool.OnToolGUI(this);
-            packageEditTool.OnToolGUI(this);
+            switch (toolbarIndex)
+            {
+                case 0: packageCreateTool.OnToolGUI(this); break;
+                case 1: packageImportTool.OnToolGUI(this); break;
+                case 2: packageEditTool.OnToolGUI(this); break;
+                case 3: packageSampleTool.OnToolGUI(this); break;
+            }
 
             EditorGUILayout.EndScrollView();
         }

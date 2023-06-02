@@ -14,17 +14,6 @@ namespace SS.PackageHelper
     public class PackageCreateTool : PackageTool
     {
         #region Enums & Classes
-        private class PackageData
-        {
-            public PackageData(string packageName)
-            {
-                name = packageName;
-            }
-            public string name = "";
-            public string displayName = "";
-            public string version = "0.0.1";
-            public string description = "Description";
-        }
 
         private class AssemblyDefinitionReferenceAsset
         {
@@ -57,8 +46,6 @@ namespace SS.PackageHelper
 
         public override void OnToolGUI(EditorWindow window)
         {
-            if (!isActivated)
-                return;
             base.OnToolGUI(window);
 
             packageName = EditorGUILayout.TextField("Package Name", packageName);
@@ -79,10 +66,14 @@ namespace SS.PackageHelper
                 var newPackageJsonPath = Path.Combine(newPackagePath, $"package.json");
                 using (var sw = File.CreateText(newPackageJsonPath))
                 {
-                    var pd = new PackageData(fullPackageName)
-                    { displayName = $"{prefixName} {packageName}" };
-                    var json = UnityEditor.EditorJsonUtility.ToJson(pd);
-                    sw.Write(json);
+                    var pd = new PackageData()
+                    {
+                        name = fullPackageName,
+                        displayName = $"{prefixName} {packageName}",
+                        description = packageName,
+                        author = new Author(){ name = System.Environment.UserName }
+                    };
+                    sw.Write(pd.SerializeObject());
                     sw.Close();
                 }
 
@@ -120,7 +111,7 @@ namespace SS.PackageHelper
                 }
 
                 // Refresh packages
-                UnityEditor.PackageManager.Client.Resolve();
+                RefreshPackages();
             }
         }
     }

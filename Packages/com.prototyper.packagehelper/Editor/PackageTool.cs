@@ -10,20 +10,25 @@ using UnityEditor.Scripting;
 
 namespace SS.PackageHelper
 {
-    public class PackageTool : EditorTool
+    public class PackageTool
     {
-        protected bool isActivated = false;
-
-        public override void OnActivated()
+        public virtual GUIContent toolbarIcon
         {
-            base.OnActivated();
-            isActivated = true;
+            get { return new GUIContent("", EditorGUIUtility.IconContent("CustomTool").image, this.ToString()); }
         }
 
-        public override void OnWillBeDeactivated()
+        public virtual void OnToolGUI(EditorWindow window)
         {
-            base.OnWillBeDeactivated();
-            isActivated = false;
+        }
+
+        public void RefreshPackages()
+        {
+            UnityEditor.PackageManager.Client.Resolve();
+        }
+
+        public virtual void OnEnable()
+        {
+
         }
     }
 }

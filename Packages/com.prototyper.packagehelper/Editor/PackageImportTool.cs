@@ -15,7 +15,8 @@ namespace SS.PackageHelper
         override public GUIContent toolbarIcon
         {
             // Use download icon
-            get { return new GUIContent("", EditorGUIUtility.IconContent("CloudConnect@2x").image, "Import"); }
+            //get { return new GUIContent("", EditorGUIUtility.IconContent("CloudConnect@2x").image, "Import"); }
+            get { return new GUIContent("", EditorGUIUtility.IconContent("Import-Available").image, "Import"); }
         }
 
         private string outputUrl = "";
@@ -29,15 +30,16 @@ namespace SS.PackageHelper
 
         public override void OnToolGUI(EditorWindow window)
         {
-            if (!isActivated)
-                return;
             base.OnToolGUI(window);
 
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
             // A help button(with question mark icon) to open unity import custom package url
-            if (GUILayout.Button(EditorGUIUtility.IconContent("console.infoicon.sml")))
+            if (GUILayout.Button(EditorGUIUtility.IconContent("_Help@2X"), GUILayout.Width(40)))
             {
                 Application.OpenURL("https://docs.unity3d.com/Manual/upm-ui-giturl.html");
             }
+            EditorGUILayout.EndHorizontal();
 
             version = EditorGUILayout.TextField("Version", version);
             path = EditorGUILayout.TextField("Path", path);

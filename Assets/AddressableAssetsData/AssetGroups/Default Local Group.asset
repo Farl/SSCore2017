@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 04041fa659aff4443bd8938c0194d27d
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 900cbcbe117f545279452d1fae15880d
+    m_Address: SS.Core.MyCustomSettings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: db37b2c01ed566e439dfa0269ddb0887, type: 2}
   m_SchemaSet:

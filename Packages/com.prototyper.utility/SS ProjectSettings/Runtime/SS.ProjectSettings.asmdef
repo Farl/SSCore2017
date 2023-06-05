@@ -1,19 +1,23 @@
 {
-    "name": "SS.BuildPipeline.Editor",
+    "name": "SS.Core.ProjectSettings",
     "rootNamespace": "SS",
     "references": [
-        "GUID:011f41291280f45e290fd8281fb123a5",
+        "GUID:f3b38a7faa02d4f0696603e0fd6bc24f",
         "GUID:7b353e1df64e3475c9a1a23b57899d2f"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.addressables",
+            "expression": "",
+            "define": "USE_ADDRESSABLES"
+        }
+    ],
     "noEngineReferences": false
 }

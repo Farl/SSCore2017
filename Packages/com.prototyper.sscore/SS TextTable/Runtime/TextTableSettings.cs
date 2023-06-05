@@ -11,7 +11,7 @@ using UnityEditor;
 
 namespace SS.TextTable
 {
-    public class TextTableSettings : ProjectSettingsObject<TextTableSettings>, ISerializationCallbackReceiver
+    public class TextTableSettings : ProjectSettingsObjectSync<TextTableSettings>, ISerializationCallbackReceiver
     {
         [Serializable]
         public class Data
@@ -29,7 +29,6 @@ namespace SS.TextTable
         private List<Data> dataList = new List<Data>();
 
         public Dictionary<string, Data> dataMap = new Dictionary<string, Data>();
-
         protected override void OnCreate()
         {
             

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e459cd4ee5a88264da5aed6eb475e118, type: 3}
-  m_Name: SS.Core.DataAssetSettings
+  m_Script: {fileID: 11500000, guid: 7fd82f9dce2ff4f4cb94ca475da3b6ab, type: 3}
+  m_Name: SS.Core.MyCustomSettings
   m_EditorClassIdentifier: 
-  settingPathAddressable: Assets/SS Settings/AAResources
-  setttingPathResources: Assets/SS Settings/Resources
+  m_Number: 123
+  m_SomeString: The answer to the universe

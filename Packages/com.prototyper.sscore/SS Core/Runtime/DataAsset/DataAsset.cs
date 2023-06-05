@@ -23,10 +23,7 @@ namespace SS.Core
 			}
 		}
 
-		private static string settingsPath
-        {
-            get { return DataAssetSettings.Instance.settingPath; }
-        }
+		private static string settingsPath => DataAssetSettings.Instance.settingPath;
 		const string settingsAssetExtension = ".asset";
         private static string fullPath => $"{settingsPath}/{settingsAssetName}";    // Unity use '/'
 
@@ -65,13 +62,39 @@ namespace SS.Core
                 {
                     if (inst == null)
                     {
-                        Debug.LogError($"Load {typeof(T).ToString()} failed");
+                        Debug.LogWarning($"Load {typeof(T).ToString()} failed");
+                        inst = ScriptableObject.CreateInstance<T>();
                     }
                     instance = inst;
                     onComplete?.Invoke(instance);
                 });
             }
         }
+
+#if UNITY_EDITOR
+        private static T _editorInstance;
+
+        public static T editorInstance
+        {
+            get
+            {
+                // In Editor always load immediately
+                if (_editorInstance == null)
+                {
+                    _editorInstance = AssetDatabase.LoadAssetAtPath<T>(fullPath);
+                    if (_editorInstance == null)
+                    {
+                        _editorInstance = ScriptableObject.CreateInstance<T>();
+                        // Create asset with addressable group
+                        string properPath = Path.Combine(DirectoryUtility.ProjectPath, settingsPath);
+                        DirectoryUtility.CheckAndCreateDirectory(properPath, false);
+                        ResourceSystem.CreateAsset(_editorInstance, fullPath);
+                    }
+                }
+                return _editorInstance;
+            }
+        }
+#endif
 
         public static T Instance
 		{
@@ -82,19 +105,7 @@ namespace SS.Core
                     if (!Application.isPlaying)
                     {
 #if UNITY_EDITOR
-                        // Load from AssetDatabase
-                        instance = AssetDatabase.LoadAssetAtPath<T>(fullPath);
-
-                        // Create if load failed
-                        if (instance == null)
-                        {
-                            instance = ScriptableObject.CreateInstance<T>();
-
-                            // Create asset with addressable group
-                            string properPath = Path.Combine(DirectoryUtility.ProjectPath, settingsPath);
-                            DirectoryUtility.CheckAndCreateDirectory(properPath, false);
-                            ResourceSystem.CreateAsset(instance, fullPath);
-                        }
+                        instance = editorInstance;
 #endif
                     }
                     else
@@ -117,7 +128,7 @@ namespace SS.Core
 #if UNITY_EDITOR
 		public static void EditNow()
 		{
-			Selection.activeObject = Instance;
+			Selection.activeObject = editorInstance;
 		}
 
 		public void DirtyEditor()

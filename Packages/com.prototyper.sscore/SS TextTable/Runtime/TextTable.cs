@@ -75,6 +75,12 @@ namespace SS.TextTable
             isInitializing = true;
             Localization.Register(localizationHandler);
 
+#if USE_ADDRESSABLES
+            Debug.Log("With Addressables");
+#else
+            Debug.Log("Without Addressables");
+#endif
+
             var defaultPackages = TextTableSettings.Instance.defaultPackages;
             var count = defaultPackages.Count;
 

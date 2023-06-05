@@ -1,12 +1,8 @@
 {
-    "name": "SS.Animator.Editor",
-    "rootNamespace": "",
-    "references": [
-        "GUID:7b353e1df64e3475c9a1a23b57899d2f"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "name": "SS.Utility",
+    "rootNamespace": "SS",
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

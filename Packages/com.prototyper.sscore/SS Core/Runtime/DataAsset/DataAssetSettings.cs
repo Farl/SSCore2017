@@ -7,9 +7,25 @@ using UnityEditor;
 
 namespace SS.Core
 {
-    public class DataAssetSettings : ProjectSettingsObject<DataAssetSettings>
+    public class DataAssetSettings : ProjectSettingsObjectSync<DataAssetSettings>
     {
-        public string settingPath = "Assets/SS Settings/AAResources";
+
+#pragma warning disable 414
+        [SerializeField] private string settingPathAddressable = "Assets/SS Settings/AAResources";
+        [SerializeField] private string setttingPathResources = "Assets/SS Settings/Resources";
+#pragma warning restore 414
+
+        public string settingPath
+        {
+            get
+            {
+#if USE_ADDRESSABLES
+                return settingPathAddressable;
+#else
+                return setttingPathResources;
+#endif
+            }
+        }
 
         protected override void OnCreate()
         {

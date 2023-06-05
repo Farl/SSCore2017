@@ -30,7 +30,7 @@ namespace SS.Core
         static void Update()
         {
             // Prepare runtime player settings
-            RuntimePlayerSettings setting = RuntimePlayerSettings.Instance;
+            RuntimePlayerSettings setting = RuntimePlayerSettings.editorInstance;
 
             if (setting != null)
             {
@@ -61,7 +61,7 @@ namespace SS.Core
         public void OnPreprocessBuild(BuildTarget target, string path)
         {
             // Prepare runtime player settings
-            RuntimePlayerSettings setting = RuntimePlayerSettings.Instance;
+            RuntimePlayerSettings setting = RuntimePlayerSettings.editorInstance;
 
             // Update machine name
             setting.userName = System.Environment.UserName;

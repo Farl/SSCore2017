@@ -7,13 +7,10 @@ using UnityEditor;
 
 namespace SS.Core
 {
-    public class LocalizationSettings : ProjectSettingsObject<LocalizationSettings>
+    public class LocalizationSettings : ProjectSettingsObjectSync<LocalizationSettings>
     {
-        [SerializeField]
-        private List<SystemLanguage> textSupportedLanguage = new List<SystemLanguage>();
-
-        [SerializeField]
-        private List<SystemLanguage> audioSupportedLanguage = new List<SystemLanguage>();
+        [SerializeField] private List<SystemLanguage> textSupportedLanguage = new List<SystemLanguage>();
+        [SerializeField] private List<SystemLanguage> audioSupportedLanguage = new List<SystemLanguage>();
 
         protected override void OnCreate()
         {

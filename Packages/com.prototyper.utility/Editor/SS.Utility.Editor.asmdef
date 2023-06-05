@@ -1,6 +1,6 @@
 {
-    "name": "SS.Animator.Editor",
-    "rootNamespace": "",
+    "name": "SS.Utility.Editor",
+    "rootNamespace": "SS",
     "references": [
         "GUID:7b353e1df64e3475c9a1a23b57899d2f"
     ],

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e459cd4ee5a88264da5aed6eb475e118, type: 3}
-  m_Name: SS.Core.DataAssetSettings
+  m_Script: {fileID: 11500000, guid: db7b9598481365247b2abaff298ea1c8, type: 3}
+  m_Name: SS.TextTable.TextTableSettings
   m_EditorClassIdentifier: 
-  settingPathAddressable: Assets/SS Settings/AAResources
-  setttingPathResources: Assets/SS Settings/Resources
+  assetPath: Assets/TextTable/Resources/
+  defaultPackages: []
+  dataList: []

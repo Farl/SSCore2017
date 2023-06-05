@@ -4,7 +4,8 @@ using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-namespace SS
+
+namespace SS.Core
 {
 	public class DialogSettings : DataAsset<DialogSettings>
 	{

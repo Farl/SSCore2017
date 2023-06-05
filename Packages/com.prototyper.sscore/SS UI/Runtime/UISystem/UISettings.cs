@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 
-namespace SS
+namespace SS.Core
 {
 	public class UISettings : DataAsset<UISettings>, ISerializationCallbackReceiver
 	{

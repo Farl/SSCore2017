@@ -10,7 +10,7 @@ using UnityEditor;
 #endif
 
 
-namespace SS
+namespace SS.Core
 {
     public abstract partial class ProjectSettingsObject<T> : ScriptableObject where T : ProjectSettingsObject<T>
     {

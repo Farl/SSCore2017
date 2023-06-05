@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SS
+namespace SS.Core
 {
     [System.Serializable]
     public class UIOrderSetting
@@ -16,7 +16,6 @@ namespace SS
         }
         public List<UIOrderData> data = new List<UIOrderData>();
     }
-
     public class UIManager : Singleton<UIManager>
     {
         public UIOrderSetting orderSetting;

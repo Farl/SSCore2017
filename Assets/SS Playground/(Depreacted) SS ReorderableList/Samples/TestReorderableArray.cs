@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
+using SS.Core;
+
 public class TestReorderableArray : MonoBehaviour
 {
     [System.Serializable]

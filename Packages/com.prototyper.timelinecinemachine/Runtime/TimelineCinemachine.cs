@@ -5,6 +5,7 @@
     using UnityEngine;
     using UnityEngine.Playables;
     using Cinemachine;
+    using SS.Core;
 
     [RequireComponent(typeof(PlayableDirector))]
     public class TimelineCinemachine : MonoBehaviour

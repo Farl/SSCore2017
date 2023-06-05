@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-namespace SS
+namespace SS.Core
 {
     [CreateAssetMenu(fileName = "Stage", menuName = "SS/Stage", order = 0)]
     public class Stage : ScriptableObject

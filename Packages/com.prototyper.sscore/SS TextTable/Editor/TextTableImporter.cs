@@ -7,8 +7,9 @@ using System.IO;
 using System;
 
 using System.Reflection;
+using SS.Core;
 
-namespace SS
+namespace SS.TextTable
 {
     public class TextTableImporter: AssetPostprocessor
     {

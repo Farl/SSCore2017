@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SS.Legacy;
 
-namespace SS
+namespace SS.Core
 {
 
     public class StageSystem : InitBehaviour

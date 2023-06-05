@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SS.Core;
 
-namespace SS
+namespace SS.TextTable
 {
     public class TextTableSampleGameMain : MonoBehaviour
     {

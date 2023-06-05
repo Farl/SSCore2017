@@ -1,6 +1,6 @@
 {
-    "name": "SS.Todo.Editor",
-    "rootNamespace": "SS",
+    "name": "SS.Game.Editor",
+    "rootNamespace": "SS.Game",
     "references": [],
     "includePlatforms": [
         "Editor"

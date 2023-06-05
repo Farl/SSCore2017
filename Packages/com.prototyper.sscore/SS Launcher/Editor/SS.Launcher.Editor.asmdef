@@ -1,6 +1,6 @@
 {
     "name": "SS.Launcher.Editor",
-    "rootNamespace": "SS",
+    "rootNamespace": "SS.Launcher",
     "references": [],
     "includePlatforms": [
         "Editor"

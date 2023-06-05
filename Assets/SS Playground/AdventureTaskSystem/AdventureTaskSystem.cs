@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SS;
+using SS.Core;
 
 public class AdventureTaskSystem : Singleton<AdventureTaskSystem> {
     [SerializeField] private List<AdventureTask> tasks = new List<AdventureTask>();

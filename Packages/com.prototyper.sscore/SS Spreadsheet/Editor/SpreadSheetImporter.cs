@@ -10,7 +10,7 @@ using System.IO;
 using System;
 using System.Reflection;
 
-namespace SS
+namespace SS.Core
 {
     public class SpreadSheetImporter
     {

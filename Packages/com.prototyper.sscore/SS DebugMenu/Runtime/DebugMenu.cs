@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-namespace SS
+namespace SS.Core
 {
     [System.Serializable]
     public class DebugEventInfo

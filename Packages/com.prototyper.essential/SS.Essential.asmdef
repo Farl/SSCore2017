@@ -1,0 +1,19 @@
+{
+    "name": "SS.Essential",
+    "rootNamespace": "SS",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:011f41291280f45e290fd8281fb123a5",
+        "GUID:fd6cf9e870ffe4f8f95f598d2604806d",
+        "GUID:76096b177011245bbb989ad9a5a622db"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

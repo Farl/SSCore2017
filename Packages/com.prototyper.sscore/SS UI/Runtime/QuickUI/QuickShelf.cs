@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace SS
+namespace SS.Core
 {
 	[DisallowMultipleComponent]
 	[RequireComponent(typeof(CanvasGroup))]

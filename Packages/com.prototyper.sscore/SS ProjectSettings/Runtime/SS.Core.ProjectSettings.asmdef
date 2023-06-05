@@ -1,0 +1,17 @@
+{
+    "name": "SS.Core.ProjectSettings",
+    "rootNamespace": "SS.Core",
+    "references": [
+        "GUID:f3b38a7faa02d4f0696603e0fd6bc24f",
+        "GUID:011f41291280f45e290fd8281fb123a5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -10,7 +10,7 @@ using NPOI.XSSF.UserModel;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 
-namespace SS
+namespace SS.Core
 {
     public class SpreadSheet : IEnumerable
     {

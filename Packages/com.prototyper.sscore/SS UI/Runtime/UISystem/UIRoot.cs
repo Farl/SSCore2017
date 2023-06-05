@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace SS
+namespace SS.Core
 {
     public class UIRoot : InitBehaviour
     {

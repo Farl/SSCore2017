@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Serialization;
 
-namespace SS
+namespace SS.TextTable
 {
     // Should in the same name script to use ScriptableObject.CreateInstance
     public class TextPackage : ScriptableObject, ISerializationCallbackReceiver

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace SS
+namespace SS.TextTable
 {
     public class TextTableMapping : MonoBehaviour, ITextTableLanguage
     {

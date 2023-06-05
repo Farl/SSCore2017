@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SS
+namespace SS.Core
 {
 	public class DialogSystemBase
 	{

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Serialization;
+using SS.Core;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace SS
+namespace SS.TextTable
 {
     public class TextTableSettings : ProjectSettingsObject<TextTableSettings>, ISerializationCallbackReceiver
     {

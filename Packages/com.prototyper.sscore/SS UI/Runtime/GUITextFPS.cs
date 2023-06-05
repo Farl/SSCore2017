@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-namespace SS
+namespace SS.Core
 {
     public class GUITextFPS : MonoBehaviour
     {

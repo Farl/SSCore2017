@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace SS
+namespace SS.TextTable
 {
     //[CustomPropertyDrawer(typeof(TextTableSettings.Data))]
     public class TextTableDataEditor: PropertyDrawer

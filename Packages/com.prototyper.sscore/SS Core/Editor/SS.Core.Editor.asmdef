@@ -1,0 +1,18 @@
+{
+    "name": "SSCore.Editor",
+    "rootNamespace": "SS.Core",
+    "references": [
+        "GUID:3d1d65fc5a0f441459b5110783a0cfe0"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

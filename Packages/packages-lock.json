@@ -19,6 +19,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.prototyper.essential": {
+      "version": "file:com.prototyper.essential",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.prototyper.json": {
       "version": "file:com.prototyper.json",
       "depth": 0,

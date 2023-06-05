@@ -4,7 +4,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
-using SS;
+using SS.Core;
 
 [CustomPropertyDrawer(typeof(UIOrderSetting), false)]
 public class UIOrderSettingEditor : PropertyDrawer

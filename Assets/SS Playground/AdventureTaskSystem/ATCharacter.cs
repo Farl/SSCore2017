@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using SS;
+using SS.Core;
 
 public class ATCharacter : MonoBehaviour {
 
@@ -16,6 +16,8 @@ public class ATCharacter : MonoBehaviour {
 
     [SerializeField] float observation = 10;
     [SerializeField] float strength = 5;
+    
+    #pragma warning disable 0414
     [SerializeField] float repair = 5;
     [SerializeField] float agile = 5;
 

@@ -5,168 +5,170 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
-using SS;
 
-public class QuickButton : UIBehaviour, IPointerClickHandler
+namespace SS.Core
 {
-	public enum ButtonType
+	public class QuickButton : UIBehaviour, IPointerClickHandler
 	{
-		Once,
-		Repeat,
-	}
-
-	public ButtonType type = ButtonType.Once;
-	
-	// Event delegates triggered on click.
-	[FormerlySerializedAs("onClick")]
-	[SerializeField]
-	private Button.ButtonClickedEvent m_OnClick = new Button.ButtonClickedEvent();
-
-	public EventTrigger.TriggerEvent m_triggerEvent = new EventTrigger.TriggerEvent();
-
-	public EventArray eventArray;
-
-	private string soundID = "UI_Click";
-	public string overrideSoundID;
-
-	private PointerEventData pointerEventData;
-
-	public bool scaleEffect = true;
-
-	private UIBase page;
-
-	private float autoLockOnceTime = 1.5f;
-	private float autoLockRepeatTime = 0.1f;
-	private float delayInvokeTime = 0.2f;
-
-	private string lockFlag = "QuickButton.AutoLock";
-
-	protected override void Start()
-	{
-		base.Start();
-
-		// if you don't name each button, this may be fail
-		lockFlag = string.Format("{0}.{1}", name, lockFlag);
-
-		// button scale effect
-		if (scaleEffect)
+		public enum ButtonType
 		{
-			gameObject.AddComponent<EventToShake>();
+			Once,
+			Repeat,
 		}
 
-		// copy event from other script (because we need to control)
-		if (m_OnClick.GetPersistentEventCount() <= 0)
+		public ButtonType type = ButtonType.Once;
+		
+		// Event delegates triggered on click.
+		[FormerlySerializedAs("onClick")]
+		[SerializeField]
+		private Button.ButtonClickedEvent m_OnClick = new Button.ButtonClickedEvent();
+
+		public EventTrigger.TriggerEvent m_triggerEvent = new EventTrigger.TriggerEvent();
+
+		public EventArray eventArray;
+
+		private string soundID = "UI_Click";
+		public string overrideSoundID;
+
+		private PointerEventData pointerEventData;
+
+		public bool scaleEffect = true;
+
+		private UIBase page;
+
+		private float autoLockOnceTime = 1.5f;
+		private float autoLockRepeatTime = 0.1f;
+		private float delayInvokeTime = 0.2f;
+
+		private string lockFlag = "QuickButton.AutoLock";
+
+		protected override void Start()
 		{
-			// copy click event from EventTrigger
-			EventTrigger trg = GetComponent<EventTrigger>();
-			if (trg && trg.triggers != null)
+			base.Start();
+
+			// if you don't name each button, this may be fail
+			lockFlag = string.Format("{0}.{1}", name, lockFlag);
+
+			// button scale effect
+			if (scaleEffect)
 			{
-				foreach(EventTrigger.Entry entry in trg.triggers)
+				gameObject.AddComponent<EventToShake>();
+			}
+
+			// copy event from other script (because we need to control)
+			if (m_OnClick.GetPersistentEventCount() <= 0)
+			{
+				// copy click event from EventTrigger
+				EventTrigger trg = GetComponent<EventTrigger>();
+				if (trg && trg.triggers != null)
 				{
-					if (entry.eventID == EventTriggerType.PointerClick)
+					foreach(EventTrigger.Entry entry in trg.triggers)
 					{
-						m_triggerEvent = entry.callback;
-						entry.callback = new EventTrigger.TriggerEvent();
+						if (entry.eventID == EventTriggerType.PointerClick)
+						{
+							m_triggerEvent = entry.callback;
+							entry.callback = new EventTrigger.TriggerEvent();
+						}
 					}
 				}
+				
+				// copy click event from Button
+				Button but = GetComponent<Button>();
+				if (but && but.onClick != null)
+				{
+					m_OnClick = but.onClick;
+					but.onClick = new Button.ButtonClickedEvent();
+				}
 			}
-			
-			// copy click event from Button
-			Button but = GetComponent<Button>();
-			if (but && but.onClick != null)
+
+			// register page
+			page = GetComponentInParent<UIBase>();
+		}
+		
+		public Button.ButtonClickedEvent onClick
+		{
+			get { return m_OnClick; }
+			set { m_OnClick = value; }
+		}
+		
+		private void Press()
+		{
+			// prevent Timer error
+			if (this == null)
+				return;
+
+			if (!IsActive())
+				return;
+
+			// click event
+			m_OnClick.Invoke();
+
+			// trigger event
+			m_triggerEvent.Invoke(pointerEventData);
+
+			// string event
+			eventArray.Broadcast(this);
+		}
+
+		void Lock(bool isLock)
+		{
+			// lock interactive
+			if (page)
 			{
-				m_OnClick = but.onClick;
-				but.onClick = new Button.ButtonClickedEvent();
+				if (isLock)
+					page.Lock(lockFlag);
+				else
+					page.Unlock(lockFlag);
+
+				UILocker.LockRecursive(page.gameObject, lockFlag, isLock);
 			}
 		}
 
-		// register page
-		page = GetComponentInParent<UIBase>();
-	}
-	
-	public Button.ButtonClickedEvent onClick
-	{
-		get { return m_OnClick; }
-		set { m_OnClick = value; }
-	}
-	
-	private void Press()
-	{
-		// prevent Timer error
-		if (this == null)
-			return;
-
-		if (!IsActive())
-			return;
-
-		// click event
-		m_OnClick.Invoke();
-
-		// trigger event
-		m_triggerEvent.Invoke(pointerEventData);
-
-		// string event
-		eventArray.Broadcast(this);
-	}
-
-	void Lock(bool isLock)
-	{
-		// lock interactive
-		if (page)
+		void Unlock()
 		{
-			if (isLock)
-				page.Lock(lockFlag);
-			else
-				page.Unlock(lockFlag);
+			// prevent Timer error
+			if (this == null)
+				return;
 
-			UILocker.LockRecursive(page.gameObject, lockFlag, isLock);
-		}
-	}
-
-	void Unlock()
-	{
-		// prevent Timer error
-		if (this == null)
-			return;
-
-		Lock(false);
-	}
-
-	void PlaySound()
-	{
-        EventMessage em = new EventMessage((string.IsNullOrEmpty(overrideSoundID)) ? soundID : overrideSoundID);
-        EventManager.Broadcast(em);
-	}
-	
-	// Trigger all registered callbacks.
-	public virtual void OnPointerClick(PointerEventData eventData)
-	{
-		if (eventData.button != PointerEventData.InputButton.Left)
-			return;
-
-		pointerEventData = eventData;
-
-		{
-			EventTimer.AddTimer(delayInvokeTime, Press, null, false);
+			Lock(false);
 		}
 
-		// lock
-		Lock(true);
-		switch (type)
+		void PlaySound()
 		{
-		case ButtonType.Once:
+			EventMessage em = new EventMessage((string.IsNullOrEmpty(overrideSoundID)) ? soundID : overrideSoundID);
+			EventManager.Broadcast(em);
+		}
+		
+		// Trigger all registered callbacks.
+		public virtual void OnPointerClick(PointerEventData eventData)
 		{
-			EventTimer.AddTimer(autoLockOnceTime, Unlock, null, false);
-		}
-			break;
-		case ButtonType.Repeat:
-		{
-			EventTimer.AddTimer(autoLockRepeatTime, Unlock, null, false);
-		}
-			break;
-		}
+			if (eventData.button != PointerEventData.InputButton.Left)
+				return;
 
-		// Play sound
-		PlaySound();
+			pointerEventData = eventData;
+
+			{
+				EventTimer.AddTimer(delayInvokeTime, Press, null, false);
+			}
+
+			// lock
+			Lock(true);
+			switch (type)
+			{
+			case ButtonType.Once:
+			{
+				EventTimer.AddTimer(autoLockOnceTime, Unlock, null, false);
+			}
+				break;
+			case ButtonType.Repeat:
+			{
+				EventTimer.AddTimer(autoLockRepeatTime, Unlock, null, false);
+			}
+				break;
+			}
+
+			// Play sound
+			PlaySound();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SS.Legacy;
 
 public class SSAccelerationTest : MonoBehaviour {
 	public GameObject testObj;

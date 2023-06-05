@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SS
+namespace SS.Core
 {
 
     public class ControllerSystem : Singleton<ControllerSystem>

@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-namespace SS
+namespace SS.Core
 {
     using System.Collections;
     using System.Collections.Generic;

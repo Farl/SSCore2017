@@ -1,0 +1,18 @@
+{
+    "name": "SSGameEditor.SpreadSheet",
+    "rootNamespace": "SS.Core",
+    "references": [
+        "GUID:9fd4fd9e184f29545a5f5ded5f78d942"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

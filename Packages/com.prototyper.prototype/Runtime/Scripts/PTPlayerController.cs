@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using SS;
+using SS.Core;
 
 public class PTPlayerController : PTController {
 	public Camera mainCamera;

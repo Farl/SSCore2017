@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SS;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -10,24 +9,26 @@ using UnityEditor;
 // Never used variable
 #pragma warning disable 0414
 
-// Create a new type of Settings Asset.
-class MyCustomSettings : ProjectSettingsObject<MyCustomSettings>
+namespace SS.Core
 {
-    #region Public
-    public int Number => m_Number;
-    #endregion
-
-    [SerializeField]
-    private int m_Number;
-
-    [SerializeField]
-    private string m_SomeString;
-
-    protected override void OnCreate()
+    // Create a new type of Settings Asset.
+    class MyCustomSettings : ProjectSettingsObject<MyCustomSettings>
     {
-        m_Number = 42;
-        m_SomeString = "The answer to the universe";
-    }
+        #region Public
+        public int Number => m_Number;
+        #endregion
+
+        [SerializeField]
+        private int m_Number;
+
+        [SerializeField]
+        private string m_SomeString;
+
+        protected override void OnCreate()
+        {
+            m_Number = 42;
+            m_SomeString = "The answer to the universe";
+        }
 
 #if UNITY_EDITOR
     // Register a SettingsProvider using IMGUI for the drawing framework:
@@ -38,4 +39,5 @@ class MyCustomSettings : ProjectSettingsObject<MyCustomSettings>
         return RegisterSettingsProvider(label: null, keywords: null);
     }
 #endif
+    }
 }

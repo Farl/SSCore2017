@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SS
+namespace SS.Core
 {
     public class FadeUI : UIBaseSingleton<FadeUI>
     {

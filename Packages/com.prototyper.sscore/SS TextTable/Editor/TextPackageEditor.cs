@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace SS
+namespace SS.TextTable
 {
     [CustomEditor(typeof(TextPackage))]
     public class TextPackageEditor : Editor

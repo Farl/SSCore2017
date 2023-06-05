@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using SS.Legacy;
+
 public class SSVR : MonoBehaviour
 {
 	protected Quaternion gyroAttitube;

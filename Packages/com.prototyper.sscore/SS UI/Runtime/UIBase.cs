@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace SS
+namespace SS.Core
 {
 
 	[DisallowMultipleComponent]

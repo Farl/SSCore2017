@@ -101,7 +101,7 @@ namespace SS
         public static void Build(XRDevice device, bool isFinal = false, bool isDev = false, bool runPlayer = false)
         {
 #if !SS_BUILDPIPELINE
-            Debug.Log("BuildPipelineSystem is not ready. Please instal SS BuildPipeline (com.prototyper.buildpipeline) package."
+            Debug.Log("BuildPipelineSystem is not ready. Please instal SS BuildPipeline (com.prototyper.buildpipeline) package.");
             return;
 #endif
             var buildTarget = EditorUserBuildSettings.activeBuildTarget;

@@ -24,6 +24,11 @@
             "name": "com.unity.xr.openxr",
             "expression": "",
             "define": "USE_OPENXR"
+        },
+        {
+            "name": "com.prototyper.buildpipeline",
+            "expression": "",
+            "define": "SS_BUILDPIPELINE"
         }
     ],
     "noEngineReferences": false

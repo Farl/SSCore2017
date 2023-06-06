@@ -100,6 +100,10 @@ namespace SS
 
         public static void Build(XRDevice device, bool isFinal = false, bool isDev = false, bool runPlayer = false)
         {
+#if !SS_BUILDPIPELINE
+            Debug.Log("BuildPipelineSystem is not ready. Please instal SS BuildPipeline (com.prototyper.buildpipeline) package."
+            return;
+#endif
             var buildTarget = EditorUserBuildSettings.activeBuildTarget;
 
             if (buildTarget != BuildTarget.Android)
@@ -122,6 +126,7 @@ namespace SS
             if (isDev)
                 buildOptions |= BuildOptions.Development;
 
+#if SS_BUILDPIPELINE
             BuildPipelineSystem.BuildPlayer(
                 args: new string[] {
                     "-setLocationPathName", locationPathName
@@ -131,6 +136,7 @@ namespace SS
                 options: buildOptions,
                 extraDefines: (isFinal)? new string[] { "FINAL" } : new string[] { }
             );
+#endif
             
             SetXRPlatform(defaultXRDevice, buildTarget);
         }

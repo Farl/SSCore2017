@@ -1,14 +1,11 @@
 {
   "name": "com.prototyper.utility",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "SS Utility",
   "description": "Utility",
-  "unity": null,
-  "unityRelease": null,
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
-  "dependencies": {},
   "keywords": [],
   "author": {
     "name": "Farl Lee",

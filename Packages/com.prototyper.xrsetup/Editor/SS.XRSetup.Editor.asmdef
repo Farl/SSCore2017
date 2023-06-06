@@ -1,0 +1,30 @@
+{
+    "name": "SS.XRSetup",
+    "rootNamespace": "SS",
+    "references": [
+        "GUID:4847341ff46394e83bb78fbd0652937e",
+        "GUID:96aa6ba065960476598f8f643e7252b6",
+        "GUID:fdef889f8ae38874ab9c4ef820e1b143",
+        "GUID:b4b2dd9753dc2574e940523b0e3e8820",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:c579267770062bf448e75eb160330b7f",
+        "GUID:6e2ca1d04b0bc41b0b2cf32ab050f47b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.openxr",
+            "expression": "",
+            "define": "USE_OPENXR"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -37,11 +37,32 @@ namespace SS.PackageHelper
         private static string prefixName = "SS";
         private static bool addEditorFolder = true;
         private static bool addRuntimeFolder = true;
+        private string userName;
+        private string userEmail;
+        private GitUtility.GitConfigData gitConfigData;
 
         override public GUIContent toolbarIcon
         {
             // Use create icon
             get { return new GUIContent("", EditorGUIUtility.IconContent("CreateAddNew").image, "Create"); }
+        }
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            gitConfigData = GitUtility.Scan();
+            if (!string.IsNullOrEmpty(gitConfigData.userName))
+            {
+                userName = gitConfigData.userName;
+            }
+            else
+            {
+                userName = System.Environment.UserName;
+            }
+            if (!string.IsNullOrEmpty(gitConfigData.userEmail))
+            {
+                userEmail = gitConfigData.userEmail;
+            }
         }
 
         public override void OnToolGUI(EditorWindow window)
@@ -54,6 +75,10 @@ namespace SS.PackageHelper
 
             addEditorFolder = EditorGUILayout.Toggle("Add Editor folder", addEditorFolder);
             addRuntimeFolder = EditorGUILayout.Toggle("Add Runtime folder", addRuntimeFolder);
+
+            userName = EditorGUILayout.TextField("User Name", userName);
+            userEmail = EditorGUILayout.TextField("User Email", userEmail);
+
             if (GUILayout.Button("Create"))
             {
                 var fullPackageName = $"com.{organizationName.ToLower()}.{packageName.ToLower()}";
@@ -71,7 +96,7 @@ namespace SS.PackageHelper
                         name = fullPackageName,
                         displayName = $"{prefixName} {packageName}",
                         description = packageName,
-                        author = new Author(){ name = System.Environment.UserName }
+                        author = new Author(){ name = userName, email = userEmail },
                     };
                     sw.Write(pd.SerializeObject());
                     sw.Close();

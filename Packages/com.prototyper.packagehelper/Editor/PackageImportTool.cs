@@ -27,6 +27,17 @@ namespace SS.PackageHelper
         private string prefix = "";
 
         private AddRequest request;
+        private GitUtility.GitConfigData gitConfigData;
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            gitConfigData = GitUtility.Scan();
+            if (!string.IsNullOrEmpty(gitConfigData.currentRemoteUrl))
+            {
+                inputUrl = gitConfigData.currentRemoteUrl;
+            }
+        }
 
         public override void OnToolGUI(EditorWindow window)
         {
@@ -49,21 +60,29 @@ namespace SS.PackageHelper
             inputUrl = EditorGUILayout.TextField("Repo url", inputUrl);
             if (EditorGUI.EndChangeCheck())
             {
-                if (inputUrl.StartsWith("git@"))
-                    prefix = "git+ssh://";
-                else
-                    prefix = "";
             }
-            if (GUILayout.Button("Paste"))
+            if (GUILayout.Button("Paste", GUILayout.Width(50)))
             {
                 inputUrl = EditorGUIUtility.systemCopyBuffer;
+            }
+            if (GUILayout.Button("SSH/HTTPS", GUILayout.Width(100)))
+            {
+                inputUrl = ToggleURLStyle(inputUrl);
             }
 
             EditorGUILayout.EndHorizontal();
 
             if (GUILayout.Button("Generate URL"))
             {
-                outputUrl = $"{prefix}{inputUrl.Replace(":", "/")}?path={path}#{version}";
+                var tmpUrl = inputUrl;
+                if (inputUrl.StartsWith("git@"))
+                {
+                    prefix = "git+ssh://";
+                    tmpUrl = tmpUrl.Replace(":", "/");
+                }
+                else
+                    prefix = "";
+                outputUrl = $"{prefix}{tmpUrl}?path={path}#{version}";
             }
 
             if (!string.IsNullOrEmpty(outputUrl))
@@ -94,6 +113,21 @@ namespace SS.PackageHelper
 
                 EditorApplication.update -= Progress;
             }
+        }
+
+        private string ToggleURLStyle(string url)
+        {
+            // Toogle url between ssh style and https style
+            if (url.StartsWith("git@"))
+            {
+                url = url.Replace(":", "/");
+                url = url.Replace("git@", "https://");
+            }
+            else
+            {
+                url = url.Replace("https://", "git@");
+            }
+            return url;
         }
     }
 }

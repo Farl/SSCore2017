@@ -15,7 +15,7 @@ namespace SS.PackageHelper
      * 
      * A tool to help create and import packages
      * 
-     * @version 0.3.0
+     * @version 0.3.1
      * @package SS.PackageHelper
      * @author Farl
      *
@@ -25,12 +25,13 @@ namespace SS.PackageHelper
         * 0.2.0: add edit tool
         * 0.2.1: fix minimal unity version issue.
         * 0.3.0: Support for manage samples
+        * 0.3.1: Add GitUtility to auto fill some fields
      */
     public class PackageHelper: EditorWindow
     {
 
         #region Static
-        private const string version = "0.3.0";
+        private const string version = "0.3.1";
         private static Vector2 scrollVec = Vector2.zero;
         #endregion
 
@@ -56,13 +57,10 @@ namespace SS.PackageHelper
         private void OnEnable()
         {
             titleContent = new GUIContent($"Package {version}");
-            switch (toolbarIndex)
-            {
-                case 0: packageCreateTool.OnEnable(); break;
-                case 1: packageImportTool.OnEnable(); break;
-                case 2: packageEditTool.OnEnable(); break;
-                case 3: packageSampleTool.OnEnable(); break;
-            }
+            packageCreateTool.OnEnable();
+            packageImportTool.OnEnable();
+            packageEditTool.OnEnable();
+            packageSampleTool.OnEnable();
         }
 
         private void OnGUI()
@@ -88,6 +86,12 @@ namespace SS.PackageHelper
             }
 
             EditorGUILayout.EndScrollView();
+
+            if (GUILayout.Button("Git"))
+            {
+                var data = GitUtility.Scan();
+                Debug.Log(data);
+            }
         }
         #endregion
 

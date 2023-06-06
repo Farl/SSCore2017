@@ -1,6 +1,6 @@
 {
   "name": "com.prototyper.packagehelper",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "displayName": "SS Package Helper",
   "description": "Tool for create, add and editor package",
   "unity": "2020.3",

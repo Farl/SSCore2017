@@ -1,0 +1,485 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28aeffd3a1c4cebbc4d86e5760ce14, type: 3}
+  m_Name: TextTable - Default_Japanese
+  m_EditorClassIdentifier: 
+  dataList:
+  - textID: ChineseTraditional
+    type: 
+    speaker: 
+    text: "\u7E41\u9AD4\u4E2D\u6587"
+  - textID: English
+    type: 
+    speaker: 
+    text: English
+  - textID: French
+    type: 
+    speaker: 
+    text: French
+  - textID: Japanese
+    type: 
+    speaker: 
+    text: "\u65E5\u672C\u8A9E"
+  - textID: InfoBest
+    type: 
+    speaker: 
+    text: "\u4E00\u756A"
+  - textID: InfoLatest
+    type: 
+    speaker: 
+    text: "\u6700\u65B0"
+  - textID: InfoTotal
+    type: 
+    speaker: 
+    text: "\u5408\u8A08"
+  - textID: InfoTotalShadowHint
+    type: 
+    speaker: 
+    text: <sprite name="info-gray"> (steps only)
+  - textID: InforBestShadowHint
+    type: 
+    speaker: 
+    text: (flying)
+  - textID: InfoRemainHardtime
+    type: 
+    speaker: 
+    text: to get through hard time
+  - textID: DistanceUnit
+    type: 
+    speaker: 
+    text: m
+  - textID: SectionTitleAudio
+    type: 
+    speaker: 
+    text: 
+  - textID: Music
+    type: 
+    speaker: 
+    text: "\u30DF\u30E5\u30FC\u30B8\u30C3\u30AF"
+  - textID: Sounds
+    type: 
+    speaker: 
+    text: "\u30B5\u30A6\u30F3\u30C9"
+  - textID: SectionTitleGraphic
+    type: 
+    speaker: 
+    text: 
+  - textID: SectioinTitleAccount
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnRemoveGoogleFit
+    type: 
+    speaker: 
+    text: 
+  - textID: CameraPermission
+    type: 
+    speaker: 
+    text: 
+  - textID: RankingAddress
+    type: 
+    speaker: 
+    text: 
+  - textID: Skymon
+    type: 
+    speaker: 
+    text: Skymon
+  - textID: Settings
+    type: 
+    speaker: 
+    text: "\u8A2D\u5B9A"
+  - textID: BtnOk
+    type: 
+    speaker: 
+    text: OK
+  - textID: BtnCancel
+    type: 
+    speaker: 
+    text: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+  - textID: BtnRetry
+    type: 
+    speaker: 
+    text: "\u30EA\u30C8\u30E9\u30A4"
+  - textID: BtnLater
+    type: 
+    speaker: 
+    text: 
+  - textID: Play
+    type: 
+    speaker: 
+    text: "\u904A\u3076"
+  - textID: SyncSkymon
+    type: 
+    speaker: 
+    text: "\u30B9\u30AB\u30A4\u30E2\u30F3\u3092\u53EC\u559A\u3057\u307E\u3059"
+  - textID: DisconnectWallet
+    type: 
+    speaker: 
+    text: "\u30A6\u30A9\u30EC\u30C3\u30C8\u3092\u5207\u65AD\u3057\u307E\u3059"
+  - textID: ImportSteps
+    type: 
+    speaker: 
+    text: "\u6B69\u6570\u3092\u4EA4\u63DB\u3057\u307E\u3059"
+  - textID: Home
+    type: 
+    speaker: 
+    text: "\u30DB\u30FC\u30E0"
+  - textID: Restart
+    type: 
+    speaker: 
+    text: "\u3084\u308A\u76F4\u3059"
+  - textID: PlayAgain
+    type: 
+    speaker: 
+    text: "\u3082\u3046\u4E00\u5EA6\u30D7\u30EC\u30A4"
+  - textID: Resume
+    type: 
+    speaker: 
+    text: "\u518D\u958B"
+  - textID: StepsToDistance
+    type: 
+    speaker: 
+    text: "$currSteps$ \u2192 + $currStepsToDistance$"
+  - textID: Reset
+    type: 
+    speaker: 
+    text: "\u30C7\u30D5\u30A9\u30EB\u30C8"
+  - textID: BtnRemove
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnDisconnect
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityLow
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityNormal
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityHigh
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnVisit
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnMySkymon
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnGlobal
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnGoogleFit
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLogin
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginWaitingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GoogleFitLoginWaitingDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginCancelTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginCancelDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitRemoveTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitRemoveDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthPermissionTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthPermissionDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthDeclineTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthDeclineDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: Confirm
+    type: 
+    speaker: 
+    text: $btn_ok$
+  - textID: Cancel
+    type: 
+    speaker: 
+    text: $btn_cancel$
+  - textID: StepsUnit-plural
+    type: 
+    speaker: 
+    text: "\u30B9\u30C6\u30C3\u30D7"
+  - textID: ...
+    type: 
+    speaker: 
+    text: <link=ellipsis-anim><sprite name="ellipsisDot"><sprite name="ellipsisDot"><sprite
+      name="ellipsisDot"></link>
+  - textID: LoginUITitle
+    type: 
+    speaker: 
+    text: 
+  - textID: LoginUIDesc
+    type: 
+    speaker: 
+    text: 'Waiting for wallet confirmation $...$
+
+      Visit <link="https://skydream.skymon.io/"><color=#D8E1E8>https://skydream.skymon.io/</color></link>
+      to get more information. '
+  - textID: LoginUIScanQRCode
+    type: 
+    speaker: 
+    text: Scan QR code
+  - textID: LoginUIPlaceholder
+    type: 
+    speaker: 
+    text: Enter username...
+  - textID: LoginMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginMessageDesc
+    type: 
+    speaker: 
+    text: Connecting $...$
+  - textID: LoginSuccessTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginSuccessDesc
+    type: 
+    speaker: 
+    text: "\u30B9\u30AB\u30A4\u30C9\u30EA\u30FC\u30E0\u3078\u3088\u3046\u3053\u305D\uFF01\nSkymon\u3067\u98DB\u884C\u3059\u308B\u81EA\u7531\u3092\u304A\u697D\u3057\u307F\u304F\u3060\u3055\u3044\uFF01"
+  - textID: LoginFailedTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: LoginFailedDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: WalletConnectTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WalletConnectDesc
+    type: 
+    speaker: 
+    text: Receiving wallet connecting request. Tap Summon button to connect.
+  - textID: WalletDisconnectTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: WalletDisconnectDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: StepImportFAQDescLess10
+    type: 
+    speaker: 
+    text: "\u30A6\u30A9\u30FC\u30AD\u30F3\u30B0\u306F\u3001\u30B9\u30AB\u30A4\u30E2\u30F3\u304C\u98DB\u884C\u8DDD\u96E2\u3092\u5897\u3084\u3059\u306E\u306B\u5F79\u7ACB\u3061\u307E\u3059\u3002\n10\u30B9\u30C6\u30C3\u30D7\u3054\u3068\u306B\u3001Skymon
+      0.1\u30E1\u30FC\u30C8\u30EB\u306E\u98DB\u884C\u8DDD\u96E2\u306B\u5909\u63DB\u3067\u304D\u307E\u3059\u3002\nSkymon\u3067\u3042\u306A\u305F\u306B\u5C5E\u3059\u308B\u4E16\u754C\u8A18\u9332\u3092\u66F8\u3044\u3066\u304F\u3060\u3055\u3044\uFF01"
+  - textID: StepImportFAQDesc_Android
+    type: 
+    speaker: 
+    text: 
+  - textID: StepImportFAQDesc_iOS
+    type: 
+    speaker: 
+    text: "\u30B9\u30C6\u30C3\u30D7\u6570\u306E\u6570\u3092\u8AAD\u3080\u3053\u3068\u304C\u3067\u304D\u307E\u305B\u3093\u3002\n\u5909\u63DB\u30B9\u30C6\u30C3\u30D7\u95A2\u6570\u306F\u3001\u5065\u5168\u306A\u30A6\u30A9\u30FC\u30AD\u30F3\u30B0\u60C5\u5831\u3092\u4F7F\u7528\u3059\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002\n\u30C7\u30D0\u30A4\u30B9\u306E\u30A2\u30AF\u30BB\u30B9\u8A31\u53EF\u306E\u8A2D\u5B9A\u3092\u78BA\u8A8D\u3057\u307E\u3059\u3002"
+  - textID: HintMessageShadowTotal
+    type: 
+    speaker: 
+    text: "\u30B7\u30E3\u30C9\u30A6\u306E\u98DB\u884C\u8D70\u884C\u8DDD\u96E2\u306F\u84C4\u7A4D\u3055\u308C\u305A\u3001\u6BCE\u56DE\u518D\u8A08\u7B97\u3055\u308C\u307E\u3059\u304C\u3001\u30B7\u30E3\u30C9\u30A6\u306B\u5909\u63DB\u3055\u308C\u305F\u8D70\u884C\u8DDD\u96E2\u306F\u30B7\u30E3\u30C9\u30A6\u306E\u7DCF\u8D70\u884C\u8DDD\u96E2\u306B\u84C4\u7A4D\u3055\u308C\u307E\u3059\u3002\u30D7\u30EC\u30A4\u30E4\u30FC\u306F\u6B69\u884C\u8DDD\u96E2\u3092\u4F7F\u7528\u3057\u3066\u3042\u3089\u3086\u308B\u30EC\u30D9\u30EB\u306B\u98DB\u3076\u3053\u3068\u304C\u3067\u304D\u307E\u3059\uFF01\n\uFF08Step\u30AB\u30A6\u30F3\u30C8\u6A5F\u80FD\u306E\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u306E\u307F\u3092\u30B5\u30DD\u30FC\u30C8\u3057\u307E\u3059\uFF09"
+  - textID: Logout
+    type: 
+    speaker: 
+    text: "\u30ED\u30B0\u30A2\u30A6\u30C8"
+  - textID: ConsumeStepReadingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepReadingDesc
+    type: 
+    speaker: 
+    text: "\u30C7\u30FC\u30BF\u306E\u30ED\u30FC\u30C9 $...$"
+  - textID: ConsumeStepTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepDesc
+    type: 
+    speaker: 
+    text: "\u30B9\u30C6\u30C3\u30D7\u30C7\u30FC\u30BF\u3092$ currskymonname $\u306E\u98DB\u884C\u8DDD\u96E2\u306B\u5909\u63DB\u3059\u308B\u3053\u3068\u3092\u78BA\u8A8D\u3057\u307E\u3059\u304B\uFF1F"
+  - textID: ConsumeStepDescWorldChanged
+    type: 
+    speaker: 
+    text: '$ConsumeStepDesc$
+
+      Skymon will fly into the next stage.'
+  - textID: ConsumeStepWritingTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepWritingDesc
+    type: 
+    speaker: 
+    text: Converting $...$
+  - textID: GetAllSkymonTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GetAllSkymonDesc
+    type: 
+    speaker: 
+    text: Summoning Skymon $...$
+  - textID: ConsumeStepHardTimeTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepHardTimeDesc
+    type: 
+    speaker: 
+    text: After Skymon has passed through the Hard Time Stage, could able to convert
+      steps, please accompany Skymon to face and overcome the Hard Time !
+  - textID: InfoMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WarningMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: ErrorMessageDesc
+    type: 
+    speaker: 
+    text: Error Code $ErrorCode$
+  - textID: ErrorMessageDetailDesc
+    type: 
+    speaker: 
+    text: 'Error Code $ErrorCode$
+
+      $ErrorMsg$'
+  - textID: ErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: "\u30B5\u30FC\u30D0\u30FC\u306B\u63A5\u7D9A\u3067\u304D\u307E\u305B\u3093\u3002\u518D\u8A66\u884C\u3059\u308B\u524D\u306B\u3001\u30C7\u30D0\u30A4\u30B9\u306E\u30A4\u30F3\u30BF\u30FC\u30CD\u30C3\u30C8\u63A5\u7D9A\u30B9\u30C6\u30FC\u30BF\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u3002\n\uFF08Network\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u63A5\u7D9A\u72B6\u614B\u304C\u306A\u3051\u308C\u3070\u3001\u30B7\u30E3\u30C9\u30A6\u3067\u306E\u307F\u98DB\u3076\u3053\u3068\u304C\u3067\u304D\u3001\u300C\u5909\u63DB\u30B9\u30C6\u30C3\u30D7\u300D\u95A2\u6570\u306F\u4F7F\u7528\u3067\u304D\u307E\u305B\u3093\u3002\uFF09"
+  - textID: ErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: 
+  - textID: ErrorMessageDesc_-301
+    type: 
+    speaker: 
+    text: 
+  - textID: ErrorMessageDesc_-302
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitStepErrorMessageTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitStepErrorMessageDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitStepErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: 
+  - textID: RankingsUnavailable
+    type: 
+    speaker: 
+    text: 
+  - textID: EmptySkymon
+    type: 
+    speaker: 
+    text: 
+  - textID: Test
+    type: 1
+    speaker: def
+    text: "\u30C6\u30B9\u30C8"
+  - textID: Hello World
+    type: 2
+    speaker: qwerty
+    text: "\u3053\u3093\u306B\u3061\u306F\u4E16\u754C"
+  - textID: High Score
+    type: 
+    speaker: 
+    text: "\u9AD8\u5F97\u70B9"
+  - textID: BtnLogin
+    type: 
+    speaker: 
+    text: 
+  - textID: TapToStart
+    type: 
+    speaker: 
+    text: "\u30BF\u30C3\u30D7\u3057\u3066\u958B\u59CB"
+  - textID: StepImportFAQTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: StepImportFAQButton
+    type: 
+    speaker: 
+    text: Not enough steps

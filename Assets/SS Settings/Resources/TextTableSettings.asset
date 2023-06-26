@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2a06b53f61849ae9cb614c31400f39, type: 3}
+  m_Name: TextTableSettings
+  m_EditorClassIdentifier: 
+  supportedLanguage: 29000000280000000a000000
+  editorSupportedLanguage: 29000000280000000a000000
+  fontSettings:
+  - language: 41
+    checkFontName: LiberationSans SDF
+    fontAssetPath: Fonts & Materials/NotoSansTC-Regular SDF
+  - language: 40
+    checkFontName: LiberationSans SDF
+    fontAssetPath: Fonts & Materials/NotoSansSC-Regular SDF
+  - language: 10
+    checkFontName: LiberationSans SDF
+    fontAssetPath: Fonts & Materials/LiberationSans SDF

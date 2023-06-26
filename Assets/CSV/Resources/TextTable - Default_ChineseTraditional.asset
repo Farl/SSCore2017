@@ -1,0 +1,481 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28aeffd3a1c4cebbc4d86e5760ce14, type: 3}
+  m_Name: TextTable - Default_ChineseTraditional
+  m_EditorClassIdentifier: 
+  dataList:
+  - textID: ChineseTraditional
+    type: 
+    speaker: 
+    text: "\u7E41\u9AD4\u4E2D\u6587"
+  - textID: English
+    type: 
+    speaker: 
+    text: English
+  - textID: French
+    type: 
+    speaker: 
+    text: French
+  - textID: Japanese
+    type: 
+    speaker: 
+    text: "\u65E5\u672C\u8A9E"
+  - textID: InfoBest
+    type: 
+    speaker: 
+    text: "\u6700\u4F73"
+  - textID: InfoLatest
+    type: 
+    speaker: 
+    text: "\u4E0A\u4E00\u6B21"
+  - textID: InfoTotal
+    type: 
+    speaker: 
+    text: "\u7E3D\u5408"
+  - textID: InfoTotalShadowHint
+    type: 
+    speaker: 
+    text: "<sprite name=\"info-gray\"> (\u50C5\u8A08\u7B97\u6B65\u6578\u8F49\u63DB\u8DDD\u96E2)"
+  - textID: InforBestShadowHint
+    type: 
+    speaker: 
+    text: "(\u98DB\u884C\u8DDD\u96E2)"
+  - textID: InfoRemainHardtime
+    type: 
+    speaker: 
+    text: "\u901A\u904E\u56F0\u5883"
+  - textID: DistanceUnit
+    type: 
+    speaker: 
+    text: m
+  - textID: SectionTitleAudio
+    type: 
+    speaker: 
+    text: 
+  - textID: Music
+    type: 
+    speaker: 
+    text: "\u97F3\u6A02"
+  - textID: Sounds
+    type: 
+    speaker: 
+    text: "\u97F3\u6548"
+  - textID: SectionTitleGraphic
+    type: 
+    speaker: 
+    text: 
+  - textID: SectioinTitleAccount
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnRemoveGoogleFit
+    type: 
+    speaker: 
+    text: 
+  - textID: CameraPermission
+    type: 
+    speaker: 
+    text: 
+  - textID: RankingAddress
+    type: 
+    speaker: 
+    text: 
+  - textID: Skymon
+    type: 
+    speaker: 
+    text: Skymon
+  - textID: Settings
+    type: 
+    speaker: 
+    text: "\u8A2D\u5B9A"
+  - textID: BtnOk
+    type: 
+    speaker: 
+    text: "\u78BA\u8A8D"
+  - textID: BtnCancel
+    type: 
+    speaker: 
+    text: "\u53D6\u6D88"
+  - textID: BtnRetry
+    type: 
+    speaker: 
+    text: "\u91CD\u8A66"
+  - textID: BtnLater
+    type: 
+    speaker: 
+    text: "\u7A0D\u5F8C"
+  - textID: Play
+    type: 
+    speaker: 
+    text: Play
+  - textID: SyncSkymon
+    type: 
+    speaker: 
+    text: "\u53EC\u559ASkymon"
+  - textID: DisconnectWallet
+    type: 
+    speaker: 
+    text: "\u65B7\u958B\u9023\u7D50"
+  - textID: ImportSteps
+    type: 
+    speaker: 
+    text: "\u8F49\u63DB\u6B65\u6578"
+  - textID: Home
+    type: 
+    speaker: 
+    text: "\u4E3B\u756B\u9762"
+  - textID: Restart
+    type: 
+    speaker: 
+    text: "\u91CD\u4F86"
+  - textID: PlayAgain
+    type: 
+    speaker: 
+    text: "\u518D\u8A66\u4E00\u6B21"
+  - textID: Resume
+    type: 
+    speaker: 
+    text: "\u7E7C\u7E8C"
+  - textID: StepsToDistance
+    type: 
+    speaker: 
+    text: "$currSteps$ \u2192 + $currStepsToDistance$\u516C\u5C3A"
+  - textID: Reset
+    type: 
+    speaker: 
+    text: "\u6062\u5FA9\u9810\u8A2D"
+  - textID: BtnRemove
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnDisconnect
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityLow
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityNormal
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityHigh
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnVisit
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnMySkymon
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnGlobal
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnGoogleFit
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLogin
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GoogleFitLoginDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginWaitingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GoogleFitLoginWaitingDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginCancelTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: GoogleFitLoginCancelDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitRemoveTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitRemoveDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthPermissionTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthPermissionDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthDeclineTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: IOSHealthDeclineDesc
+    type: 
+    speaker: 
+    text: "\u6C92\u6709\u5141\u8A31 Health \u8B80\u53D6\u6B0A\u9650\uFF0C\"\u8F49\u63DB\u6B65\u6578\"
+      \u529F\u80FD\u7121\u6CD5\u4F7F\u7528\u3002"
+  - textID: Confirm
+    type: 
+    speaker: 
+    text: $btn_ok$
+  - textID: Cancel
+    type: 
+    speaker: 
+    text: $btn_cancel$
+  - textID: StepsUnit-plural
+    type: 
+    speaker: 
+    text: "\u6B65\u6578"
+  - textID: ...
+    type: 
+    speaker: 
+    text: <link=ellipsis-anim><sprite name="ellipsisDot"><sprite name="ellipsisDot"><sprite
+      name="ellipsisDot"></link>
+  - textID: LoginUITitle
+    type: 
+    speaker: 
+    text: 
+  - textID: LoginUIDesc
+    type: 
+    speaker: 
+    text: "\u7CFB\u7D71\u6B63\u5728\u7B49\u5F85Skymon\u8CC7\u6599\u532F\u5165 $...$\n\u524D\u5F80
+      <link=\"https://skydream.skymon.io/\"><color=#D8E1E8>https://skydream.skymon.io/</color></link>
+      \u4E86\u89E3\u66F4\u591A\u532F\u5165\u8CC7\u8A0A"
+  - textID: LoginUIScanQRCode
+    type: 
+    speaker: 
+    text: "\u6383\u63CF QR code"
+  - textID: LoginUIPlaceholder
+    type: 
+    speaker: 
+    text: Enter username...
+  - textID: LoginMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginMessageDesc
+    type: 
+    speaker: 
+    text: "\u9023\u63A5\u4E2D $...$"
+  - textID: LoginSuccessTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginSuccessDesc
+    type: 
+    speaker: 
+    text: "\u6B61\u8FCE\u4F86\u5230Sky Dream ! \n\u76E1\u60C5\u4EAB\u53D7\u8207Skymon\u4E00\u8D77\u98DB\u7FD4\u7684\u81EA\u7531\u6642\u5149\u5427
+      !"
+  - textID: LoginFailedTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: LoginFailedDesc
+    type: 
+    speaker: 
+    text: "\u53EC\u559ASkymon\u5931\u6557\u3002\u8ACB\u6AA2\u67E5\u88DD\u7F6E\u7DB2\u8DEF\uFF0C\u78BA\u5B9A\u9322\u5305\u4F4D\u5740\u8CC7\u8A0A\u6B63\u78BA\u5F8C\uFF0C\u518D\u8A66\u4E00\u6B21\u3002"
+  - textID: WalletConnectTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WalletConnectDesc
+    type: 
+    speaker: 
+    text: "\u7CFB\u7D71\u6536\u5230Skymon\u8CC7\u6599\uFF0C\u9EDE\u64CA\u53EC\u559A\u6309\u9215\u9032\u884C\u8CC7\u6599\u9023\u63A5\u3002"
+  - textID: WalletDisconnectTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: WalletDisconnectDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: StepImportFAQDescLess10
+    type: 
+    speaker: 
+    text: "\u8D70\u8DEF\u53EF\u4EE5\u5E6B\u52A9Skymon\u589E\u52A0\u98DB\u884C\u8DDD\u96E2\u3002\n\u6BCF10\u6B65\u53EF\u4EE5\u8F49\u63DB\u6210Skymon
+      0.1\u516C\u5C3A\u7684\u98DB\u884C\u8DDD\u96E2\uFF0C\n\u4E00\u8D77\u966A\u4F34\u4F60\u7684Skymon\u5BEB\u4E0B\u5C6C\u65BC\u4F60\u5011\u7684\u4E16\u754C\u8A18\u9304\u5427!"
+  - textID: StepImportFAQDesc_Android
+    type: 
+    speaker: 
+    text: 
+  - textID: StepImportFAQDesc_iOS
+    type: 
+    speaker: 
+    text: "\u7121\u6CD5\u8B80\u53D6\u6B65\u6578\u8A08\u6578\u503C\u3002\n\u8F49\u63DB\u6B65\u6578\u529F\u80FD\u5FC5\u9808\u4F7F\u7528\u5065\u5EB7\u7684\u6B65\u884C\u8CC7\u6599\uFF0C\n\u78BA\u8A8D\u4E00\u4E0B\u88DD\u7F6E\u7684\u5B58\u53D6\u6B0A\u9650\u8A2D\u5B9A\u5427\u3002"
+  - textID: HintMessageShadowTotal
+    type: 
+    speaker: 
+    text: "Shadow\u7684\u98DB\u884C\u91CC\u7A0B\u4E0D\u6703\u7D2F\u7A4D\uFF0C\u6BCF\u6B21\u90FD\u6703\u91CD\u65B0\u8A08\u7B97\uFF0C\u4F46\u6B65\u884C\u8F49\u63DB\u7D66Shadow\u7684\u91CC\u7A0B\uFF0C\u6703\u7D2F\u7A4D\u81F3Shadow\u7684\u7E3D\u91CC\u7A0B\uFF0C\u73A9\u5BB6\u53EF\u4EE5\u5229\u7528\u6B65\u884C\u8F49\u63DB\u7684\u8DDD\u96E2\uFF0C\u966A\u8457Shadow\u98DB\u7FD4\u81F3\u6BCF\u4E00\u500B\u95DC\u5361!\n(\u203B\u53EA\u652F\u63F4\u6709\u8A08\u6B65\u529F\u80FD\u7684\u88DD\u7F6E)"
+  - textID: Logout
+    type: 
+    speaker: 
+    text: "\u767B\u51FA"
+  - textID: ConsumeStepReadingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepReadingDesc
+    type: 
+    speaker: 
+    text: "\u6B65\u6578\u8CC7\u6599\u8B80\u53D6\u4E2D $...$"
+  - textID: ConsumeStepTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepDesc
+    type: 
+    speaker: 
+    text: "\u78BA\u5B9A\u5C07\u6B65\u6578\u8CC7\u6599\uFF0C\u8F49\u63DB\u6210$currSkymonName$\u7684\u98DB\u884C\u8DDD\u96E2\u55CE?"
+  - textID: ConsumeStepDescWorldChanged
+    type: 
+    speaker: 
+    text: "$ConsumeStepDesc$\nSkymon\u5C07\u76F4\u63A5\u98DB\u9032\u65B0\u7684\u821E\u53F0\u3002"
+  - textID: ConsumeStepWritingTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepWritingDesc
+    type: 
+    speaker: 
+    text: "\u6B65\u6578\u8F49\u63DB\u4E2D $...$"
+  - textID: GetAllSkymonTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GetAllSkymonDesc
+    type: 
+    speaker: 
+    text: "Skymon\u53EC\u559A\u4E2D $...$"
+  - textID: ConsumeStepHardTimeTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepHardTimeDesc
+    type: 
+    speaker: 
+    text: "Skymon \u7A7F\u8D8A\u56F0\u5883\u5F8C\uFF0C\u624D\u80FD\u5920\u9032\u884C\u6B65\u6578\u8F49\u63DB\uFF0C\u966A\u4F34Skymon\u4E00\u8D77\u9762\u5C0D\u4E26\u8DE8\u8D8A\u56F0\u5883\u5427!"
+  - textID: InfoMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WarningMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: ErrorMessageDesc
+    type: 
+    speaker: 
+    text: "\u932F\u8AA4\u4EE3\u78BC $ErrorCode$"
+  - textID: ErrorMessageDetailDesc
+    type: 
+    speaker: 
+    text: "\u932F\u8AA4\u4EE3\u78BC $ErrorCode$\n$ErrorMsg$"
+  - textID: ErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: "\u7121\u6CD5\u9023\u63A5\u4F3A\u670D\u5668\uFF0C\u8ACB\u78BA\u8A8D\u88DD\u7F6E\u7684\u7DB2\u969B\u7DB2\u8DEF\u9023\u63A5\u72C0\u614B\u5F8C\uFF0C\u518D\u8A66\u4E00\u6B21\u3002\n(\u203B\u6C92\u6709\u7DB2\u8DEF\u9023\u7DDA\u72C0\u614B\u4E0B\uFF0C\u53EA\u80FD\u966A\u4F34Shadow\u4E00\u8D77\u98DB\u884C\uFF0C\u4E14\"\u8F49\u63DB\u6B65\u6578\"\u529F\u80FD\u7121\u6CD5\u4F7F\u7528\u3002)"
+  - textID: ErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: "\u932F\u8AA4\u4EE3\u78BC $ErrorCode$ \u9023\u7DDA\u903E\u6642\u3002"
+  - textID: ErrorMessageDesc_-301
+    type: 
+    speaker: 
+    text: "\u932F\u8AA4\u4EE3\u78BC $ErrorCode$ QR Code\u8CC7\u8A0A\u5931\u6548\uFF0C\u8ACB\u518D\u8A66\u4E00\u6B21\u3002\n\u524D\u5F80<link=\"https://skydream.skymon.io/\"><color=#D8E1E8>https://skydream.skymon.io/</color></link>\u4E86\u89E3\u66F4\u591A\u8CC7\u8A0A\u3002"
+  - textID: ErrorMessageDesc_-302
+    type: 
+    speaker: 
+    text: "\u932F\u8AA4\u4EE3\u78BC $ErrorCode$ \u7CFB\u7D71\u7B49\u5F85\u5DF2\u903E\u671F\uFF0C\u8ACB\u91CD\u65B0\u64CD\u4F5C\u3002\n\u524D\u5F80<link=\"https://skydream.skymon.io/\"><color=#D8E1E8>https://skydream.skymon.io/</color></link>\u4E86\u89E3\u66F4\u591A\u8CC7\u8A0A\u3002"
+  - textID: GoogleFitLoginErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: GoogleFitLoginErrorMessageDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: $ErrorMessageDesc_2$
+  - textID: GoogleFitLoginErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitStepErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: GoogleFitStepErrorMessageDesc
+    type: 
+    speaker: 
+    text: "\u932F\u8AA4\u4EE3\u78BC $ErrorCode$\n$ErrorMsg$"
+  - textID: GoogleFitStepErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: "\u7121\u6CD5\u8B80\u53D6\u6B65\u6578\u8A08\u6578\u503C\u3002\u8ACB\u78BA\u8A8D\u88DD\u7F6E\u7684\u7DB2\u969B\u7DB2\u8DEF\u9023\u63A5\u72C0\u614B\u5F8C\uFF0C\u518D\u8A66\u4E00\u6B21\u3002"
+  - textID: RankingsUnavailable
+    type: 
+    speaker: 
+    text: 
+  - textID: EmptySkymon
+    type: 
+    speaker: 
+    text: 
+  - textID: Test
+    type: 1
+    speaker: def
+    text: "\u6E2C\u8A66"
+  - textID: Hello World
+    type: 2
+    speaker: qwerty
+    text: "\u4F60\u597D\u4E16\u754C"
+  - textID: High Score
+    type: 
+    speaker: 
+    text: "\u9AD8\u5206"
+  - textID: BtnLogin
+    type: 
+    speaker: 
+    text: "\u767B\u5165"
+  - textID: TapToStart
+    type: 
+    speaker: 
+    text: "\u6309\u4E00\u4E0B\u4F86\u958B\u59CB"
+  - textID: StepImportFAQTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: StepImportFAQButton
+    type: 
+    speaker: 
+    text: "\u5E6B\u52A9Skymon"

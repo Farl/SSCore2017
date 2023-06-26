@@ -1,0 +1,496 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28aeffd3a1c4cebbc4d86e5760ce14, type: 3}
+  m_Name: TextTable - Default_French
+  m_EditorClassIdentifier: 
+  dataList:
+  - textID: ChineseTraditional
+    type: 
+    speaker: 
+    text: "\u7E41\u9AD4\u4E2D\u6587"
+  - textID: English
+    type: 
+    speaker: 
+    text: English
+  - textID: French
+    type: 
+    speaker: 
+    text: French
+  - textID: Japanese
+    type: 
+    speaker: 
+    text: "\u65E5\u672C\u8A9E"
+  - textID: InfoBest
+    type: 
+    speaker: 
+    text: Meilleur
+  - textID: InfoLatest
+    type: 
+    speaker: 
+    text: Dernier
+  - textID: InfoTotal
+    type: 
+    speaker: 
+    text: Total
+  - textID: InfoTotalShadowHint
+    type: 
+    speaker: 
+    text: <sprite name="info-gray"> (steps only)
+  - textID: InforBestShadowHint
+    type: 
+    speaker: 
+    text: (flying)
+  - textID: InfoRemainHardtime
+    type: 
+    speaker: 
+    text: to get through hard time
+  - textID: DistanceUnit
+    type: 
+    speaker: 
+    text: m
+  - textID: SectionTitleAudio
+    type: 
+    speaker: 
+    text: 
+  - textID: Music
+    type: 
+    speaker: 
+    text: Musique
+  - textID: Sounds
+    type: 
+    speaker: 
+    text: Sons
+  - textID: SectionTitleGraphic
+    type: 
+    speaker: 
+    text: 
+  - textID: SectioinTitleAccount
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnRemoveGoogleFit
+    type: 
+    speaker: 
+    text: 
+  - textID: CameraPermission
+    type: 
+    speaker: 
+    text: 
+  - textID: RankingAddress
+    type: 
+    speaker: 
+    text: 
+  - textID: Skymon
+    type: 
+    speaker: 
+    text: Skymon
+  - textID: Settings
+    type: 
+    speaker: 
+    text: "Param\xE8tre"
+  - textID: BtnOk
+    type: 
+    speaker: 
+    text: D'ACCORD
+  - textID: BtnCancel
+    type: 
+    speaker: 
+    text: Annuler
+  - textID: BtnRetry
+    type: 
+    speaker: 
+    text: Recommencez
+  - textID: BtnLater
+    type: 
+    speaker: 
+    text: 
+  - textID: Play
+    type: 
+    speaker: 
+    text: Jouer
+  - textID: SyncSkymon
+    type: 
+    speaker: 
+    text: Invoquer Skymon
+  - textID: DisconnectWallet
+    type: 
+    speaker: 
+    text: "D\xE9brancher le portefeuille"
+  - textID: ImportSteps
+    type: 
+    speaker: 
+    text: "Convertir les \xE9tapes"
+  - textID: Home
+    type: 
+    speaker: 
+    text: Maison
+  - textID: Restart
+    type: 
+    speaker: 
+    text: "Red\xE9marrage"
+  - textID: PlayAgain
+    type: 
+    speaker: 
+    text: Rejouer
+  - textID: Resume
+    type: 
+    speaker: 
+    text: CV
+  - textID: StepsToDistance
+    type: 
+    speaker: 
+    text: "$currSteps$ \u2192 + $currStepsToDistance$"
+  - textID: Reset
+    type: 
+    speaker: 
+    text: "D\xE9faut"
+  - textID: BtnRemove
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnDisconnect
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityLow
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityNormal
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnQualityHigh
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnVisit
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnMySkymon
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnGlobal
+    type: 
+    speaker: 
+    text: 
+  - textID: BtnGoogleFit
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLogin
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginWaitingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GoogleFitLoginWaitingDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginCancelTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginCancelDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitRemoveTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitRemoveDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthPermissionTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthPermissionDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthDeclineTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: IOSHealthDeclineDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: Confirm
+    type: 
+    speaker: 
+    text: $btn_ok$
+  - textID: Cancel
+    type: 
+    speaker: 
+    text: $btn_cancel$
+  - textID: StepsUnit-plural
+    type: 
+    speaker: 
+    text: pas
+  - textID: ...
+    type: 
+    speaker: 
+    text: <link=ellipsis-anim><sprite name="ellipsisDot"><sprite name="ellipsisDot"><sprite
+      name="ellipsisDot"></link>
+  - textID: LoginUITitle
+    type: 
+    speaker: 
+    text: 
+  - textID: LoginUIDesc
+    type: 
+    speaker: 
+    text: 'Waiting for wallet confirmation $...$
+
+      Visit <link="https://skydream.skymon.io/"><color=#D8E1E8>https://skydream.skymon.io/</color></link>
+      to get more information. '
+  - textID: LoginUIScanQRCode
+    type: 
+    speaker: 
+    text: Scan QR code
+  - textID: LoginUIPlaceholder
+    type: 
+    speaker: 
+    text: Enter username...
+  - textID: LoginMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginMessageDesc
+    type: 
+    speaker: 
+    text: Connecting $...$
+  - textID: LoginSuccessTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginSuccessDesc
+    type: 
+    speaker: 
+    text: "Bienvenue \xC0 Sky Dream!\nProfitez De La Libert\xE9 De Voler Avec Skymon!"
+  - textID: LoginFailedTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: LoginFailedDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: WalletConnectTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WalletConnectDesc
+    type: 
+    speaker: 
+    text: Receiving wallet connecting request. Tap Summon button to connect.
+  - textID: WalletDisconnectTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: WalletDisconnectDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: StepImportFAQDescLess10
+    type: 
+    speaker: 
+    text: "La Marche Peut Aider Skymon \xC0 Augmenter La Distance De Vol.\nToutes
+      Les 10 \xC9tapes Peuvent \xCAtre Converties En Une Distance De Vol Skymon 0,1
+      M\xE8tre,\n\xC9crivez Le Record Du Monde Qui Vous Appartient Avec Skymon!"
+  - textID: StepImportFAQDesc_Android
+    type: 
+    speaker: 
+    text: 
+  - textID: StepImportFAQDesc_iOS
+    type: 
+    speaker: 
+    text: "Impossible De Lire Le Nombre De Comptes D'\xC9tapes.\nLa Fonction D'\xC9tape
+      De Conversion Doit Utiliser Des Informations De Marche Saines,\nConfirmez Le
+      R\xE9glage Des Autorisations D'Acc\xE8s De L'Appareil."
+  - textID: HintMessageShadowTotal
+    type: 
+    speaker: 
+    text: "Le Kilom\xE9trage De Vol De Shadow Ne S'Accumulera Pas, Et Il Sera R\xE9\xE9lev\xE9
+      \xC0 Chaque Fois, Mais Le Kilom\xE9trage Converti En Shadow S'Accumulera Au
+      Kilom\xE9trage Total De L'Ombre. Les Joueurs Peuvent Utiliser La Distance De
+      Marche Pour Voler \xC0 Tous Les Niveaux!\n(\u203B Prise En Charge Uniquement
+      De L'Installation Des Fonctions De Comptage D'\xC9tape)"
+  - textID: Logout
+    type: 
+    speaker: 
+    text: "Se d\xE9connecter"
+  - textID: ConsumeStepReadingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepReadingDesc
+    type: 
+    speaker: 
+    text: "Chargement Des Donn\xE9es $...$"
+  - textID: ConsumeStepTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepDesc
+    type: 
+    speaker: 
+    text: "Confirmer pour convertir les donn\xE9es de pas en distance de vol de $
+      currskymonName $?"
+  - textID: ConsumeStepDescWorldChanged
+    type: 
+    speaker: 
+    text: '$ConsumeStepDesc$
+
+      Skymon will fly into the next stage.'
+  - textID: ConsumeStepWritingTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepWritingDesc
+    type: 
+    speaker: 
+    text: Converting $...$
+  - textID: GetAllSkymonTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GetAllSkymonDesc
+    type: 
+    speaker: 
+    text: Summoning Skymon $...$
+  - textID: ConsumeStepHardTimeTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepHardTimeDesc
+    type: 
+    speaker: 
+    text: After Skymon has passed through the Hard Time Stage, could able to convert
+      steps, please accompany Skymon to face and overcome the Hard Time !
+  - textID: InfoMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WarningMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: ErrorMessageDesc
+    type: 
+    speaker: 
+    text: Error Code $ErrorCode$
+  - textID: ErrorMessageDetailDesc
+    type: 
+    speaker: 
+    text: 'Error Code $ErrorCode$
+
+      $ErrorMsg$'
+  - textID: ErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: "Impossible De Se Connecter Au Serveur, Veuillez Confirmer L'\xC9tat De
+      La Connexion Internet De L'Appareil Avant De R\xE9essayer.\n(\u203B Sans L'\xC9tat
+      De Connexion Du R\xE9seau, Vous Ne Pouvez Voler Qu'Avec L'Ombre Et La Fonction
+      \"\xC9tape De Conversion\" Ne Peut Pas \xCAtre Utilis\xE9e.)"
+  - textID: ErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: 
+  - textID: ErrorMessageDesc_-301
+    type: 
+    speaker: 
+    text: 
+  - textID: ErrorMessageDesc_-302
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitLoginErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitStepErrorMessageTitle
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitStepErrorMessageDesc
+    type: 
+    speaker: 
+    text: 
+  - textID: GoogleFitStepErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: 
+  - textID: RankingsUnavailable
+    type: 
+    speaker: 
+    text: 
+  - textID: EmptySkymon
+    type: 
+    speaker: 
+    text: 
+  - textID: Test
+    type: 1
+    speaker: def
+    text: Test
+  - textID: Hello World
+    type: 2
+    speaker: qwerty
+    text: Bonjour le monde
+  - textID: High Score
+    type: 
+    speaker: 
+    text: "Score \xE9lev\xE9"
+  - textID: BtnLogin
+    type: 
+    speaker: 
+    text: 
+  - textID: TapToStart
+    type: 
+    speaker: 
+    text: "toucher pour d\xE9marrer"
+  - textID: StepImportFAQTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: StepImportFAQButton
+    type: 
+    speaker: 
+    text: Not enough steps

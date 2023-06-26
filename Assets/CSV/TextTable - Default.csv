@@ -1,0 +1,183 @@
+textID,speaker,type,ChineseTraditional,English,French,Japanese,Deutsch,// Formula 用法
+// Comment,abc,,zh-tw,en,fr,ja-jp,de,
+ChineseTraditional,,,繁體中文,繁體中文,繁體中文,繁體中文,繁體中文,
+English,,,English,English,English,English,English,
+French,,,French,French,French,French,French,
+Japanese,,,日本語,日本語,日本語,日本語,日本語,
+InfoBest,,,最佳,Best,Meilleur,一番,Am besten,
+InfoLatest,,,上一次,Latest,Dernier,最新,Neueste,
+InfoTotal,,,總合,Total,Total,合計,Gesamt,
+InfoTotalShadowHint,,,"<sprite name=""info-gray""> (僅計算步數轉換距離)","<sprite name=""info-gray""> (steps only)","<sprite name=""info-gray""> (steps only)","<sprite name=""info-gray""> (steps only)","<sprite name=""info-gray""> (steps only)",
+InforBestShadowHint,,,(飛行距離),(flying),(flying),(flying),(flying),
+InfoRemainHardtime,,,通過困境,to get through hard time,to get through hard time,to get through hard time,to get through hard time,
+DistanceUnit,,,m,m,m,m,M,
+//Settings,,,,,,,,
+SectionTitleAudio,,,,Audio,,,,new
+Music,,,音樂,Music,Musique,ミュージック,Musik,
+Sounds,,,音效,Sounds,Sons,サウンド,Töne,
+SectionTitleGraphic,,,,Graphic Quality,,,,new
+SectioinTitleAccount,,,,Account,,,,new
+BtnRemoveGoogleFit,,,,Deactivate Google Fit,,,,
+CameraPermission,,,,Allow Sky Dream to  access your camera under Sky Dream in your device's settings.,,,,
+RankingAddress,,,,"Visit <link=""https://skydream.skymon.io/""><color=#FB6039>https://skydream.skymon.io/</color></link> to find more information. ",,,,
+//Btn,,,,,,,,
+Skymon,,,Skymon,Skymon,Skymon,Skymon,Skymon,
+Settings,,,設定,Settings,Paramètre,設定,Einstellungen,
+BtnOk,,,確認,OK,D'ACCORD,OK,OK,
+BtnCancel,,,取消,Cancel,Annuler,キャンセル,Stornieren,
+BtnRetry,,,重試,Retry,Recommencez,リトライ,Wiederholen,
+BtnLater,,,稍後,Later,,,,
+Play,,,Play,Play,Jouer,遊ぶ,Spielen,
+SyncSkymon,,,召喚Skymon,Summon Skymon,Invoquer Skymon,スカイモンを召喚します,Beschwörung Skymon,
+DisconnectWallet,,,斷開連結,Disconnect Wallet,Débrancher le portefeuille,ウォレットを切断します,Brieftasche trennen,
+ImportSteps,,,轉換步數,Convert Steps,Convertir les étapes,歩数を交換します,Schritte konvertieren,
+Home,,,主畫面,Home,Maison,ホーム,Heim,
+Restart,,,重來,Restart,Redémarrage,やり直す,Neu starten,
+PlayAgain,,,再試一次,Play Again,Rejouer,もう一度プレイ,Nochmal abspielen,
+Resume,,,繼續,Resume,CV,再開,Fortsetzen,
+StepsToDistance,,,$currSteps$ → + $currStepsToDistance$公尺,$currSteps$ → + $currStepsToDistance$ m,$currSteps$ → + $currStepsToDistance$,$currSteps$ → + $currStepsToDistance$,$currSteps$ → + $currStepsToDistance$,
+Reset,,,恢復預設,Default,Défaut,デフォルト,Standard,
+BtnRemove,,,,Remove,,,,remove Google account
+BtnDisconnect,,,,Disconnect,,,,disconnect wallet
+BtnQualityLow,,,,Lite,,,,
+BtnQualityNormal,,,,Medium,,,,
+BtnQualityHigh,,,,High,,,,
+BtnVisit,,,,Visit,,,,
+BtnMySkymon,,,,My Skymon,,,,
+BtnGlobal,,,,Golbal,,,,
+BtnGoogleFit,,,,Connect to Google Fit,,,,
+// messages,,,,,,,,
+GoogleFitLogin,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">",,,,
+GoogleFitLoginDesc,,,,"Welcome to Sky Dream ! 
+Please connect to Google Fit. 
+The ""Convert Steps"" feature uses Google Fit's physical activity profile. Please connect to the Internet and install Google Fit, and confirm the device's access permission settings.",,,,
+GoogleFitLoginWaitingTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+GoogleFitLoginWaitingDesc,,,,Waiting for connecting to Google Fit $...$,,,,
+GoogleFitLoginCancelTitle,,,"<sprite name=""warning-orange"">","<sprite name=""warning-orange"">",,,,
+GoogleFitLoginCancelDesc,,,,"To enable ""Convert Steps"" feature by connecting to Google Fit and allow access permission.
+(※You could connect Google Fit again by tap ""Convert Steps"" button at Skymon page.)",,,,
+GoogleFitRemoveTitle,,,,"<sprite name=""warning-orange"">",,,,
+GoogleFitRemoveDesc,,,,"Are you sure you want to deactivate Google Fit? The ""Convert Steps"" function would be deactivated.",,,,
+IOSHealthPermissionTitle,,,,"<sprite name=""info-gray"">",,,,
+IOSHealthPermissionDesc,,,,"Welcome to Sky Dream ! 
+Walking can help Skymon increase the flying distance. The ""Convert Steps"" feature uses steps data in Health. Please allow ""Sky Dream"" to access your steps data.",,,,
+IOSHealthDeclineTitle,,,"<sprite name=""warning-orange"">","<sprite name=""warning-orange"">",,,,
+IOSHealthDeclineDesc,,,"沒有允許 Health 讀取權限，""轉換步數"" 功能無法使用。","""Convert Steps"" feature would be available after you allow the steps data access permission in Health.",,,,
+Confirm,,,$btn_ok$,$btn_ok$,$btn_ok$,$btn_ok$,$btn_ok$,
+Cancel,,,$btn_cancel$,$btn_cancel$,$btn_cancel$,$btn_cancel$,$btn_cancel$,
+StepsUnit-plural,,,步數,steps,pas,ステップ,Schritte,
+...,,,"<link=ellipsis-anim><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""></link>","<link=ellipsis-anim><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""></link>","<link=ellipsis-anim><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""></link>","<link=ellipsis-anim><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""></link>","<link=ellipsis-anim><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""><sprite name=""ellipsisDot""></link>",Text animation
+LoginUITitle,,,,,,,,※不使用標題所以留空
+LoginUIDesc,,,"系統正在等待Skymon資料匯入 $...$
+前往 <link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link> 了解更多匯入資訊","Waiting for wallet confirmation $...$
+Visit <link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link> to get more information. ","Waiting for wallet confirmation $...$
+Visit <link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link> to get more information. ","Waiting for wallet confirmation $...$
+Visit <link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link> to get more information. ","Waiting for wallet confirmation $...$
+Visit <link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link> to get more information. ",
+LoginUIScanQRCode,,,掃描 QR code,Scan QR code,Scan QR code,Scan QR code,Scan QR code,
+LoginUIPlaceholder,,,Enter username...,Enter username...,Enter username...,Enter username...,Enter username...,開發用
+LoginMessageTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+LoginMessageDesc,,,連接中 $...$,Connecting $...$,Connecting $...$,Connecting $...$,Connecting $...$,
+LoginSuccessTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+LoginSuccessDesc,,,"歡迎來到Sky Dream ! 
+盡情享受與Skymon一起飛翔的自由時光吧 !","Welcome to Sky Dream ! 
+Enjoy your free time flying with Skymon!","Bienvenue À Sky Dream!
+Profitez De La Liberté De Voler Avec Skymon!","スカイドリームへようこそ！
+Skymonで飛行する自由をお楽しみください！","Willkommen Bei Sky Dream!
+Genießen Sie Die Freiheit Des Fliegens Mit Skymon!",
+LoginFailedTitle,,,"<sprite name=""warning-red"">","<sprite name=""warning-red"">","<sprite name=""warning-red"">","<sprite name=""warning-red"">","<sprite name=""warning-red"">",
+LoginFailedDesc,,,召喚Skymon失敗。請檢查裝置網路，確定錢包位址資訊正確後，再試一次。,Failed to summon Skymon. Please check the device network connection and the wallet address is correct and try again. ,,,,
+WalletConnectTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+WalletConnectDesc,,,系統收到Skymon資料，點擊召喚按鈕進行資料連接。,Receive wallet connecting request. Tap Summon button to connect.,Receiving wallet connecting request. Tap Summon button to connect.,Receiving wallet connecting request. Tap Summon button to connect.,Receiving wallet connecting request. Tap Summon button to connect.,
+WalletDisconnectTitle,,,"<sprite name=""warning-orange"">","<sprite name=""warning-orange"">",,,,
+WalletDisconnectDesc,,,,Are you sure you want to disconnect? You would not be able to fly with your Skymon.,,,,
+StepImportFAQDescLess10,,,"走路可以幫助Skymon增加飛行距離。
+每10步可以轉換成Skymon 0.1公尺的飛行距離，
+一起陪伴你的Skymon寫下屬於你們的世界記錄吧!","Walking can help Skymon increase the flying distance.
+Every 10 steps can be converted into a flying distance of 0.1 meter for Skymon. Let’s accompany your Skymon to write your own world record!","La Marche Peut Aider Skymon À Augmenter La Distance De Vol.
+Toutes Les 10 Étapes Peuvent Être Converties En Une Distance De Vol Skymon 0,1 Mètre,
+Écrivez Le Record Du Monde Qui Vous Appartient Avec Skymon!","ウォーキングは、スカイモンが飛行距離を増やすのに役立ちます。
+10ステップごとに、Skymon 0.1メートルの飛行距離に変換できます。
+Skymonであなたに属する世界記録を書いてください！","Gehen Kann Skymon Helfen, Die Flugentfernung Zu Erhöhen.
+Alle 10 Schritte Können In Eine Flugdistanz Von 0,1 Metern Umgewandelt Werden.
+Schreiben Sie Den Weltrekord, Der Ihnen Mit Skymon Gehört!",步數小於10的訊息，需要功能，訊息內容再調整，讓玩家知道至少要10步。
+StepImportFAQDesc_Android,,,,"Unable to read step count value.
+The ""Convert Steps"" feature uses Google Fit's physical activity profile. Please install and connect to Google Fit, and allow access permission.",,,,在遊戲中確認
+StepImportFAQDesc_iOS,,,"無法讀取步數計數值。
+轉換步數功能必須使用健康的步行資料，
+確認一下裝置的存取權限設定吧。","Unable to read step count value.
+The ""Convert Steps"" feature uses HealthKit's walking profile, check the access permission settings of the device.","Impossible De Lire Le Nombre De Comptes D'Étapes.
+La Fonction D'Étape De Conversion Doit Utiliser Des Informations De Marche Saines,
+Confirmez Le Réglage Des Autorisations D'Accès De L'Appareil.","ステップ数の数を読むことができません。
+変換ステップ関数は、健全なウォーキング情報を使用する必要があります。
+デバイスのアクセス許可の設定を確認します。","Die Anzahl Der Schrittzahlen Kann Nicht Gelesen Werden.
+Die Konvertierungsschrittfunktion Muss Gesunde Wanderinformationen Verwenden.
+Bestätigen Sie Die Einstellung Der Zugriffsberechtigungen Des Geräts.",在遊戲中確認
+HintMessageShadowTotal,,,"Shadow的飛行里程不會累積，每次都會重新計算，但步行轉換給Shadow的里程，會累積至Shadow的總里程，玩家可以利用步行轉換的距離，陪著Shadow飛翔至每一個關卡!
+(※只支援有計步功能的裝置)","Shadow's flight mileage will not accumulate and will be recalculated every flight, but the mileage converted from walking to Shadow will be accumulated to the total mileage of Shadow. Players can use the distance converted from walking to accompany Shadow to fly to each Stage!
+(※Only devices with pedometer function are supported)","Le Kilométrage De Vol De Shadow Ne S'Accumulera Pas, Et Il Sera Réélevé À Chaque Fois, Mais Le Kilométrage Converti En Shadow S'Accumulera Au Kilométrage Total De L'Ombre. Les Joueurs Peuvent Utiliser La Distance De Marche Pour Voler À Tous Les Niveaux!
+(※ Prise En Charge Uniquement De L'Installation Des Fonctions De Comptage D'Étape)","シャドウの飛行走行距離は蓄積されず、毎回再計算されますが、シャドウに変換された走行距離はシャドウの総走行距離に蓄積されます。プレイヤーは歩行距離を使用してあらゆるレベルに飛ぶことができます！
+（Stepカウント機能のインストールのみをサポートします）","Shadows Flugmeilen Wird Sich Nicht Ansammeln, Und Er Wird Jedes Mal Wiederkalkuliert, Aber Die In Den Schatten Umgewandelte Kilometerleistung Sammelt Sich Auf Die Gesamtkilometer Des Schattens An. Die Spieler Können Die Entfernung Des Gehens Nutzen, Um Auf Jedes Level Zu Fliegen!
+(※ Unterstützen Sie Nur Die Installation Von Schritt -Counting -Funktionen)",
+Logout,,,登出,Logout,Se déconnecter,ログアウト,Ausloggen,
+ConsumeStepReadingTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+ConsumeStepReadingDesc,,,步數資料讀取中 $...$,Loading Data $...$,Chargement Des Données $...$,データのロード $...$,Lade Daten $...$,正在讀取 health kit or google fit data訊息文字調整
+ConsumeStepTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+ConsumeStepDesc,,,確定將步數資料，轉換成$currSkymonName$的飛行距離嗎?,Confirm to convert the step data into the flying distance of $currSkymonName$?,Confirmer pour convertir les données de pas en distance de vol de $ currskymonName $?,ステップデータを$ currskymonname $の飛行距離に変換することを確認しますか？,"Bestätigen Sie, um die Schrittdaten in die fliegende Entfernung von $ currskymonname $ umzuwandeln?",
+ConsumeStepDescWorldChanged,,,"$ConsumeStepDesc$
+Skymon將直接飛進新的舞台。","$ConsumeStepDesc$
+Skymon will fly into the next stage.","$ConsumeStepDesc$
+Skymon will fly into the next stage.","$ConsumeStepDesc$
+Skymon will fly into the next stage.","$ConsumeStepDesc$
+Skymon will fly into the next stage.",
+ConsumeStepWritingTitle,,,"<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">",遊戲中確認
+ConsumeStepWritingDesc,,,步數轉換中 $...$,Converting $...$,Converting $...$,Converting $...$,Converting $...$,
+GetAllSkymonTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+GetAllSkymonDesc,,,Skymon召喚中 $...$,Summoning Skymon $...$,Summoning Skymon $...$,Summoning Skymon $...$,Summoning Skymon $...$,
+ConsumeStepHardTimeTitle,,,"<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">",
+ConsumeStepHardTimeDesc,,,Skymon 穿越困境後，才能夠進行步數轉換，陪伴Skymon一起面對並跨越困境吧!,"After Skymon has passed through the Hard Time Stage, could able to convert steps, please accompany Skymon to face and overcome the Hard Time !","After Skymon has passed through the Hard Time Stage, could able to convert steps, please accompany Skymon to face and overcome the Hard Time !","After Skymon has passed through the Hard Time Stage, could able to convert steps, please accompany Skymon to face and overcome the Hard Time !","After Skymon has passed through the Hard Time Stage, could able to convert steps, please accompany Skymon to face and overcome the Hard Time !",
+InfoMessageTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+WarningMessageTitle,,,"<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">","<sprite name=""warning-orange"">",
+//ErrorMessage (通用),,,,,,,,
+ErrorMessageTitle,,,"<sprite name=""warning-red"">","<sprite name=""warning-red"">","<sprite name=""warning-red"">","<sprite name=""warning-red"">","<sprite name=""warning-red"">",
+ErrorMessageDesc,,,錯誤代碼 $ErrorCode$,Error Code $ErrorCode$,Error Code $ErrorCode$,Error Code $ErrorCode$,Error Code $ErrorCode$,
+ErrorMessageDetailDesc,,,"錯誤代碼 $ErrorCode$
+$ErrorMsg$","Error Code $ErrorCode$
+$ErrorMsg$","Error Code $ErrorCode$
+$ErrorMsg$","Error Code $ErrorCode$
+$ErrorMsg$","Error Code $ErrorCode$
+$ErrorMsg$",
+ErrorMessageDesc_2,,,"無法連接伺服器，請確認裝置的網際網路連接狀態後，再試一次。
+(※沒有網路連線狀態下，只能陪伴Shadow一起飛行，且""轉換步數""功能無法使用。)","Failed to connect with server. Please check your device's network setting and environment and try again.
+(※Without internet connection, you can only fly with Shadow, and ""Convert Steps"" feature would be deactivated.)","Impossible De Se Connecter Au Serveur, Veuillez Confirmer L'État De La Connexion Internet De L'Appareil Avant De Réessayer.
+(※ Sans L'État De Connexion Du Réseau, Vous Ne Pouvez Voler Qu'Avec L'Ombre Et La Fonction ""Étape De Conversion"" Ne Peut Pas Être Utilisée.)","サーバーに接続できません。再試行する前に、デバイスのインターネット接続ステータスを確認してください。
+（Networkネットワーク接続状態がなければ、シャドウでのみ飛ぶことができ、「変換ステップ」関数は使用できません。）","Bitte Bestätigen Sie Den Status Des Internetverbindungsstatus Des Geräts, Bevor Sie Es Erneut Versuchen.
+(※ Ohne Den Netzwerkverbindungszustand Können Sie Nur Mit Schatten Fliegen, Und Die Funktion ""Konvertierungsschritt"" Kann Nicht Verwendet Werden.)",如果一直沒有連線成功或取消，會轉換成 shadow，訊息是否 一起呈現
+ErrorMessageDesc_-202,,,錯誤代碼 $ErrorCode$ 連線逾時。,Error Code $ErrorCode$ Connection timed out.,,,,
+ErrorMessageDesc_-301,,,"錯誤代碼 $ErrorCode$ QR Code資訊失效，請再試一次。
+前往<link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link>了解更多資訊。","Error Code $ErrorCode$ The QR code is invalid. Please try again or visit <link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link> to get more information. ",,,,
+ErrorMessageDesc_-302,,,"錯誤代碼 $ErrorCode$ 系統等待已逾期，請重新操作。
+前往<link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link>了解更多資訊。","Error Code $ErrorCode$ The QR code has expired. Please try again or visit <link=""https://skydream.skymon.io/""><color=#D8E1E8>https://skydream.skymon.io/</color></link> to get more information. ",,,,
+GoogleFitLoginErrorMessageTitle,,,"<sprite name=""warning-red"">","<sprite name=""warning-red"">",,,,
+GoogleFitLoginErrorMessageDesc,,,,"Error Code $ErrorCode$, Google Fit connecting failed, please check the device network connection and activate Google Fit and allow access permission and try again.
+(※ By connecting Sky Dream and Google Fit to enable ""Convert Steps"" feature.)",,,,
+GoogleFitLoginErrorMessageDesc_2,,,$ErrorMessageDesc_2$,$ErrorMessageDesc_2$,,,,
+GoogleFitLoginErrorMessageDesc_-202,,,,"Connection timed out, Google Fit connecting failed.
+(※ By connecting Sky Dream and Google Fit to enable ""Convert Steps"" feature.)",,,,
+GoogleFitStepErrorMessageTitle,,,"<sprite name=""warning-red"">","<sprite name=""warning-red"">",,,,
+GoogleFitStepErrorMessageDesc,,,"錯誤代碼 $ErrorCode$
+$ErrorMsg$","Error Code $ErrorCode$
+$ErrorMsg$",,,,
+GoogleFitStepErrorMessageDesc_2,,,無法讀取步數計數值。請確認裝置的網際網路連接狀態後，再試一次。,Unable to read step count value. Please check your device's network setting and environment and try again.,,,,
+RankingsUnavailable,,,,Unable to get rankings. Please check network connection and try again.,,,,
+EmptySkymon,,,,"Don't you have any Skymon? 
+Visit <link=""https://www.skymon.io/""><color=#FB6039>skymon.io</color></link> to get your own!",,,,
+// Test,,,,,,,,
+Test,def,1,測試,Test,Test,テスト,Prüfen,
+Hello World,qwerty,2,你好世界,Hello World,Bonjour le monde,こんにちは世界,Hallo Welt,
+High Score,,,高分,High Score,Score élevé,高得点,Highscore,
+// 未使用,,,,,,,,
+BtnLogin,,,登入,Login,,,,只在google fit登入使用，所以改成使用BtnGoogleFit
+TapToStart,,,按一下來開始,Tap to start,toucher pour démarrer,タップして開始,"Tippe, um zu starten",
+StepImportFAQTitle,,,"<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">","<sprite name=""info-gray"">",
+StepImportFAQButton,,,幫助Skymon,Not enough steps,Not enough steps,Not enough steps,Not enough steps,

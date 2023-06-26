@@ -1,0 +1,524 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28aeffd3a1c4cebbc4d86e5760ce14, type: 3}
+  m_Name: TextTable - Default_English
+  m_EditorClassIdentifier: 
+  dataList:
+  - textID: ChineseTraditional
+    type: 
+    speaker: 
+    text: "\u7E41\u9AD4\u4E2D\u6587"
+  - textID: English
+    type: 
+    speaker: 
+    text: English
+  - textID: French
+    type: 
+    speaker: 
+    text: French
+  - textID: Japanese
+    type: 
+    speaker: 
+    text: "\u65E5\u672C\u8A9E"
+  - textID: InfoBest
+    type: 
+    speaker: 
+    text: Best
+  - textID: InfoLatest
+    type: 
+    speaker: 
+    text: Latest
+  - textID: InfoTotal
+    type: 
+    speaker: 
+    text: Total
+  - textID: InfoTotalShadowHint
+    type: 
+    speaker: 
+    text: <sprite name="info-gray"> (steps only)
+  - textID: InforBestShadowHint
+    type: 
+    speaker: 
+    text: (flying)
+  - textID: InfoRemainHardtime
+    type: 
+    speaker: 
+    text: to get through hard time
+  - textID: DistanceUnit
+    type: 
+    speaker: 
+    text: m
+  - textID: SectionTitleAudio
+    type: 
+    speaker: 
+    text: Audio
+  - textID: Music
+    type: 
+    speaker: 
+    text: Music
+  - textID: Sounds
+    type: 
+    speaker: 
+    text: Sounds
+  - textID: SectionTitleGraphic
+    type: 
+    speaker: 
+    text: Graphic Quality
+  - textID: SectioinTitleAccount
+    type: 
+    speaker: 
+    text: Account
+  - textID: BtnRemoveGoogleFit
+    type: 
+    speaker: 
+    text: Deactivate Google Fit
+  - textID: CameraPermission
+    type: 
+    speaker: 
+    text: Allow Sky Dream to  access your camera under Sky Dream in your device's
+      settings.
+  - textID: RankingAddress
+    type: 
+    speaker: 
+    text: 'Visit <link="https://skydream.skymon.io/"><color=#FB6039>https://skydream.skymon.io/</color></link>
+      to find more information. '
+  - textID: Skymon
+    type: 
+    speaker: 
+    text: Skymon
+  - textID: Settings
+    type: 
+    speaker: 
+    text: Settings
+  - textID: BtnOk
+    type: 
+    speaker: 
+    text: OK
+  - textID: BtnCancel
+    type: 
+    speaker: 
+    text: Cancel
+  - textID: BtnRetry
+    type: 
+    speaker: 
+    text: Retry
+  - textID: BtnLater
+    type: 
+    speaker: 
+    text: Later
+  - textID: Play
+    type: 
+    speaker: 
+    text: Play
+  - textID: SyncSkymon
+    type: 
+    speaker: 
+    text: Summon Skymon
+  - textID: DisconnectWallet
+    type: 
+    speaker: 
+    text: Disconnect Wallet
+  - textID: ImportSteps
+    type: 
+    speaker: 
+    text: Convert Steps
+  - textID: Home
+    type: 
+    speaker: 
+    text: Home
+  - textID: Restart
+    type: 
+    speaker: 
+    text: Restart
+  - textID: PlayAgain
+    type: 
+    speaker: 
+    text: Play Again
+  - textID: Resume
+    type: 
+    speaker: 
+    text: Resume
+  - textID: StepsToDistance
+    type: 
+    speaker: 
+    text: "$currSteps$ \u2192 + $currStepsToDistance$ m"
+  - textID: Reset
+    type: 
+    speaker: 
+    text: Default
+  - textID: BtnRemove
+    type: 
+    speaker: 
+    text: Remove
+  - textID: BtnDisconnect
+    type: 
+    speaker: 
+    text: Disconnect
+  - textID: BtnQualityLow
+    type: 
+    speaker: 
+    text: Lite
+  - textID: BtnQualityNormal
+    type: 
+    speaker: 
+    text: Medium
+  - textID: BtnQualityHigh
+    type: 
+    speaker: 
+    text: High
+  - textID: BtnVisit
+    type: 
+    speaker: 
+    text: Visit
+  - textID: BtnMySkymon
+    type: 
+    speaker: 
+    text: My Skymon
+  - textID: BtnGlobal
+    type: 
+    speaker: 
+    text: Golbal
+  - textID: BtnGoogleFit
+    type: 
+    speaker: 
+    text: Connect to Google Fit
+  - textID: GoogleFitLogin
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GoogleFitLoginDesc
+    type: 
+    speaker: 
+    text: "Welcome to Sky Dream ! \nPlease connect to Google Fit. \nThe \"Convert
+      Steps\" feature uses Google Fit's physical activity profile. Please connect
+      to the Internet and install Google Fit, and confirm the device's access permission
+      settings."
+  - textID: GoogleFitLoginWaitingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GoogleFitLoginWaitingDesc
+    type: 
+    speaker: 
+    text: Waiting for connecting to Google Fit $...$
+  - textID: GoogleFitLoginCancelTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: GoogleFitLoginCancelDesc
+    type: 
+    speaker: 
+    text: "To enable \"Convert Steps\" feature by connecting to Google Fit and allow
+      access permission.\n(\u203BYou could connect Google Fit again by tap \"Convert
+      Steps\" button at Skymon page.)"
+  - textID: GoogleFitRemoveTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: GoogleFitRemoveDesc
+    type: 
+    speaker: 
+    text: Are you sure you want to deactivate Google Fit? The "Convert Steps" function
+      would be deactivated.
+  - textID: IOSHealthPermissionTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: IOSHealthPermissionDesc
+    type: 
+    speaker: 
+    text: "Welcome to Sky Dream ! \nWalking can help Skymon increase the flying distance.
+      The \"Convert Steps\" feature uses steps data in Health. Please allow \"Sky
+      Dream\" to access your steps data."
+  - textID: IOSHealthDeclineTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: IOSHealthDeclineDesc
+    type: 
+    speaker: 
+    text: '"Convert Steps" feature would be available after you allow the steps data
+      access permission in Health.'
+  - textID: Confirm
+    type: 
+    speaker: 
+    text: $btn_ok$
+  - textID: Cancel
+    type: 
+    speaker: 
+    text: $btn_cancel$
+  - textID: StepsUnit-plural
+    type: 
+    speaker: 
+    text: steps
+  - textID: ...
+    type: 
+    speaker: 
+    text: <link=ellipsis-anim><sprite name="ellipsisDot"><sprite name="ellipsisDot"><sprite
+      name="ellipsisDot"></link>
+  - textID: LoginUITitle
+    type: 
+    speaker: 
+    text: 
+  - textID: LoginUIDesc
+    type: 
+    speaker: 
+    text: 'Waiting for wallet confirmation $...$
+
+      Visit <link="https://skydream.skymon.io/"><color=#D8E1E8>https://skydream.skymon.io/</color></link>
+      to get more information. '
+  - textID: LoginUIScanQRCode
+    type: 
+    speaker: 
+    text: Scan QR code
+  - textID: LoginUIPlaceholder
+    type: 
+    speaker: 
+    text: Enter username...
+  - textID: LoginMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginMessageDesc
+    type: 
+    speaker: 
+    text: Connecting $...$
+  - textID: LoginSuccessTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: LoginSuccessDesc
+    type: 
+    speaker: 
+    text: "Welcome to Sky Dream ! \nEnjoy your free time flying with Skymon!"
+  - textID: LoginFailedTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: LoginFailedDesc
+    type: 
+    speaker: 
+    text: 'Failed to summon Skymon. Please check the device network connection and
+      the wallet address is correct and try again. '
+  - textID: WalletConnectTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WalletConnectDesc
+    type: 
+    speaker: 
+    text: Receive wallet connecting request. Tap Summon button to connect.
+  - textID: WalletDisconnectTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: WalletDisconnectDesc
+    type: 
+    speaker: 
+    text: Are you sure you want to disconnect? You would not be able to fly with
+      your Skymon.
+  - textID: StepImportFAQDescLess10
+    type: 
+    speaker: 
+    text: "Walking can help Skymon increase the flying distance.\nEvery 10 steps
+      can be converted into a flying distance of 0.1 meter for Skymon. Let\u2019s
+      accompany your Skymon to write your own world record!"
+  - textID: StepImportFAQDesc_Android
+    type: 
+    speaker: 
+    text: 'Unable to read step count value.
+
+      The "Convert Steps" feature uses
+      Google Fit''s physical activity profile. Please install and connect to Google
+      Fit, and allow access permission.'
+  - textID: StepImportFAQDesc_iOS
+    type: 
+    speaker: 
+    text: 'Unable to read step count value.
+
+      The "Convert Steps" feature uses
+      HealthKit''s walking profile, check the access permission settings of the device.'
+  - textID: HintMessageShadowTotal
+    type: 
+    speaker: 
+    text: "Shadow's flight mileage will not accumulate and will be recalculated every
+      flight, but the mileage converted from walking to Shadow will be accumulated
+      to the total mileage of Shadow. Players can use the distance converted from
+      walking to accompany Shadow to fly to each Stage!\n(\u203BOnly devices with
+      pedometer function are supported)"
+  - textID: Logout
+    type: 
+    speaker: 
+    text: Logout
+  - textID: ConsumeStepReadingTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepReadingDesc
+    type: 
+    speaker: 
+    text: Loading Data $...$
+  - textID: ConsumeStepTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: ConsumeStepDesc
+    type: 
+    speaker: 
+    text: Confirm to convert the step data into the flying distance of $currSkymonName$?
+  - textID: ConsumeStepDescWorldChanged
+    type: 
+    speaker: 
+    text: '$ConsumeStepDesc$
+
+      Skymon will fly into the next stage.'
+  - textID: ConsumeStepWritingTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepWritingDesc
+    type: 
+    speaker: 
+    text: Converting $...$
+  - textID: GetAllSkymonTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: GetAllSkymonDesc
+    type: 
+    speaker: 
+    text: Summoning Skymon $...$
+  - textID: ConsumeStepHardTimeTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ConsumeStepHardTimeDesc
+    type: 
+    speaker: 
+    text: After Skymon has passed through the Hard Time Stage, could able to convert
+      steps, please accompany Skymon to face and overcome the Hard Time !
+  - textID: InfoMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: WarningMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-orange">
+  - textID: ErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: ErrorMessageDesc
+    type: 
+    speaker: 
+    text: Error Code $ErrorCode$
+  - textID: ErrorMessageDetailDesc
+    type: 
+    speaker: 
+    text: 'Error Code $ErrorCode$
+
+      $ErrorMsg$'
+  - textID: ErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: "Failed to connect with server. Please check your device's network setting
+      and environment and try again.\n(\u203BWithout internet connection, you can
+      only fly with Shadow, and \"Convert Steps\" feature would be deactivated.)"
+  - textID: ErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: Error Code $ErrorCode$ Connection timed out.
+  - textID: ErrorMessageDesc_-301
+    type: 
+    speaker: 
+    text: 'Error Code $ErrorCode$ The QR code is invalid. Please try again or visit
+      <link="https://skydream.skymon.io/"><color=#D8E1E8>https://skydream.skymon.io/</color></link>
+      to get more information. '
+  - textID: ErrorMessageDesc_-302
+    type: 
+    speaker: 
+    text: 'Error Code $ErrorCode$ The QR code has expired. Please try again or visit
+      <link="https://skydream.skymon.io/"><color=#D8E1E8>https://skydream.skymon.io/</color></link>
+      to get more information. '
+  - textID: GoogleFitLoginErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: GoogleFitLoginErrorMessageDesc
+    type: 
+    speaker: 
+    text: "Error Code $ErrorCode$, Google Fit connecting failed, please check the
+      device network connection and activate Google Fit and allow access permission
+      and try again.\n(\u203B By connecting Sky Dream and Google Fit to enable \"Convert
+      Steps\" feature.)"
+  - textID: GoogleFitLoginErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: $ErrorMessageDesc_2$
+  - textID: GoogleFitLoginErrorMessageDesc_-202
+    type: 
+    speaker: 
+    text: "Connection timed out, Google Fit connecting failed.\n(\u203B By connecting
+      Sky Dream and Google Fit to enable \"Convert Steps\" feature.)"
+  - textID: GoogleFitStepErrorMessageTitle
+    type: 
+    speaker: 
+    text: <sprite name="warning-red">
+  - textID: GoogleFitStepErrorMessageDesc
+    type: 
+    speaker: 
+    text: 'Error Code $ErrorCode$
+
+      $ErrorMsg$'
+  - textID: GoogleFitStepErrorMessageDesc_2
+    type: 
+    speaker: 
+    text: Unable to read step count value. Please check your device's network setting
+      and environment and try again.
+  - textID: RankingsUnavailable
+    type: 
+    speaker: 
+    text: Unable to get rankings. Please check network connection and try again.
+  - textID: EmptySkymon
+    type: 
+    speaker: 
+    text: "Don't you have any Skymon? \nVisit <link=\"https://www.skymon.io/\"><color=#FB6039>skymon.io</color></link>
+      to get your own!"
+  - textID: Test
+    type: 1
+    speaker: def
+    text: Test
+  - textID: Hello World
+    type: 2
+    speaker: qwerty
+    text: Hello World
+  - textID: High Score
+    type: 
+    speaker: 
+    text: High Score
+  - textID: BtnLogin
+    type: 
+    speaker: 
+    text: Login
+  - textID: TapToStart
+    type: 
+    speaker: 
+    text: Tap to start
+  - textID: StepImportFAQTitle
+    type: 
+    speaker: 
+    text: <sprite name="info-gray">
+  - textID: StepImportFAQButton
+    type: 
+    speaker: 
+    text: Not enough steps

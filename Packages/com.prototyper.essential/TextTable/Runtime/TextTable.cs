@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using TMPro;
 
 namespace SS
 {
@@ -29,6 +30,10 @@ namespace SS
         private static bool isInit = false;
 
         private static List<SystemLanguage> supportedLanguage = new List<SystemLanguage>();
+
+        private static Dictionary<string, TMP_FontAsset> fontAssets = new Dictionary<string, TMP_FontAsset>();
+
+        private static List<ITextTableMapping> mappings = new List<ITextTableMapping>();
 
         private static SystemLanguage FixSupportedLanguage(SystemLanguage input)
         {
@@ -97,6 +102,11 @@ namespace SS
             // Load default package
             LoadPackage(defaultPackage);
 
+            // Load font assets
+            LoadFontAssets(GetCurrentLanguage());
+
+            //
+            OnLanguageChanged();
         }
 
         public static void SetCurrentLanguage(SystemLanguage systemLanguage)
@@ -105,7 +115,9 @@ namespace SS
 
             systemLanguage = FixSupportedLanguage(systemLanguage);
 
-            if (systemLanguage != GetCurrentLanguage() || IsSpecifyLanguage == false)
+            var currLanguage = GetCurrentLanguage();
+
+            if (systemLanguage != currLanguage || IsSpecifyLanguage == false)
             {
 
                 List<string> packageNames = new List<string>();
@@ -126,9 +138,24 @@ namespace SS
                 // Load
                 foreach (var pn in packageNames)
                     LoadPackage(pn);
+
+                // Load font assets
+                LoadFontAssets(currLanguage, systemLanguage);
+
+                //
+                OnLanguageChanged();
             }
         }
 
+        public static void Register(ITextTableMapping component)
+        {
+            mappings.Add(component);
+        }
+
+        public static void Unregister(ITextTableMapping component)
+        {
+            mappings.Remove(component);
+        }
 
         public static void LoadPackage(string packageName)
         {
@@ -228,6 +255,73 @@ namespace SS
                     overrideNotify[textID]?.Invoke(textID, text);
                 }
             }
+        }
+
+        private static void OnLanguageChanged()
+        {
+            foreach (var map in mappings)
+            {
+                if (map != null)
+                {
+                    map.OnLanguageChanged();
+                }
+            }
+        }
+
+        private static void LoadFontAssets(SystemLanguage language)
+        {
+            // Load
+            foreach (var fs in settings.fontSettings)
+            {
+                if (fs.language == language)
+                {
+                    var fontAsset = Resources.Load<TMP_FontAsset>(fs.fontAssetPath);
+                    if (fontAsset != null)
+                    {
+                        fontAssets.Add(fs.fontAssetPath, fontAsset);
+                    }
+                    else
+                    {
+                        Debug.LogError($"{fs.fontAssetPath} does not exist.");
+                    }
+                }
+            }
+        }
+
+        private static void LoadFontAssets(SystemLanguage from, SystemLanguage to)
+        {
+            if (settings == null)
+                return;
+
+            // Unlaod
+            foreach (var kvp in fontAssets)
+            {
+                Resources.UnloadAsset(kvp.Value);
+            }
+            fontAssets.Clear();
+
+            // Load
+            LoadFontAssets(to);
+        }
+
+        public static bool TryGetFontAsset(string origFontAssetName, out TMPro.TMP_FontAsset fontAsset)
+        {
+            fontAsset = null;
+
+            if (settings == null)
+                return false;
+            foreach (var fs in settings.fontSettings)
+            {
+                if (fs.checkFontName.Equals(origFontAssetName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (fontAssets.ContainsKey(fs.fontAssetPath))
+                    {
+                        fontAsset = fontAssets[fs.fontAssetPath];
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private static bool TryGetTextInternal(string textID, out string text, int depth, List<string> collectTextIDs)

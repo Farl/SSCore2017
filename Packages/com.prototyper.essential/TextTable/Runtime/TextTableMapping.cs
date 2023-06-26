@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SS
 {
-    public class TextTableMapping : EntityBase
+    public class TextTableMapping : EntityBase, ITextTableMapping
     {
 
         #region OSFont
@@ -196,6 +196,8 @@ namespace SS
 
         private bool isInit;
 
+        private string origFontName;
+
         #region Override
 
         public override void OnRunnerStart()
@@ -209,10 +211,18 @@ namespace SS
                 return;
 
             InitOSFont();
-            if (_osDefaultFontAsset && TextComponent && TextComponent.font != null && !_initedFontAssets.Contains(TextComponent.font))
+
+            if (TextComponent != null && TextComponent.font != null)
             {
-                TextComponent.font.fallbackFontAssetTable.Add(_osDefaultFontAsset);
-                _initedFontAssets.Add(TextComponent.font);
+                // Backup original font asset name
+                origFontName = TextComponent.font.name;
+
+                // Add fallback font by using OS fonts
+                if (_osDefaultFontAsset && !_initedFontAssets.Contains(TextComponent.font))
+                {
+                    TextComponent.font.fallbackFontAssetTable.Add(_osDefaultFontAsset);
+                    _initedFontAssets.Add(TextComponent.font);
+                }
             }
             isInit = true;
         }
@@ -260,12 +270,30 @@ namespace SS
         {
             base.OnEntityAwake();
             RegisterVariable(this);
+            TextTable.Register(this);
         }
 
         protected override void OnEntityDestroy()
         {
             base.OnEntityDestroy();
             UnregisterVariable(this);
+            TextTable.Unregister(this);
+        }
+
+        private void SetupFontAsset()
+        {
+            if (TextComponent == null)
+                return;
+            if (string.IsNullOrEmpty(origFontName))
+                return;
+
+            if (TextTable.TryGetFontAsset(origFontName, out var fontAsset))
+            {
+                if (fontAsset != null)
+                {
+                    TextComponent.font = fontAsset;
+                }
+            }
         }
 
         private void OnEnable()
@@ -278,7 +306,13 @@ namespace SS
         {
             
         }
+
         #endregion
+
+        public void OnLanguageChanged()
+        {
+            ManualUpdateText();
+        }
 
         public void SetText(string text)
         {
@@ -315,6 +349,8 @@ namespace SS
             {
                 UpdateTextFromTextID();
             }
+
+            SetupFontAsset();
         }
 
         internal void SetColor(Color color)

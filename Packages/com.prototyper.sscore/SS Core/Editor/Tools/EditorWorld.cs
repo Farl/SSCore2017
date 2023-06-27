@@ -9,12 +9,13 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
+using UnityEditor.Build.Reporting;
 
 namespace SS.Core
 {
     [InitializeOnLoad]
     public class EditorWorld:
-        IPreprocessBuild
+        IPreprocessBuildWithReport
     {
         static EditorWorld()
         {
@@ -68,6 +69,11 @@ namespace SS.Core
 
             // Update build time
             setting.buildTime = System.DateTime.Now.ToString();
+        }
+
+        public void OnPreprocessBuild(BuildReport report)
+        {
+            OnPreprocessBuild(report.summary.platform, report.summary.outputPath);
         }
     }
 }

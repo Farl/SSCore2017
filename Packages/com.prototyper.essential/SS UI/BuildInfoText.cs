@@ -53,11 +53,20 @@ namespace SS
                 CheckNFT(ref defs);
                 CheckStep(ref defs);
 
-
-                text?.SetText($"{buildInfo.version}({buildInfo.versionCode}) {buildInfo.buildTime}{defs}");
-                if (canvasGroup)
-                    canvasGroup.alpha = 0;
+                if (text)
+                    text.SetText($"{buildInfo.version}({buildInfo.versionCode}) {buildInfo.buildTime}{defs}");
             }
+            else
+            {
+                if (text)
+                {
+                    text.SetText("BuildInfo not found");
+                }
+            }
+            
+            // Hide on start
+            if (canvasGroup)
+                canvasGroup.alpha = 0;
         }
 
         public void OnShowText()

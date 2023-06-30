@@ -188,7 +188,8 @@ namespace SS
         {
             if (loadedPackages.ContainsKey(packageName))
             {
-                Resources.UnloadAsset(loadedPackages[packageName]);
+                // TOCheck: May cause TMP issue
+                //Resources.UnloadAsset(loadedPackages[packageName]);
 
                 loadedPackages.Remove(packageName);
             }

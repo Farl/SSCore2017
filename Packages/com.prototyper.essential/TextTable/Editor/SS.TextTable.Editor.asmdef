@@ -1,11 +1,8 @@
 {
-    "name": "SS.Core.TextTable.Editor",
-    "rootNamespace": "SS.TextTable",
+    "name": "SS.TextTable.Editor",
+    "rootNamespace": "SS",
     "references": [
-        "GUID:1a1132a6426e91742bfe262e46e9b190",
-        "GUID:742253e3a4963e640ae8c0624ce2dc34",
-        "GUID:3d1d65fc5a0f441459b5110783a0cfe0",
-        "GUID:e31def9c4db5942a7b2f5860f17c409f"
+        "GUID:5b887df74686749329fd76ffa2dc81fb"
     ],
     "includePlatforms": [
         "Editor"

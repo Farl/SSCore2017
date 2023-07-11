@@ -16,6 +16,7 @@ namespace SS
         }
 
         public bool showDebugInfo = false;
+        public string[] defaultPackages = new string[] { "TextTable - Default" };
         public List<SystemLanguage> supportedLanguage = new List<SystemLanguage>();
         public List<SystemLanguage> editorSupportedLanguage = new List<SystemLanguage>();
         public FontSettings[] fontSettings;

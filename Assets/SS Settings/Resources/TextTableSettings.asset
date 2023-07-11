@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2a06b53f61849ae9cb614c31400f39, type: 3}
   m_Name: TextTableSettings
   m_EditorClassIdentifier: 
+  showDebugInfo: 0
+  defaultPackages:
+  - TextTable - Default
   supportedLanguage: 29000000280000000a000000
   editorSupportedLanguage: 29000000280000000a000000
   fontSettings:

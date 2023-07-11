@@ -22,8 +22,6 @@ namespace SS
         }
         private static SystemLanguage specifyLanguage;
 
-        private static string defaultPackage = "TextTable - Default";
-
         private static string defaultSettings = "TextTableSettings";
         private static TextTableSettings settings;
 
@@ -100,7 +98,13 @@ namespace SS
             isInit = true;
 
             // Load default package
-            LoadPackage(defaultPackage);
+            if (settings != null)
+            {
+                foreach (var pck in settings.defaultPackages)
+                {
+                    LoadPackage(pck);
+                }
+            }
 
             // Load font assets
             LoadFontAssets(GetCurrentLanguage());

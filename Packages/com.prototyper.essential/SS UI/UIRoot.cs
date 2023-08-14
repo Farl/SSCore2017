@@ -7,7 +7,8 @@ namespace SS
 {
     public class UIRoot : MonoBehaviour
     {
-        BaseRaycaster raycaster;
+        private bool isSetup = false;
+        private BaseRaycaster raycaster;
         private void Awake()
         {
             UIManager.Register(this);
@@ -28,6 +29,10 @@ namespace SS
 
         public void Setup()
         {
+            if (isSetup)
+            {
+                return;
+            }
             var entities = GetComponentsInChildren<UIEntity>(true);
             foreach (var e in entities)
             {

@@ -1,14 +1,11 @@
 {
   "name": "com.prototyper.essential",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "displayName": "SS Essential",
   "description": "Essential",
-  "unity": null,
-  "unityRelease": null,
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
-  "dependencies": {},
   "keywords": [],
   "author": {
     "name": "Farl Lee",

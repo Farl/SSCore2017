@@ -33,6 +33,10 @@ namespace SS
                     animator.SetBool("isShow", true);
                 IsShowing = true;
             }
+            else
+            {
+                OnShowed();
+            }
         }
 
         protected override void OnHide(params object[] parameters)
@@ -44,6 +48,26 @@ namespace SS
                     animator.SetBool("isShow", false);
                 IsHiding = true;
             }
+            else
+            {
+                OnHided();
+            }
+        }
+
+        /// <summary>
+        /// Animation is finished
+        /// </summary>
+        protected virtual void OnHided()
+        {
+
+        }
+
+        /// <summary>
+        /// Animation is finished
+        /// </summary>
+        protected virtual void OnShowed()
+        {
+
         }
 
         public override void OnEnterAnimatorState(AnimatorStateInfo stateInfo, int layerIndex)
@@ -56,12 +80,14 @@ namespace SS
                     if (stateInfo.IsName("Opened"))
                     {
                         IsShowing = false;
+                        OnShowed();
                     }
                 }
                 if (IsHiding && stateInfo.IsName("Closed"))
                 {
                     IsHiding = false;
                     gameObject.SetActive(false);
+                    OnHided();
                 }
             }
         }

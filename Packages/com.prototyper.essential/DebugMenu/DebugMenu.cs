@@ -260,7 +260,6 @@ namespace SS
                     if (GetPageRoot(ed.page) == currPage.rootTransform)
                     {
                         ed.onShow?.Invoke(ed.obj);
-                        break;
                     }
                 }
             }

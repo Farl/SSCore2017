@@ -475,6 +475,8 @@ namespace SS
         protected override void OnEntityDestroy()
         {
             base.OnEntityDestroy();
+            if (IsShow)
+                onMenuToggle?.Invoke(false);
             foreach (var kvp in dataSet)
             {
                 kvp.Value.isInit = false;

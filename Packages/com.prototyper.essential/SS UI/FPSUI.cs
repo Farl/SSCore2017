@@ -114,8 +114,8 @@ namespace SS
         {
             base.OnUpdate();
 
-            timeleft -= Time.deltaTime;
-            accum += Time.timeScale / Time.deltaTime;
+            timeleft -= Time.unscaledDeltaTime;
+            accum += 1f / Time.unscaledDeltaTime;
             ++frames;
 
             // Interval ended - update GUI text and start new interval

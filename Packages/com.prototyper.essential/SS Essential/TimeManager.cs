@@ -263,7 +263,7 @@ namespace SS
 		{
 			DebugMenu.onMenuToggle += (b) =>
 			{
-				SetTimeScale(nameof(TimeManager), b? 0: 1);
+				SetTimeScale(nameof(TimeManager), b? DebugMenu.TimeScale: 1);
 			};
 
 			string kSpeedUp = "Speed Up";

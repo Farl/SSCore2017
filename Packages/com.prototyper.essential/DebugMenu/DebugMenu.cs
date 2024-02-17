@@ -20,6 +20,7 @@ namespace SS
 
         public Toggle pageToggleTemplate;
         public DebugMenuLog logTemplate;
+        public float timeScale = 0.0f;
 
         private bool input;
         private ElementPage currPage;
@@ -76,6 +77,14 @@ namespace SS
         }
 
         public static Action<bool> onMenuToggle;
+        public static float TimeScale
+        {
+            get
+            {
+                return _timeScale;
+            }
+        }
+        private static float _timeScale = 0.0f;
         private const string defaultPageName = "Default";
         private Toggle currPageToggle = null;
         private static Dictionary<string, ElementData> dataSet = new Dictionary<string, ElementData>();
@@ -268,6 +277,7 @@ namespace SS
         protected override void OnShow(params object[] parameters)
         {
             base.OnShow(parameters);
+            _timeScale = timeScale;
             onMenuToggle?.Invoke(true);
 
             // Init pages step 1

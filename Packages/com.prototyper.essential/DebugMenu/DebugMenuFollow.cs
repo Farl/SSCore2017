@@ -10,6 +10,7 @@ namespace SS
      **/
     public class DebugMenuFollow : EntityBase
     {
+        [SerializeField] private List<GameObject> objectActiveWithMenu;
         public float distance = 1f;
         protected override void OnEntityAwake()
         {
@@ -19,6 +20,13 @@ namespace SS
 
         private void OnMenuToggle(bool isOn)
         {
+            foreach (var go in objectActiveWithMenu)
+            {
+                if (go == null)
+                    continue;
+                go.SetActive(isOn);
+            }
+            
             if (isOn)
             {
                 //transform.rotation = Camera.main.transform.rotation;

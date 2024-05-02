@@ -73,3 +73,5 @@ crashlytics-build.properties
 *BurstDebugInformation_DoNotShip
 .DS_Store
 UserSettings
+Assets/Resources/BuildInfo.asset
+Assets/Resources/BuildInfo.asset.meta

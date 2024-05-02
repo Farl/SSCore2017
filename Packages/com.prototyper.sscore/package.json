@@ -1,10 +1,8 @@
 {
   "name": "com.prototyper.sscore",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "displayName": "SS Core",
   "description": "Core function",
-  "unity": null,
-  "unityRelease": null,
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",

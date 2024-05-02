@@ -12,6 +12,11 @@ using UnityEditor.XR.OpenXR;
 using UnityEditor.XR.OpenXR.Features;
 #endif
 
+#if USE_XR_MANAGEMENT
+using UnityEngine.XR.Management;
+using UnityEditor.XR.Management;
+#endif
+
 namespace SS
 {
     public enum XRDevice
@@ -133,15 +138,9 @@ namespace SS
         }
 #endregion
 
-        public static bool SetXRPlatform(XRDevice device, BuildTarget buildTarget = BuildTarget.NoTarget)
+        private static bool SetupOpenXR(XRDevice device, BuildTargetGroup targetGroup)
         {
-            if (buildTarget == BuildTarget.NoTarget)
-            {
-                buildTarget = EditorUserBuildSettings.activeBuildTarget;
-            }
-
 #if USE_OPENXR
-            var targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
             var featureSets = OpenXRFeatureSetManager.FeatureSetsForBuildTarget(targetGroup);
             foreach (var featureSet in featureSets)
             {
@@ -155,7 +154,6 @@ namespace SS
             var settings = OpenXRSettings.GetSettingsForBuildTargetGroup(targetGroup);
             if (settings)
             {
-
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine(settings.name);
 
@@ -177,11 +175,63 @@ namespace SS
 
                 Debug.Log(stringBuilder.ToString());
             }
-            return true;
+            return settings != null;
 #else
-            Debug.LogError("OpenXR is not ready. Please install OpenXR (com.unity.xr.openxr) package.");
             return false;
 #endif
+        }
+
+        public static bool SetXRPlatform(XRDevice device, BuildTarget buildTarget = BuildTarget.NoTarget)
+        {
+            if (buildTarget == BuildTarget.NoTarget)
+            {
+                buildTarget = EditorUserBuildSettings.activeBuildTarget;
+            }
+            var targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+
+            bool isSupported = false;
+#if USE_OPENXR
+            if (SetupOpenXR(device, buildTarget)
+            {
+                isSupported = true;
+            }
+
+#elif USE_XR_MANAGEMENT
+            var settings = XRGeneralSettingsPerBuildTarget.XRGeneralSettingsForBuildTarget(targetGroup);
+            if (settings)
+            {
+                var manager = settings.Manager;
+                if (manager)
+                {
+                    if (manager.activeLoaders.Count > 0)
+                    {
+                        foreach (var loader in manager.activeLoaders)
+                        {
+                            if (device == XRDevice.MetaQuest && loader.name.Contains("Oculus", System.StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                isSupported = true;
+                                break;
+                            }
+                            // Todo: Validate Vive loader
+                            if (device == XRDevice.ViveFocus && loader.name.Contains("Vive", System.StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                isSupported = true;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"No active loader! {device.ToString()} loader must be active.");
+                    }
+                }
+            }
+
+#else
+            Debug.LogError("XR Management is not ready. Please install com.unity.xr.management package.");
+            
+#endif
+            return isSupported;
         }
 
         public static void Build(XRDevice device, bool isFinal = false, bool isDev = false, bool runPlayer = false)

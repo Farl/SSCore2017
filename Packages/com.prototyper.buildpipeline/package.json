@@ -1,8 +1,8 @@
 {
   "name": "com.prototyper.buildpipeline",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "displayName": "SS BuildPipeline",
-  "description": "Build pipeline for build player, addressable, ... etc",
+  "description": "Build pipeline for build player, addressable, launcher... etc",
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",

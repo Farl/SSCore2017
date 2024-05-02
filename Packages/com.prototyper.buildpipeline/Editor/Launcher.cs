@@ -1,23 +1,21 @@
 namespace SS.Core
 {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using System.Reflection;
     using System;
-    using System.IO;
     using System.Linq;
 
     using UnityEditor;
-    using UnityEditor.SceneManagement;
 
     public class Launcher : EditorWindow
     {
-        HashSet<MethodInfo> disabledMethods = new HashSet<MethodInfo>();
-        Vector2 scrollVec;
+        #region Static
 
-        private static TypeCache.MethodCollection sectionList;
-        [MenuItem("Tools/Launcher")]
+
+        private static List<MethodInfo> methodInfoList = new List<MethodInfo>();
+
+        [MenuItem("Tools/SS/Game Launcher")]
         public static void Open()
         {
             var w = EditorWindow.GetWindow<Launcher>();
@@ -27,16 +25,21 @@ namespace SS.Core
         [InitializeOnLoadMethod]
         private static void CheckSection()
         {
-            if (sectionList.Count <= 0)
-            {
-                sectionList = TypeCache.GetMethodsWithAttribute<LauncherSection>();
-            }
+            var sectionList = TypeCache.GetMethodsWithAttribute<LauncherSection>();
+            methodInfoList = sectionList.ToList();
         }
 
+        #endregion
+
+        private HashSet<MethodInfo> disabledMethods = new HashSet<MethodInfo>();
+        private Vector2 scrollVec;
         private void OnGUI()
         {
+            if (methodInfoList == null || methodInfoList.Count == 0)
+                return;
+
             scrollVec = EditorGUILayout.BeginScrollView(scrollVec);
-            foreach (var sec in sectionList)
+            foreach (var sec in methodInfoList)
             {
                 var a = sec.GetCustomAttribute<LauncherSection>();
                 var isDisabled = disabledMethods.Contains(sec);
@@ -83,54 +86,5 @@ namespace SS.Core
             }
             EditorGUILayout.EndScrollView();
         }
-
-
-        [LauncherSection("Test 1")]
-        private static void Test(int a = 1)
-        {
-            EditorGUILayout.LabelField("Test 1!");
-        }
-        [LauncherSection("Test 2")]
-        private void Test2()
-        {
-            EditorGUILayout.LabelField("Test 2!");
-        }
-
-
-        [LauncherSection("PlayerPrefs & EditorPrefs")]
-        private static void DrawPrefs()
-        {
-            if (GUILayout.Button("Clear PlayerPrefs"))
-            {
-                PlayerPrefs.DeleteAll();
-            }
-            if (GUILayout.Button("Clear EditorPrefs"))
-            {
-                EditorPrefs.DeleteAll();
-            }
-            if (GUILayout.Button("GC"))
-            {
-                GC.Collect();
-            }
-        }
-
-        [LauncherSection("Scene List")]
-        private static void DrawSceneList()
-        {
-            EditorGUILayout.LabelField("Test");
-            var editorScenes = EditorBuildSettings.scenes;
-            foreach (var scene in editorScenes)
-            {
-                var fileName = Path.GetFileNameWithoutExtension(scene.path);
-                var content = new GUIContent($"{fileName}");
-                content.tooltip = scene.path;
-                if (GUILayout.Button(content))
-                {
-                    var obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scene.path);
-                    Selection.activeObject = obj;
-                }
-            }
-        }
     }
-
 }

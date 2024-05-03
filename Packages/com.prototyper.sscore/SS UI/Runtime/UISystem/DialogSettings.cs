@@ -10,7 +10,7 @@ namespace SS.Core
 	public class DialogSettings : DataAsset<DialogSettings>
 	{
 		#if UNITY_EDITOR
-		[MenuItem("SS/Edit Dialog Settings")]
+		[MenuItem("Tools/SS Core/Edit Dialog Settings")]
 		static void Edit()
 		{
 			EditNow();

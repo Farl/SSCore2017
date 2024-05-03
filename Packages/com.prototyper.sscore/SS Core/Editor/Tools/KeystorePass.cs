@@ -7,13 +7,13 @@ namespace SS
 
     public class KeystorePass : MonoBehaviour
     {
-        [MenuItem("SS/Keystore/Set Prototyper")]
+        [MenuItem("Tools/SS Core/Keystore/Set Prototyper")]
         public static void KeystorePrototyper()
         {
             SetKeystore("lifestyle");
         }
 
-        [MenuItem("SS/Keystore/Set SS")]
+        [MenuItem("Tools/SS Core/Keystore/Set SS")]
         public static void KeystoreSS()
         {
             SetKeystore("ss");

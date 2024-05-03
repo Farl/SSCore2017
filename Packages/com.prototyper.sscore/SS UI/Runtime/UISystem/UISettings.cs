@@ -91,7 +91,7 @@ namespace SS.Core
 		}
 		
 		#if UNITY_EDITOR
-		[MenuItem("SS/Edit UI Settings")]
+		[MenuItem("Tools/SS Core/Edit UI Settings")]
 		static void Edit()
 		{
 			EditNow();

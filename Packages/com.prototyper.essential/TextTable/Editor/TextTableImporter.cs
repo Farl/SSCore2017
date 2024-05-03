@@ -113,7 +113,7 @@ namespace SS
             }
         }
         
-        [MenuItem("SS/Text Table")]
+        [MenuItem("Tools/SS/Text Table Importer")]
         private static void Open()
         {
             var w = EditorWindow.GetWindow<TextTableImporter>("Text");

@@ -43,6 +43,32 @@ namespace SS
             return default(T);
         }
 
+        public static GameObject[] GetGameObjectsByGroup(string groupName)
+        {
+            if (string.IsNullOrEmpty(groupName)) return null;
+            if (groupMap.TryGetValue(groupName, out var group))
+            {
+                return group.objects.ToArray();
+            }
+            return null;
+        }
+
+        public static void ForEachInGroup(string groupName, System.Action<GameObject> action)
+        {
+            if (string.IsNullOrEmpty(groupName)) return;
+            if (groupMap.TryGetValue(groupName, out var group))
+            {
+                // Prevent objects from changing while iterating
+                var array = group.objects.ToArray();
+                foreach (var obj in array)
+                {
+                    if (obj == null)
+                        continue;
+                    action?.Invoke(obj);
+                }
+            }
+        }
+
         public static void RegisterObject(GameObject gameObject, string objectID)
         {
             Register(gameObject, objectID);

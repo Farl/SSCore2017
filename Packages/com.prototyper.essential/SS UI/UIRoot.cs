@@ -40,6 +40,7 @@ namespace SS
                 e.gameObject.SetActive(true);
 
                 e.OnRootInitialize();
+                isSetup = true;
             }
         }
     }

@@ -196,44 +196,44 @@ namespace SS
                     asyncUploadPersistentBuffer: 1
                     resolutionScalingFixedDPIFactor: 1
                 **/
-                newQualityLevel.FindPropertyRelative("name").stringValue = "All-in-One XR";
-                newQualityLevel.FindPropertyRelative("pixelLightCount").intValue = 4;
-                newQualityLevel.FindPropertyRelative("shadows").intValue = 2;
-                newQualityLevel.FindPropertyRelative("shadowResolution").intValue = 2;
-                newQualityLevel.FindPropertyRelative("shadowProjection").intValue = 1;
-                newQualityLevel.FindPropertyRelative("shadowCascades").intValue = 4;
-                newQualityLevel.FindPropertyRelative("shadowDistance").floatValue = 150f;
-                newQualityLevel.FindPropertyRelative("shadowNearPlaneOffset").floatValue = 3f;
-                newQualityLevel.FindPropertyRelative("shadowCascade2Split").floatValue = 0.333333343f;
-                newQualityLevel.FindPropertyRelative("shadowCascade4Split").vector3Value = new Vector3(0.06666667f, 0.2f, 0.466666669f);
-                newQualityLevel.FindPropertyRelative("shadowmaskMode").intValue = 1;
-                newQualityLevel.FindPropertyRelative("skinWeights").intValue = 4;
-                newQualityLevel.FindPropertyRelative("textureQuality").intValue = 0;
-                newQualityLevel.FindPropertyRelative("anisotropicTextures").intValue = 1;
-                newQualityLevel.FindPropertyRelative("antiAliasing").intValue = 4;
-                newQualityLevel.FindPropertyRelative("softParticles").boolValue = true;
-                newQualityLevel.FindPropertyRelative("softVegetation").boolValue = true;
-                newQualityLevel.FindPropertyRelative("realtimeReflectionProbes").boolValue = true;
-                newQualityLevel.FindPropertyRelative("billboardsFaceCameraPosition").boolValue = true;
-                newQualityLevel.FindPropertyRelative("vSyncCount").intValue = 0;
-                newQualityLevel.FindPropertyRelative("lodBias").floatValue = 2f;
-                newQualityLevel.FindPropertyRelative("maximumLODLevel").intValue = 0;
-                newQualityLevel.FindPropertyRelative("streamingMipmapsActive").boolValue = false;
-                newQualityLevel.FindPropertyRelative("streamingMipmapsAddAllCameras").boolValue = true;
-                newQualityLevel.FindPropertyRelative("streamingMipmapsMemoryBudget").floatValue = 512f;
-                newQualityLevel.FindPropertyRelative("streamingMipmapsRenderersPerFrame").intValue = 512;
-                newQualityLevel.FindPropertyRelative("streamingMipmapsMaxLevelReduction").intValue = 2;
-                newQualityLevel.FindPropertyRelative("streamingMipmapsMaxFileIORequests").intValue = 1024;
-                newQualityLevel.FindPropertyRelative("particleRaycastBudget").intValue = 4096;
-                newQualityLevel.FindPropertyRelative("asyncUploadTimeSlice").intValue = 2;
-                newQualityLevel.FindPropertyRelative("asyncUploadBufferSize").intValue = 16;
-                newQualityLevel.FindPropertyRelative("asyncUploadPersistentBuffer").boolValue = true;
-                newQualityLevel.FindPropertyRelative("resolutionScalingFixedDPIFactor").floatValue = 1f;
+                SetValue(newQualityLevel, "name", "All-in-One XR");
+                SetValue(newQualityLevel, "pixelLightCount", 4);
+                SetValue(newQualityLevel, "shadows", 2);
+                SetValue(newQualityLevel, "shadowResolution", 2);
+                SetValue(newQualityLevel, "shadowProjection", 1);
+                SetValue(newQualityLevel, "shadowCascades", 4);
+                SetValue(newQualityLevel, "shadowDistance", 150f);
+                SetValue(newQualityLevel, "shadowNearPlaneOffset", 3f);
+                SetValue(newQualityLevel, "shadowCascade2Split", 0.333333343f);
+                SetValue(newQualityLevel, "shadowCascade4Split", new Vector3(0.06666667f, 0.2f, 0.466666669f));
+                SetValue(newQualityLevel, "shadowmaskMode", 1);
+                SetValue(newQualityLevel, "skinWeights", 4);
+                SetValue(newQualityLevel, "textureQuality", 0);
+                SetValue(newQualityLevel, "anisotropicTextures", 1);
+                SetValue(newQualityLevel, "antiAliasing", 4);
+                SetValue(newQualityLevel, "softParticles", true);
+                SetValue(newQualityLevel, "softVegetation", true);
+                SetValue(newQualityLevel, "realtimeReflectionProbes", true);
+                SetValue(newQualityLevel, "billboardsFaceCameraPosition", true);
+                SetValue(newQualityLevel, "vSyncCount", 0);
+                SetValue(newQualityLevel, "lodBias", 2f);
+                SetValue(newQualityLevel, "maximumLODLevel", 0);
+                SetValue(newQualityLevel, "streamingMipmapsActive", false);
+                SetValue(newQualityLevel, "streamingMipmapsAddAllCameras", true);
+                SetValue(newQualityLevel, "streamingMipmapsMemoryBudget", 512f);
+                SetValue(newQualityLevel, "streamingMipmapsRenderersPerFrame", 512);
+                SetValue(newQualityLevel, "streamingMipmapsMaxLevelReduction", 2);
+                SetValue(newQualityLevel, "streamingMipmapsMaxFileIORequests", 1024);
+                SetValue(newQualityLevel, "particleRaycastBudget", 4096);
+                SetValue(newQualityLevel, "asyncUploadTimeSlice", 2);
+                SetValue(newQualityLevel, "asyncUploadBufferSize", 16);
+                SetValue(newQualityLevel, "asyncUploadPersistentBuffer", true);
+                SetValue(newQualityLevel, "resolutionScalingFixedDPIFactor", 1f);
 
                 var asset = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>("Assets/Settings/URP-XR-AllInOne.asset");
                 if (asset)
                 {
-                    newQualityLevel.FindPropertyRelative("customRenderPipeline").objectReferenceValue = asset;
+                    SetValue(newQualityLevel, "customRenderPipeline", asset);
                 }
                 
                 // Set all platforms to use new quality level
@@ -241,7 +241,7 @@ namespace SS
                 for (int i = 0; i < perPlatformProp.arraySize; i++)
                 {
                     var platform = perPlatformProp.GetArrayElementAtIndex(i);
-                    platform.FindPropertyRelative("second").intValue = index;
+                    SetValue(platform, "second", index);
                 }
                 
                 // Apply changes
@@ -268,6 +268,46 @@ namespace SS
             if (GUILayout.Button("Setup to XRDevice.MetaQuest"))
             {
                 BuildPipelineImplementXR.SetXRPlatform(XRDevice.MetaQuest);
+            }
+        }
+
+        private void SetValue(SerializedProperty property, string key, object value)
+        {
+            var prop = property.FindPropertyRelative(key);
+            if (prop != null)
+            {
+                if (value is int)
+                {
+                    prop.intValue = (int)value;
+                }
+                else if (value is float)
+                {
+                    prop.floatValue = (float)value;
+                }
+                else if (value is bool)
+                {
+                    prop.boolValue = (bool)value;
+                }
+                else if (value is Vector3)
+                {
+                    prop.vector3Value = (Vector3)value;
+                }
+                else if (value is string || value is System.String)
+                {
+                    prop.stringValue = (string)value;
+                }
+                else if (value is UnityEngine.Object)
+                {
+                    prop.objectReferenceValue = (UnityEngine.Object)value;
+                }
+                else
+                {
+                    Debug.LogError($"Unsupported type {value.GetType()}");
+                }
+            }
+            else
+            {
+                Debug.LogError($"Property {key} not found.");
             }
         }
 

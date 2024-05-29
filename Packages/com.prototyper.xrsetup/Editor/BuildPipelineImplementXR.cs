@@ -138,9 +138,10 @@ namespace SS
         }
 #endregion
 
-        private static bool SetupOpenXR(XRDevice device, BuildTargetGroup targetGroup)
+        private static bool SetupOpenXR(XRDevice device, BuildTarget buildTarget)
         {
 #if USE_OPENXR
+            var targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
             var featureSets = OpenXRFeatureSetManager.FeatureSetsForBuildTarget(targetGroup);
             foreach (var featureSet in featureSets)
             {

@@ -191,7 +191,7 @@ namespace SS
 
             bool isSupported = false;
 #if USE_OPENXR
-            if (SetupOpenXR(device, buildTarget)
+            if (SetupOpenXR(device, buildTarget))
             {
                 isSupported = true;
             }

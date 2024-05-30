@@ -114,7 +114,8 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.prototyper.utility": ""
+        "com.prototyper.utility": "",
+        "com.prototyper.buildpipeline": ""
       }
     },
     "com.unity.2d.sprite": {

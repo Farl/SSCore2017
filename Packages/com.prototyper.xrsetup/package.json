@@ -1,6 +1,6 @@
 {
   "name": "com.prototyper.xrsetup",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "displayName": "SS XRSetup",
   "description": "XRSetup",
   "documentationUrl": "",
@@ -22,6 +22,7 @@
   },
   "hideFlags": 0,
   "dependencies": {
-    "com.prototyper.utility": ""
+    "com.prototyper.utility": "",
+    "com.prototyper.buildpipeline": ""
   }
 }

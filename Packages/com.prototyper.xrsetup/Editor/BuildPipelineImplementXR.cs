@@ -40,7 +40,7 @@ namespace SS
                 var name = PlayerSettings.GetApplicationIdentifier(targetGroup);
                 if (string.IsNullOrEmpty(name))
                     name = PlayerSettings.productName;
-                
+
                 // Get last identifier
                 var tokens = name.Split('.');
                 if (tokens.Length > 0)
@@ -72,7 +72,7 @@ namespace SS
             currXRDeviceSettings.featureSet.Clear();
             currXRDeviceSettings.features.Clear();
 
-            #if USE_OPENXR
+#if USE_OPENXR
             // OpenXR Feature Set
             var featureSets = OpenXRFeatureSetManager.FeatureSetsForBuildTarget(targetGroup);
             foreach (var featureSet in featureSets)
@@ -96,7 +96,7 @@ namespace SS
                     }
                 }
             }
-            #endif
+#endif
 
             EditorUtility.SetDirty(bs);
         }
@@ -136,46 +136,77 @@ namespace SS
             }
             return null;
         }
-#endregion
+        #endregion
+
+        private static bool CheckName(string name, params string[] compare)
+        {
+            foreach (var item in compare)
+            {
+                if (name.Contains(item, System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         private static bool SetupOpenXR(XRDevice device, BuildTarget buildTarget)
         {
 #if USE_OPENXR
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"Setup OpenXR for {device.ToString()}");
+            
             var targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+
+            // Feature Sets
+            stringBuilder.AppendLine($"Feature Sets:");
             var featureSets = OpenXRFeatureSetManager.FeatureSetsForBuildTarget(targetGroup);
             foreach (var featureSet in featureSets)
             {
-                Debug.Log(featureSet.name);
-                if (featureSet.name.Contains("Vive", System.StringComparison.InvariantCultureIgnoreCase))
+                if (CheckName(featureSet.name, "Vive"))
                 {
-                    featureSet.isEnabled = (device == XRDevice.ViveFocus);
+                    featureSet.isEnabled = device == XRDevice.ViveFocus;
                 }
+
+                stringBuilder.AppendLine($"{(featureSet.isEnabled ? '+' : '-')}{featureSet.name}");
             }
 
+            // Feature
+            stringBuilder.AppendLine($"Features:");
             var settings = OpenXRSettings.GetSettingsForBuildTargetGroup(targetGroup);
             if (settings)
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine(settings.name);
+                stringBuilder.AppendLine($"OpenXR Settings ({settings.name}");
 
                 var features = settings.GetFeatures();
                 foreach (var feature in features)
                 {
-                    if (feature.name.Contains("Vive", System.StringComparison.InvariantCultureIgnoreCase))
+                    if (CheckName(feature.name, "Vive"))
                     {
-                        feature.enabled = (device == XRDevice.ViveFocus);
+                        feature.enabled = device == XRDevice.ViveFocus;
                     }
-                    else if (feature.name.Contains("Oculus", System.StringComparison.InvariantCultureIgnoreCase))
+                    else if (CheckName(feature.name, "Meta", "Quest", "Oculus"))
                     {
-                        feature.enabled = (device == XRDevice.MetaQuest);
+                        // Exception for "OculusQuestFeature" which is deprecated
+                        if (CheckName(feature.name, "OculusQuestFeature"))
+                        {
+                            feature.enabled = false;
+                        }
+                        else
+                        {
+                            feature.enabled = device == XRDevice.MetaQuest;
+                        }
+                    }
+                    else
+                    {
+                        // Do nothing
                     }
 
-                    char enabled = (feature.enabled) ? '+' : '-';
-                    stringBuilder.AppendLine($"{enabled}{feature.name}");
+                    stringBuilder.AppendLine($"{(feature.enabled ? "<color=green>+</color>" : "<color=red>-</color>")}{feature.name}");
                 }
-
-                Debug.Log(stringBuilder.ToString());
             }
+
+            Debug.Log(stringBuilder.ToString());
             return settings != null;
 #else
             return false;
@@ -230,7 +261,7 @@ namespace SS
 
 #else
             Debug.LogError("XR Management is not ready. Please install com.unity.xr.management package.");
-            
+
 #endif
             return isSupported;
         }
@@ -254,7 +285,7 @@ namespace SS
                 return;
             }
 
-            string build = isFinal ? "F" + (isDev? "D": "") : (isDev ? "D" : "R");
+            string build = isFinal ? "F" + (isDev ? "D" : "") : (isDev ? "D" : "R");
             var locationPathName = $"Build/{buildTarget.ToString()}/{productName}_{build}_{Application.version}({PlayerSettings.Android.bundleVersionCode})_{device}";
             var buildOptions = BuildOptions.ShowBuiltPlayer;
 
@@ -271,10 +302,10 @@ namespace SS
                 buildTarget: buildTarget,
                 scenes: null,
                 options: buildOptions,
-                extraDefines: (isFinal)? new string[] { "FINAL" } : new string[] { }
+                extraDefines: (isFinal) ? new string[] { "FINAL" } : new string[] { }
             );
 #endif
-            
+
             SetXRPlatform(defaultXRDevice, buildTarget);
         }
 

@@ -42,20 +42,47 @@ namespace SS
             }
         }
 
+        private static void DrawButton(string label, System.Func<bool> checkFunc = null, System.Action action = null)
+        {
+            EditorGUILayout.BeginHorizontal();
+            if (checkFunc != null && checkFunc.Invoke())
+            {
+                GUI.color = Color.green;
+                GUILayout.Label("✓", GUILayout.Width(20));
+                GUI.color = Color.white;
+            }
+            if (GUILayout.Button(label))
+            {
+                action?.Invoke();
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
         private void OnGUI()
         {
-            if (GUILayout.Button("Import OpenXR Plugin"))
-            {
-                // Import plug-in com.unity.xr.openxr
-                request = Client.Add("com.unity.xr.openxr");
-                EditorApplication.update += Progress;
-            }
+            DrawButton("Import OpenXR Plugin",
+                checkFunc: () =>
+                {
+#if USE_OPENXR
+                    return true;
+#else
+                    return false;
+#endif
+                },
+                action: () =>
+                {
+                    request = Client.Add("com.unity.xr.openxr");
+                    EditorApplication.update += Progress;
+                }
+            );
 
-            if (GUILayout.Button("Import XR Interaction Toolkits"))
-            {
-                request = Client.Add("com.unity.xr.interaction.toolkit");
-                EditorApplication.update += Progress;
-            }
+            DrawButton("Import XR Interaction Toolkits",
+                action: () =>
+                {
+                    request = Client.Add("com.unity.xr.interaction.toolkit");
+                    EditorApplication.update += Progress;
+                }
+            );
 
             EditorGUILayout.Separator();
 
@@ -104,11 +131,11 @@ namespace SS
             if (GUILayout.Button("Add All-in-one URP asset"))
             {
                 // Add new URP assets and renderer
-                
+
                 // URP Asset
                 var asset = ScriptableObject.CreateInstance<UniversalRenderPipelineAsset>();
                 AssetDatabase.CreateAsset(asset, "Assets/Settings/URP-XR-AllInOne.asset");
-                
+
 
                 // Renderer data
                 var rendererData = ScriptableRendererData.CreateInstance<UniversalRendererData>();
@@ -143,7 +170,7 @@ namespace SS
                 serializedRendererData.FindProperty("m_DepthPrimingMode").intValue = 1;
                 serializedRendererData.FindProperty("postProcessData").objectReferenceValue = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath("41439944d30ece34e96484bdb6645b55"), typeof(PostProcessData));
                 serializedRendererData.FindProperty("m_IntermediateTextureMode").intValue = 0;
-                
+
                 serializedRendererData.ApplyModifiedProperties();
                 serializedAsset.ApplyModifiedProperties();
 
@@ -235,7 +262,7 @@ namespace SS
                 {
                     SetValue(newQualityLevel, "customRenderPipeline", asset);
                 }
-                
+
                 // Set all platforms to use new quality level
                 var perPlatformProp = qualitySettings.FindProperty("m_PerPlatformDefaultQuality");
                 for (int i = 0; i < perPlatformProp.arraySize; i++)
@@ -243,7 +270,7 @@ namespace SS
                     var platform = perPlatformProp.GetArrayElementAtIndex(i);
                     SetValue(platform, "second", index);
                 }
-                
+
                 // Apply changes
                 qualitySettings.ApplyModifiedProperties();
 
@@ -252,23 +279,24 @@ namespace SS
                 Debug.Log("New quality setting added and set as default for all platforms.");
             }
 
-            if (GUILayout.Button("Check Texture compression format (PlayerSettings)"))
-            {
-                EditorUserBuildSettings.overrideTextureCompression = UnityEditor.Build.OverrideTextureCompression.NoOverride;
-                
-            }
+            EditorUserBuildSettings.overrideTextureCompression = (UnityEditor.Build.OverrideTextureCompression)EditorGUILayout.EnumPopup(new GUIContent("Texture compression format override"), EditorUserBuildSettings.overrideTextureCompression);
 
             EditorGUILayout.Separator();
 
-            if (GUILayout.Button("Switch to XRDevice.Focus"))
+            EditorGUILayout.BeginVertical();
             {
-                BuildPipelineImplementXR.SetXRPlatform(XRDevice.ViveFocus);
+                EditorGUILayout.LabelField("XR Device Switch");
+                EditorGUILayout.BeginHorizontal();
+                foreach (var e in System.Enum.GetValues(typeof(XRDevice)))
+                {
+                    if (GUILayout.Button(e.ToString()))
+                    {
+                        BuildPipelineImplementXR.SetXRPlatform((XRDevice)e);
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
             }
-
-            if (GUILayout.Button("Setup to XRDevice.MetaQuest"))
-            {
-                BuildPipelineImplementXR.SetXRPlatform(XRDevice.MetaQuest);
-            }
+            EditorGUILayout.EndVertical();
         }
 
         private void SetValue(SerializedProperty property, string key, object value)
@@ -319,7 +347,7 @@ namespace SS
             var manifest = JsonConvert.DeserializeObject<ManifestJson>(manifestJson);
 
             bool doAdd = true;
-            foreach(var sr in manifest.scopedRegistries)
+            foreach (var sr in manifest.scopedRegistries)
             {
                 if (sr.name.Equals(pScopeRegistry.name))
                 {

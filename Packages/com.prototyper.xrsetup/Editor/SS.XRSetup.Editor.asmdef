@@ -8,10 +8,10 @@
         "GUID:b4b2dd9753dc2574e940523b0e3e8820",
         "GUID:15fc0a57446b3144c949da3e2b9737a9",
         "GUID:c579267770062bf448e75eb160330b7f",
-        "GUID:6e2ca1d04b0bc41b0b2cf32ab050f47b",
-        "GUID:7b353e1df64e3475c9a1a23b57899d2f",
         "GUID:e40ba710768534012815d3193fa296cb",
-        "GUID:f9fe0089ec81f4079af78eb2287a6163"
+        "GUID:f9fe0089ec81f4079af78eb2287a6163",
+        "GUID:6e2ca1d04b0bc41b0b2cf32ab050f47b",
+        "GUID:7b353e1df64e3475c9a1a23b57899d2f"
     ],
     "includePlatforms": [
         "Editor"
@@ -42,6 +42,16 @@
             "name": "com.unity.xr.management",
             "expression": "",
             "define": "USE_XR_MANAGEMENT"
+        },
+        {
+            "name": "com.htc.upm.vive.openxr",
+            "expression": "",
+            "define": "USE_VIVE_OPENXR"
+        },
+        {
+            "name": "com.unity.xr.interaction.toolkit",
+            "expression": "",
+            "define": "USE_XRI"
         }
     ],
     "noEngineReferences": false

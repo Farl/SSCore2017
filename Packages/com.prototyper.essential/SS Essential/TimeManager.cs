@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
@@ -284,7 +284,7 @@ namespace SS
 			DebugMenu.AddButton(page: "Advance", label: kSpeedPause, onClick: (obj) => { speedPause(); });
 
 
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
 			InputActionMap debugActionMap = new InputActionMap("TimeManager");
 
 			var actionList = new List<InputAction>();

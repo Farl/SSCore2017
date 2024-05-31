@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 #endif
@@ -25,14 +25,14 @@ namespace SS
         private bool input;
         private ElementPage currPage;
 
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
         private UnityEngine.InputSystem.Controls.KeyControl compKey;
         private UnityEngine.InputSystem.Controls.KeyControl key;
 #endif
 
         private void InitKeyboard()
         {
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
             var keyboard = Keyboard.current;
             if (keyboard != null)
             {
@@ -474,7 +474,7 @@ namespace SS
             //
             InitLoggerMenu();
 
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
             EnhancedTouchSupport.Enable();
 #endif
 
@@ -501,7 +501,7 @@ namespace SS
         {
             bool prevInput = input;
             input = false;
-#if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
 
             if (key != null)
             {

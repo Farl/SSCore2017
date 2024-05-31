@@ -19,7 +19,7 @@
         {
             "name": "com.unity.inputsystem",
             "expression": "",
-            "define": "ENABLE_INPUT_SYSTEM"
+            "define": "USE_INPUT_SYSTEM"
         }
     ],
     "noEngineReferences": false

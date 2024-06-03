@@ -206,6 +206,10 @@ namespace SS
 
                         // Add package
                         AddPackageRequest("com.htc.upm.wave.openxr");
+                    },
+                    cancelAction: () =>
+                    {
+                        RemovePackageRequest("com.htc.upm.wave.openxr");
                     }
                 );
 
@@ -226,6 +230,8 @@ namespace SS
                     PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android, false);
                     PlayerSettings.SetGraphicsAPIs(BuildTarget.Android, new GraphicsDeviceType[] { GraphicsDeviceType.OpenGLES3 });
                 }
+
+                PlayerSettings.runInBackground = EditorGUILayout.Toggle(new GUIContent("Run in background"), PlayerSettings.runInBackground);
             }
 
             EditorGUILayout.Separator();

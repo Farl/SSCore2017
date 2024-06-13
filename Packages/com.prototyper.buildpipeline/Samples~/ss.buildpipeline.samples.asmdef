@@ -1,0 +1,16 @@
+{
+    "name": "ss.buildpipeline.samples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6e2ca1d04b0bc41b0b2cf32ab050f47b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

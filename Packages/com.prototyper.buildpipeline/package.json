@@ -1,11 +1,14 @@
 {
   "name": "com.prototyper.buildpipeline",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "displayName": "SS BuildPipeline",
   "description": "Build pipeline for build player, addressable, launcher... etc",
+  "unity": null,
+  "unityRelease": null,
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
+  "dependencies": {},
   "keywords": [],
   "author": {
     "name": "Farl Lee",
@@ -14,7 +17,23 @@
   },
   "hideInEditor": false,
   "license": "",
-  "samples": [],
+  "samples": [
+    {
+      "displayName": "Launcher Sample PlayerPrefs",
+      "description": "",
+      "path": "Samples~/LauncherSamplePlayerPrefs"
+    },
+    {
+      "displayName": "Launcher Sample Scene List",
+      "description": "",
+      "path": "Samples~/LauncherSampleSceneList"
+    },
+    {
+      "displayName": "Launcher Sample Version Code",
+      "description": "",
+      "path": "Samples~/LauncherSampleVersionCode"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "",

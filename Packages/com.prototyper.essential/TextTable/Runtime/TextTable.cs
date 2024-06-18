@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using TMPro;
+using System.Linq;
 
 namespace SS
 {
@@ -30,6 +31,7 @@ namespace SS
         private static List<SystemLanguage> supportedLanguage = new List<SystemLanguage>();
 
         private static Dictionary<string, TMP_FontAsset> fontAssets = new Dictionary<string, TMP_FontAsset>();
+        private static HashSet<string> keepFontAssets = new HashSet<string>();
 
         private static List<ITextTableMapping> mappings = new List<ITextTableMapping>();
 
@@ -55,6 +57,8 @@ namespace SS
 #if UNITY_EDITOR
             if (settings.editorSupportedLanguage != null)
                 supportedLanguage.AddRange(settings.editorSupportedLanguage);
+            // Remove duplicated
+            supportedLanguage = supportedLanguage.Distinct().ToList();
 #endif
             // Default language
             if (supportedLanguage.Count > 0)
@@ -90,7 +94,7 @@ namespace SS
             // Load save data
             IsSpecifyLanguage = SS.PlayerPrefs.HasKey(specifyLanguageKey);
             var languageStr = SS.PlayerPrefs.GetString(specifyLanguageKey, @"English");
-            SystemLanguage.TryParse<SystemLanguage>(languageStr, out specifyLanguage);
+            Enum.TryParse(languageStr, out specifyLanguage);
 
             // Load Settings
             LoadSettings();
@@ -100,6 +104,14 @@ namespace SS
             // Load default package
             if (settings != null)
             {
+                // Keep font assets
+                foreach (var fs in settings.fontSettings)
+                {
+                    if (fs.keepFontAsset)
+                    {
+                        keepFontAssets.Add(fs.fontAssetPath);
+                    }
+                }
                 foreach (var pck in settings.defaultPackages)
                 {
                     LoadPackage(pck);
@@ -301,7 +313,10 @@ namespace SS
             // Unlaod
             foreach (var kvp in fontAssets)
             {
-                Resources.UnloadAsset(kvp.Value);
+                if (!keepFontAssets.Contains(kvp.Key))
+                {
+                    Resources.UnloadAsset(kvp.Value);
+                }
             }
             fontAssets.Clear();
 

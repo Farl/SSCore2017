@@ -21,9 +21,12 @@ MonoBehaviour:
   - language: 41
     checkFontName: LiberationSans SDF
     fontAssetPath: Fonts & Materials/NotoSansTC-Regular SDF
+    keepFontAsset: 0
   - language: 40
     checkFontName: LiberationSans SDF
     fontAssetPath: Fonts & Materials/NotoSansSC-Regular SDF
+    keepFontAsset: 0
   - language: 10
     checkFontName: LiberationSans SDF
     fontAssetPath: Fonts & Materials/LiberationSans SDF
+    keepFontAsset: 1

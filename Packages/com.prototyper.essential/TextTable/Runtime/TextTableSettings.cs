@@ -13,6 +13,7 @@ namespace SS
             public SystemLanguage language;
             public string checkFontName;
             public string fontAssetPath;
+            public bool keepFontAsset = false;
         }
 
         public bool showDebugInfo = false;

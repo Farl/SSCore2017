@@ -6,9 +6,11 @@ namespace SS
 {
     public class UIEntityAnimated : UIEntity
     {
-        [SerializeField]
-        protected bool m_IsAnimated = false;
+        #region Inspector
+        [SerializeField] protected bool m_IsAnimated = false;
+        #endregion
 
+        #region Public
         public override void OnRootInitialize()
         {
             base.OnRootInitialize();
@@ -20,9 +22,32 @@ namespace SS
             if (showOnAwake)
             {
                 Show();
-            }   
+            }
         }
+        public override void OnEnterAnimatorState(AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            base.OnEnterAnimatorState(stateInfo, layerIndex);
+            if (m_IsAnimated)
+            {
+                if (IsShowing)
+                {
+                    if (stateInfo.IsName("Opened"))
+                    {
+                        IsShowing = false;
+                        OnShowed();
+                    }
+                }
+                if (IsHiding && stateInfo.IsName("Closed"))
+                {
+                    IsHiding = false;
+                    gameObject.SetActive(false);
+                    OnHided();
+                }
+            }
+        }
+        #endregion
 
+        #region Private / Protected
         protected override void OnShow(params object[] parameters)
         {
             base.OnShow(parameters);
@@ -59,7 +84,7 @@ namespace SS
         /// </summary>
         protected virtual void OnHided()
         {
-
+            OnHideComplete?.Invoke();
         }
 
         /// <summary>
@@ -67,29 +92,8 @@ namespace SS
         /// </summary>
         protected virtual void OnShowed()
         {
-
+            OnShowComplete?.Invoke();
         }
-
-        public override void OnEnterAnimatorState(AnimatorStateInfo stateInfo, int layerIndex)
-        {
-            base.OnEnterAnimatorState(stateInfo, layerIndex);
-            if (m_IsAnimated)
-            {
-                if (IsShowing)
-                {
-                    if (stateInfo.IsName("Opened"))
-                    {
-                        IsShowing = false;
-                        OnShowed();
-                    }
-                }
-                if (IsHiding && stateInfo.IsName("Closed"))
-                {
-                    IsHiding = false;
-                    gameObject.SetActive(false);
-                    OnHided();
-                }
-            }
-        }
+        #endregion
     }
 }

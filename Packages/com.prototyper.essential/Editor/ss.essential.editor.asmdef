@@ -1,0 +1,18 @@
+{
+    "name": "ss.essential.editor",
+    "rootNamespace": "SS",
+    "references": [
+        "GUID:5b887df74686749329fd76ffa2dc81fb"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -6,32 +6,30 @@ namespace SS
 {
     public class UIEntity : MonoBehaviour
     {
-        [SerializeField]
-        protected Animator animator;
-
-        [SerializeField]
-        private string overrideTypeName;
-
-        [SerializeField]
-        protected bool showOnAwake = false;
-
-        public bool IsShow { get; private set; }
-        public bool IsShowing { get; protected set; } = false;
-        public bool IsHiding { get; protected set; } = false;
-
-        protected bool overrideShow = false;
-        protected bool overrideHide = false;
-
+        #region Enums / Classes
         public enum UpdateMethod
         {
             ActiveAndEnabled = 0,
             Always = 1,
             Never = -1,
         }
+        #endregion
 
-        [SerializeField]
-        protected UpdateMethod updateMethod = UpdateMethod.Never;
+        #region Inspector
+        [SerializeField] protected Animator animator;
+        [SerializeField] private string overrideTypeName;
+        [SerializeField] protected bool showOnAwake = false;
+        [SerializeField] protected UpdateMethod updateMethod = UpdateMethod.Never;
+        #endregion
 
+        #region Public
+        public bool IsShow { get; private set; }
+        public bool IsShowing { get; protected set; } = false;
+        public bool IsHiding { get; protected set; } = false;
+        public System.Action OnShowBegin;
+        public System.Action OnShowComplete;
+        public System.Action OnHideBegin;
+        public System.Action OnHideComplete;
         public virtual bool IsUpdating
         {
             get
@@ -51,32 +49,13 @@ namespace SS
 
         public string TypeName
         {
-            get {
+            get
+            {
                 if (!string.IsNullOrEmpty(overrideTypeName))
                     return overrideTypeName;
                 return this.GetType().Name;
             }
         }
-
-        private void Awake()
-        {
-            OnEntityAwake();
-        }
-        private void OnDestroy()
-        {
-            OnEntityDestroy();
-        }
-
-        protected virtual void OnEntityAwake()
-        {
-            UIManager.Register(this);
-        }
-
-        protected virtual void OnEntityDestroy()
-        {
-            UIManager.Unregister(this);
-        }
-
         public virtual void OnUpdate()
         {
 
@@ -86,17 +65,6 @@ namespace SS
         {
             gameObject.SetActive(showOnAwake);
         }
-
-        protected virtual void OnShow(params object[] parameters)
-        {
-
-        }
-
-        protected virtual void OnHide(params object[] parameters)
-        {
-
-        }
-
         public void Show()
         {
             Show(null);
@@ -107,20 +75,26 @@ namespace SS
             Hide(null);
         }
 
-        public void Show(params object[] parameters)
+        public virtual void Show(params object[] parameters)
         {
+            OnShowBegin?.Invoke();
             if (!overrideShow)
                 gameObject.SetActive(true);
             OnShow(parameters);
             IsShow = true;
+            if (!overrideShow)
+                OnShowComplete?.Invoke();
         }
 
-        public void Hide(params object[] parameters)
+        public virtual void Hide(params object[] parameters)
         {
+            OnHideBegin?.Invoke();
             if (!overrideHide)
                 gameObject.SetActive(false);
             OnHide(parameters);
             IsShow = false;
+            if (!overrideHide)
+                OnHideComplete?.Invoke();
         }
 
         public void ShowUI(string typeName)
@@ -147,5 +121,37 @@ namespace SS
         public virtual void SendMessage(params object[] args)
         {
         }
+        #endregion
+
+        #region Protected / Private
+        protected bool overrideShow = false;
+        protected bool overrideHide = false;
+        private void Awake()
+        {
+            OnEntityAwake();
+        }
+        private void OnDestroy()
+        {
+            OnEntityDestroy();
+        }
+
+        protected virtual void OnEntityAwake()
+        {
+            UIManager.Register(this);
+        }
+
+        protected virtual void OnEntityDestroy()
+        {
+            UIManager.Unregister(this);
+        }
+
+        protected virtual void OnShow(params object[] parameters)
+        {
+        }
+
+        protected virtual void OnHide(params object[] parameters)
+        {
+        }
+        #endregion
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using System.Linq;
 
 #if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -402,20 +403,44 @@ namespace SS
                 templateRoot.gameObject.SetActive(false);
 
             // Language select
-            var languages = TextTable.GetSupportLanguage();
-            var languageStrings = new List<string>();
-            foreach (var l in languages)
+            List<string> GetLanguageList(TMP_Dropdown dropdown)
             {
-                languageStrings.Add(l.ToString());
+                var currLang = TextTable.GetCurrentLanguage();
+                int currIndex = -1;
+                var languages = TextTable.GetSupportLanguage();
+                var languageStrings = new List<string>();
+                for (int i = 0; i < languages.Length; i++)
+                {
+                    if (languages[i] == currLang)
+                    {
+                        currIndex = i;
+                    }
+                    languageStrings.Add(languages[i].ToString());
+                }
+                if (dropdown)
+                {
+                    dropdown.ClearOptions();
+                    dropdown.AddOptions(languageStrings);
+                    if (currIndex < 0)
+                    {
+                        dropdown.AddOptions(new List<string>() { currLang.ToString() });
+                        dropdown.value = dropdown.options.Count - 1;
+                    }
+                    else
+                    {
+                        dropdown.value = currIndex;
+                    }
+                }
+                return languageStrings;
             }
             DebugMenu.AddDropdown(page: null, label: "Language", defaultValue: 0,
-                stringList: languageStrings,
+                stringList: GetLanguageList(null),
                 onChanged: (idx, obj) =>
                 {
                     var dropdown = obj as TMP_Dropdown;
                     if (dropdown)
                     {
-                        if (SystemLanguage.TryParse<SystemLanguage>(dropdown.options[idx].text, out var l))
+                        if (Enum.TryParse<SystemLanguage>(dropdown.options[idx].text, out var l))
                         {
                             TextTable.SetCurrentLanguage(l);
                         }
@@ -424,19 +449,10 @@ namespace SS
                 onShow: (obj) =>
                 {
                     var dropdown = obj as TMP_Dropdown;
-                    var l = TextTable.GetCurrentLanguage();
+
                     if (dropdown)
                     {
-                        var idx = dropdown.options.FindIndex(d => d.text == l.ToString());
-                        if (idx > 0)
-                            dropdown.value = idx;
-                        else
-                        {
-                            var newOpts = new List<string>();
-                            newOpts.Add(l.ToString());
-                            dropdown.AddOptions(newOpts);
-                            dropdown.value = dropdown.options.Count - 1;
-                        }
+                        GetLanguageList(dropdown);
                     }
                 }
             );

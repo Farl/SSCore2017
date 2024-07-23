@@ -36,6 +36,10 @@ namespace SS
             return "NotoSansCJK";
 #elif UNITY_IOS
             return "PingFang";
+#elif UNITY_STANDALONE_OSX
+            return "Arial Unicode";
+#elif UNITY_STANDALONE
+            return "MSJH.ttc";
 #else
             return null;
 #endif

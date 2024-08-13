@@ -50,93 +50,19 @@ namespace SS
                 return name;
             }
         }
-        public const XRDevice defaultXRDevice = XRDevice.MetaQuest;
 
-        #region XR Build Settings
-
-        public const string xrBuildSettingsPath = "Assets/Settings/XRBuildSettings.asset";
-        public static XRBuildSettings xrBuildSettings;
-
-        public static void SaveDeviceSettings(XRDevice device, BuildTarget buildTarget = BuildTarget.NoTarget)
+        public static XRDevice defaultXRDevice
         {
-            var bs = GetXRBuildSettings();
-            var currXRDeviceSettings = GetXRDeviceSettings(device);
-
-            if (buildTarget == BuildTarget.NoTarget)
+            get
             {
-                buildTarget = EditorUserBuildSettings.activeBuildTarget;
-            }
-            var targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
-
-            // Clear first
-            currXRDeviceSettings.featureSet.Clear();
-            currXRDeviceSettings.features.Clear();
-
-#if USE_OPENXR
-            // OpenXR Feature Set
-            var featureSets = OpenXRFeatureSetManager.FeatureSetsForBuildTarget(targetGroup);
-            foreach (var featureSet in featureSets)
-            {
-                if (featureSet.isEnabled)
+                var xrBuildSettings = XRBuildSettings.GetXRBuildSettings();
+                if (xrBuildSettings)
                 {
-                    currXRDeviceSettings.featureSet.Add(featureSet.name);
+                    return xrBuildSettings.DefaultXRDevice;
                 }
+                return XRDevice.MetaQuest;
             }
-
-            // OpenXR Settings
-            var settings = OpenXRSettings.GetSettingsForBuildTargetGroup(targetGroup);
-            if (settings)
-            {
-                var features = settings.GetFeatures();
-                foreach (var feature in features)
-                {
-                    if (feature.enabled)
-                    {
-                        currXRDeviceSettings.features.Add(feature.name);
-                    }
-                }
-            }
-#endif
-
-            EditorUtility.SetDirty(bs);
         }
-
-        public static XRBuildSettings GetXRBuildSettings()
-        {
-            if (xrBuildSettings == null)
-            {
-                xrBuildSettings = AssetDatabase.LoadAssetAtPath<XRBuildSettings>(xrBuildSettingsPath);
-                if (xrBuildSettings == null)
-                {
-                    // Create one
-                    xrBuildSettings = ScriptableObject.CreateInstance<XRBuildSettings>();
-                    xrBuildSettings.settings = new Dictionary<XRDevice, XRDeviceSettings>
-                    {
-                        { XRDevice.ViveFocus, new XRDeviceSettings() },
-                        { XRDevice.MetaQuest, new XRDeviceSettings() }
-                    };
-                    DirectoryUtility.CheckAndCreateDirectory(xrBuildSettingsPath, withFileName: true);
-                    AssetDatabase.CreateAsset(xrBuildSettings, xrBuildSettingsPath);
-                    AssetDatabase.SaveAssets();
-                }
-            }
-            return xrBuildSettings;
-        }
-
-        public static XRDeviceSettings GetXRDeviceSettings(XRDevice device)
-        {
-            var bs = GetXRBuildSettings();
-            if (bs.settings.ContainsKey(device) == false)
-            {
-                bs.settings.Add(device, new XRDeviceSettings());
-            }
-            if (bs.settings.TryGetValue(device, out var settings))
-            {
-                return settings;
-            }
-            return null;
-        }
-        #endregion
 
         private static bool CheckName(string name, params string[] compare)
         {
@@ -150,9 +76,11 @@ namespace SS
             return false;
         }
 
-        private static bool SetupOpenXR(XRDevice device, BuildTarget buildTarget)
+        private static bool SetupOpenXR(XRDevice device, BuildTarget buildTarget, XRDeviceSettings currXRDeviceSettings)
         {
 #if USE_OPENXR
+            bool useXRBuildSettings = (currXRDeviceSettings == null || !currXRDeviceSettings.auto);
+
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"Setup OpenXR for {device.ToString()}");
             
@@ -163,7 +91,11 @@ namespace SS
             var featureSets = OpenXRFeatureSetManager.FeatureSetsForBuildTarget(targetGroup);
             foreach (var featureSet in featureSets)
             {
-                if (CheckName(featureSet.name, "Vive"))
+                if (useXRBuildSettings)
+                {
+                    featureSet.isEnabled = currXRDeviceSettings.featureSet.Contains(featureSet.name);
+                }
+                else if (CheckName(featureSet.name, "Vive"))
                 {
                     featureSet.isEnabled = device == XRDevice.ViveFocus;
                 }
@@ -181,7 +113,11 @@ namespace SS
                 var features = settings.GetFeatures();
                 foreach (var feature in features)
                 {
-                    if (CheckName(feature.name, "Vive"))
+                    if (useXRBuildSettings)
+                    {
+                        feature.enabled = currXRDeviceSettings.features.Contains(feature.name);
+                    }
+                    else if (CheckName(feature.name, "Vive"))
                     {
                         feature.enabled = device == XRDevice.ViveFocus;
                     }
@@ -222,8 +158,10 @@ namespace SS
             var targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
 
             bool isSupported = false;
+
+            var currXRDeviceSettings = XRBuildSettings.GetXRDeviceSettings(device);
 #if USE_OPENXR
-            if (SetupOpenXR(device, buildTarget))
+            if (SetupOpenXR(device, buildTarget, currXRDeviceSettings))
             {
                 isSupported = true;
             }
@@ -258,11 +196,11 @@ namespace SS
                     }
                 }
             }
-
 #else
             Debug.LogError("XR Management is not ready. Please install com.unity.xr.management package.");
 
 #endif
+            
             return isSupported;
         }
 

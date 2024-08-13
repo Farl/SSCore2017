@@ -52,6 +52,11 @@
             "name": "com.unity.xr.interaction.toolkit",
             "expression": "",
             "define": "USE_XRI"
+        },
+        {
+            "name": "com.unity.xr.meta-openxr",
+            "expression": "",
+            "define": "USE_META_OPENXR"
         }
     ],
     "noEngineReferences": false

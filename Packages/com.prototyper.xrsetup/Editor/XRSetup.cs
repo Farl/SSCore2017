@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System;
 
 namespace SS
 {
@@ -53,7 +54,7 @@ namespace SS
             removeRequest = Client.Remove(packageId);
             EditorApplication.update += RemoveProgress;
         }
-        
+
         private static void AddProgress()
         {
             if (addRequest.IsCompleted)
@@ -85,6 +86,8 @@ namespace SS
 
         #region Variables
         private static string viveVersion = "";
+        private static XRDevice targetXRDevice = XRDevice.MetaQuest;
+        private Vector2 scrollPos;
         #endregion
 
         [MenuItem("Tools/SS/XR Setup")]
@@ -117,154 +120,198 @@ namespace SS
 
         private void OnGUI()
         {
-            DrawButton("Import OpenXR Plugin",
-                checkFunc: () =>
-                {
-#if USE_OPENXR
-                    return true;
-#else
-                    return false;
-#endif
-                },
-                action: () =>
-                {
-                    AddPackageRequest("com.unity.xr.openxr");
-                },
-                cancelAction: () =>
-                {
-                    RemovePackageRequest("com.unity.xr.openxr");
-                }
-            );
-
-            DrawButton("Import XR Interaction Toolkits",
-                checkFunc: () =>
-                {
-#if USE_XRI
-                    return true;
-#else
-                    return false;
-#endif
-                },
-                action: () =>
-                {
-                    AddPackageRequest("com.unity.xr.interaction.toolkit");
-                },
-                cancelAction: () =>
-                {
-                    RemovePackageRequest("com.unity.xr.interaction.toolkit");
-                }
-            );
-
-            EditorGUILayout.Separator();
-
-            if (EditorGUILayout.Foldout(true, new GUIContent("Vive")))
+            scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
             {
-                DrawButton("Import Vive (2-in-one)",
+
+                DrawButton("Import OpenXR Plugin",
                     checkFunc: () =>
                     {
-#if USE_VIVE_OPENXR
-                        return true;
+#if USE_OPENXR
+                    return true;
 #else
                         return false;
 #endif
                     },
                     action: () =>
                     {
-                        if (string.IsNullOrEmpty(viveVersion))
-                        {
-                            AddPackageRequest("https://github.com/ViveSoftware/VIVE-OpenXR.git?path=com.htc.upm.vive.openxr");
-                        }
-                        else
-                        {
-                            AddPackageRequest($"https://github.com/ViveSoftware/VIVE-OpenXR.git?path=com.htc.upm.vive.openxr#versions/{viveVersion}");
-                        }
+                        AddPackageRequest("com.unity.xr.openxr");
                     },
                     cancelAction: () =>
                     {
-                        RemovePackageRequest("com.htc.upm.vive.openxr");
+                        RemovePackageRequest("com.unity.xr.openxr");
                     }
                 );
-                viveVersion = EditorGUILayout.TextField(new GUIContent("Package version"), viveVersion);
 
-                DrawButton("[Legacy] Import Vive (Wave OpenXR)",
+                DrawButton("Import XR Interaction Toolkits",
+                    checkFunc: () =>
+                    {
+#if USE_XRI
+                    return true;
+#else
+                        return false;
+#endif
+                    },
                     action: () =>
                     {
-                        // Install plugin
-                        // https://developer.vive.com/resources/openxr/openxr-mobile/tutorials/unity/how-install-vive-wave-openxr-plugin/
-
-                        // Add scope
-                        // https://forum.unity.com/threads/how-to-add-a-scoped-registry-using-code.1077758/
-                        //internal static AddScopedRegistryRequest AddScopedRegistry(string registryName, string url, string[] scopes)
-                        AddScopedRegistry(new ScopedRegistry
-                        {
-                            name = "Vive",
-                            url = "https://npm-registry.vive.com",
-                            scopes = new string[] {
-                        "com.htc.upm"
-                        }
-                        });
-
-                        // Add package
-                        AddPackageRequest("com.htc.upm.wave.openxr");
+                        AddPackageRequest("com.unity.xr.interaction.toolkit");
                     },
                     cancelAction: () =>
                     {
-                        RemovePackageRequest("com.htc.upm.wave.openxr");
+                        RemovePackageRequest("com.unity.xr.interaction.toolkit");
                     }
                 );
 
-                if (GUILayout.Button("Setup Vive Focus 3 OpenXR"))
+                EditorGUILayout.Separator();
+
+                if (EditorGUILayout.Foldout(true, new GUIContent("Meta")))
                 {
-                    // https://developer.vive.com/resources/openxr/openxr-mobile/tutorials/unity/getting-started-openxr-mobile/
-
-                    // switch platform Android
-
-                    // landscale left
-                    PlayerSettings.allowedAutorotateToLandscapeLeft = true;
-                    PlayerSettings.allowedAutorotateToLandscapeRight = false;
-                    PlayerSettings.allowedAutorotateToPortrait = false;
-                    PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
-                    PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
-
-                    // OpenGLES 3
-                    PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android, false);
-                    PlayerSettings.SetGraphicsAPIs(BuildTarget.Android, new GraphicsDeviceType[] { GraphicsDeviceType.OpenGLES3 });
+                    DrawButton("Import Meta (OpenXR)",
+                        checkFunc: () =>
+                        {
+#if USE_META_OPENXR
+                        return true;
+#else
+                            return false;
+#endif
+                        },
+                        action: () =>
+                        {
+                            AddPackageRequest("com.unity.xr.meta-openxr");
+                        },
+                        cancelAction: () =>
+                        {
+                            RemovePackageRequest("com.unity.xr.meta-openxr");
+                        }
+                    );
                 }
 
-                PlayerSettings.runInBackground = EditorGUILayout.Toggle(new GUIContent("Run in background"), PlayerSettings.runInBackground);
-            }
-
-            EditorGUILayout.Separator();
-
-            if (GUILayout.Button("Add All-in-one URP asset"))
-            {
-                AddURPAssetAndRenderer();
-            }
-
-            if (GUILayout.Button("Add All-in-one Quality Settings"))
-            {
-                AddQualitySetting();
-            }
-
-            // Override texture compression format
-            EditorUserBuildSettings.overrideTextureCompression = (UnityEditor.Build.OverrideTextureCompression)EditorGUILayout.EnumPopup(new GUIContent("Texture compression format override"), EditorUserBuildSettings.overrideTextureCompression);
-
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.BeginVertical();
-            {
-                EditorGUILayout.LabelField("XR Device Switch");
-                EditorGUILayout.BeginHorizontal();
-                foreach (var e in System.Enum.GetValues(typeof(XRDevice)))
+                if (EditorGUILayout.Foldout(true, new GUIContent("Vive")))
                 {
-                    if (GUILayout.Button(e.ToString()))
+                    DrawButton("Import Vive (2-in-one)",
+                        checkFunc: () =>
+                        {
+#if USE_VIVE_OPENXR
+                        return true;
+#else
+                            return false;
+#endif
+                        },
+                        action: () =>
+                        {
+                            if (string.IsNullOrEmpty(viveVersion))
+                            {
+                                AddPackageRequest("https://github.com/ViveSoftware/VIVE-OpenXR.git?path=com.htc.upm.vive.openxr");
+                            }
+                            else
+                            {
+                                AddPackageRequest($"https://github.com/ViveSoftware/VIVE-OpenXR.git?path=com.htc.upm.vive.openxr#versions/{viveVersion}");
+                            }
+                        },
+                        cancelAction: () =>
+                        {
+                            RemovePackageRequest("com.htc.upm.vive.openxr");
+                        }
+                    );
+                    viveVersion = EditorGUILayout.TextField(new GUIContent("Package version"), viveVersion);
+
+                    DrawButton("[Legacy] Import Vive (Wave OpenXR)",
+                        action: () =>
+                        {
+                            // Install plugin
+                            // https://developer.vive.com/resources/openxr/openxr-mobile/tutorials/unity/how-install-vive-wave-openxr-plugin/
+
+                            // Add scope
+                            // https://forum.unity.com/threads/how-to-add-a-scoped-registry-using-code.1077758/
+                            //internal static AddScopedRegistryRequest AddScopedRegistry(string registryName, string url, string[] scopes)
+                            AddScopedRegistry(new ScopedRegistry
+                            {
+                                name = "Vive",
+                                url = "https://npm-registry.vive.com",
+                                scopes = new string[] {
+                        "com.htc.upm"
+                            }
+                            });
+
+                            // Add package
+                            AddPackageRequest("com.htc.upm.wave.openxr");
+                        }
+                    );
+
+                    if (GUILayout.Button("Setup Vive Focus 3 OpenXR"))
                     {
-                        BuildPipelineImplementXR.SetXRPlatform((XRDevice)e);
+                        // https://developer.vive.com/resources/openxr/openxr-mobile/tutorials/unity/getting-started-openxr-mobile/
+
+                        // switch platform Android
+
+                        // landscale left
+                        PlayerSettings.allowedAutorotateToLandscapeLeft = true;
+                        PlayerSettings.allowedAutorotateToLandscapeRight = false;
+                        PlayerSettings.allowedAutorotateToPortrait = false;
+                        PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+                        PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
+
+                        // OpenGLES 3
+                        PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android, false);
+                        PlayerSettings.SetGraphicsAPIs(BuildTarget.Android, new GraphicsDeviceType[] { GraphicsDeviceType.OpenGLES3 });
                     }
                 }
-                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Separator();
+
+                if (GUILayout.Button("Add All-in-one URP asset"))
+                {
+                    AddURPAssetAndRenderer();
+                }
+
+                if (GUILayout.Button("Add All-in-one Quality Settings"))
+                {
+                    AddQualitySetting();
+                }
+
+                // Override texture compression format
+                EditorUserBuildSettings.overrideTextureCompression = (UnityEditor.Build.OverrideTextureCompression)EditorGUILayout.EnumPopup(new GUIContent("Texture compression format override"), EditorUserBuildSettings.overrideTextureCompression);
+
+                EditorGUILayout.Separator();
+
+                EditorGUILayout.BeginVertical();
+                {
+                    EditorGUILayout.LabelField("XR Device Switch");
+                    EditorGUILayout.BeginHorizontal();
+                    foreach (var e in System.Enum.GetValues(typeof(XRDevice)))
+                    {
+                        if (GUILayout.Button(e.ToString()))
+                        {
+                            BuildPipelineImplementXR.SetXRPlatform((XRDevice)e);
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.Separator();
+
+                DrawXRBuildSettings();
             }
-            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndScrollView();
+        }
+
+        private static void DrawXRBuildSettings()
+        {
+            EditorGUILayout.LabelField("XR Build Settings");
+            if (GUILayout.Button("Get Settings"))
+            {
+                Selection.activeObject = XRBuildSettings.GetXRBuildSettings();
+            }
+            // Target XR device
+            targetXRDevice = (XRDevice)EditorGUILayout.EnumPopup(new GUIContent("Target XR Device"), targetXRDevice);
+            if (GUILayout.Button("Save Settings"))
+            {
+                XRBuildSettings.SaveDeviceSettings(targetXRDevice);
+            }
+            if (GUILayout.Button("Load Settings"))
+            {
+                XRBuildSettings.LoadDeviceSettings(targetXRDevice);
+            }
         }
 
         private static void SetValue(SerializedProperty property, string key, object value)
@@ -298,12 +345,12 @@ namespace SS
                 }
                 else
                 {
-                    Debug.LogError($"Unsupported type {value.GetType()}");
+                    Debug.LogWarning($"Unsupported type {value.GetType()}");
                 }
             }
             else
             {
-                Debug.LogError($"Property {key} not found.");
+                Debug.LogWarning($"Property {key} not found.");
             }
         }
 

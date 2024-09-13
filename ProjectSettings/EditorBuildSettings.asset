@@ -16,9 +16,9 @@ EditorBuildSettings:
     XRBuildSettings: {fileID: 11400000, guid: 7b1af154d5460477c8ea3e42aacc7692, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: e1225c919dcc2e141a8d23f9d003d60b,
       type: 2}
-    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 643cc9842a950473994e4025077cff70,
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 9662c03a2d73c41db8c08d268b4a125a,
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 195d38070cc274306a96c4fd7bbefb1d,
       type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: bb46b6afcd1424b419a379e77747b6ff,
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 3eeeb3c794499421b91f1bf45d5b0ca3,
       type: 2}

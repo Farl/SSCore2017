@@ -1,0 +1,20 @@
+{
+    "name": "ss.timeline.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5ca3020f3b3994e52bb5397077c306de",
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:02f771204943f4a40949438e873e3eff"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

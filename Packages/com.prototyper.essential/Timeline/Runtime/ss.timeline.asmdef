@@ -1,0 +1,23 @@
+{
+    "name": "ss.timeline",
+    "rootNamespace": "SS",
+    "references": [
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:fd6cf9e870ffe4f8f95f598d2604806d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.timeline",
+            "expression": "",
+            "define": "USE_TIMELINE"
+        }
+    ],
+    "noEngineReferences": false
+}

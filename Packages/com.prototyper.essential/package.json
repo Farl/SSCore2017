@@ -1,11 +1,16 @@
 {
   "name": "com.prototyper.essential",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "displayName": "SS Essential",
   "description": "Essential",
+  "unity": null,
+  "unityRelease": null,
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
+  "dependencies": {
+    "com.prototyper.buildpipeline": ""
+  },
   "keywords": [],
   "author": {
     "name": "Farl Lee",
@@ -14,14 +19,17 @@
   },
   "hideInEditor": false,
   "license": "",
-  "samples": [],
+  "samples": [
+    {
+      "displayName": "Audio Visualization Example",
+      "description": "",
+      "path": "Samples~/Audio Visualization Example"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "",
     "revision": ""
   },
-  "hideFlags": 0,
-  "dependencies": {
-    "com.prototyper.buildpipeline": ""
-  }
+  "hideFlags": 0
 }

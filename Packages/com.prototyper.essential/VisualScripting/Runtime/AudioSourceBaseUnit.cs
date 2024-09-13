@@ -1,4 +1,4 @@
-// Visual scripting node(Bolt) for stopping an audio source.
+// Visual scripting node(Bolt) for control an audio source.
 
 
 #if USE_VISUAL_SCRIPTING
@@ -9,6 +9,9 @@ using Unity.VisualScripting;
 
 namespace SS
 {
+    // Hidden unit
+    [UnitCategory("SS/Hidden")]
+    [UnitTitle("Audio Source Base")]
     public class AudioSourceBaseUnit : Unit, IGraphElementWithData
     {
         public class Data : IGraphElementData

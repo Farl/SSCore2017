@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.Rendering;
+#if USE_URP
 using UnityEngine.Rendering.Universal;
+#endif
 
 using UnityEditor;
 using UnityEditor.PackageManager;
@@ -356,6 +358,7 @@ namespace SS
 
         private void AddURPAssetAndRenderer()
         {
+#if USE_URP
             // Add new URP assets and renderer
 
             // URP Asset
@@ -400,6 +403,7 @@ namespace SS
             serializedAsset.ApplyModifiedProperties();
 
             AssetDatabase.SaveAssets();
+#endif
         }
 
         private static void AddQualitySetting()
@@ -482,11 +486,13 @@ namespace SS
             SetValue(newQualityLevel, "asyncUploadPersistentBuffer", true);
             SetValue(newQualityLevel, "resolutionScalingFixedDPIFactor", 1f);
 
+#if USE_URP
             var asset = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>("Assets/Settings/URP-XR-AllInOne.asset");
             if (asset)
             {
                 SetValue(newQualityLevel, "customRenderPipeline", asset);
             }
+#endif
 
             // Set all platforms to use new quality level
             var perPlatformProp = qualitySettings.FindProperty("m_PerPlatformDefaultQuality");

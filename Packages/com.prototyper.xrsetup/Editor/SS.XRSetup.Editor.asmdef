@@ -57,6 +57,11 @@
             "name": "com.unity.xr.meta-openxr",
             "expression": "",
             "define": "USE_META_OPENXR"
+        },
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "USE_URP"
         }
     ],
     "noEngineReferences": false

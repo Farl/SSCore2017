@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if USE_VISUAL_SCRIPTING
 using Unity.VisualScripting;
+#endif
 using UnityEngine.Events;
 
 namespace SS
@@ -17,11 +19,19 @@ namespace SS
         }
         [SerializeField] private bool forwardToVisualScripting = true;
         [SerializeField] private List<Data> eventData = new List<Data>();
+
+#if USE_VISUAL_SCRIPTING
         [System.NonSerialized] public ScriptMachine scriptMachine;
         [System.NonSerialized] public StateMachine stateMachine;
+#else
+        [System.NonSerialized] public MonoBehaviour scriptMachine;
+        [System.NonSerialized] public MonoBehaviour stateMachine;
+#endif
 
         public void Awake()
         {
+
+#if USE_VISUAL_SCRIPTING
             if (!scriptMachine)
             {
                 scriptMachine = GetComponent<ScriptMachine>();
@@ -30,10 +40,12 @@ namespace SS
             {
                 stateMachine = GetComponent<StateMachine>();
             }
+#endif
         }
 
         public void OnRecieve(string eventName)
         {
+#if USE_VISUAL_SCRIPTING
             if (forwardToVisualScripting)
             {
                 if (scriptMachine)
@@ -45,6 +57,7 @@ namespace SS
                     stateMachine.TriggerUnityEvent(eventName);
                 }
             }
+#endif
             var data = eventData.Find(x => x.eventName == eventName);
             if (data != null && data.unityEvent != null)
             {

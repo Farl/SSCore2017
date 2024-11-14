@@ -6,10 +6,7 @@ namespace SS
 {
     public class SystemMessageUI : UIEntity
     {
-        [SerializeField]
-        private bool showDebugInfo = false;
-
-        private static int currHandle = -1;
+        #region Classes / Enums
 
         public enum Priority
         {
@@ -37,46 +34,11 @@ namespace SS
             public string buttonText;
             public Action onButton;
         }
+        #endregion
 
-        private static List<RequestData> requestDatas = new List<RequestData>();
-        private static RequestData currRequestData = null;
+        #region Static
 
-        private static SystemMessageUI Instance;
-
-        [SerializeField]
-        private List<SystemMessagePanel> panels = new List<SystemMessagePanel>();
-
-        private static void OnRequestShow(RequestData rd)
-        {
-
-        }
-
-        private static void OnRequestHide(RequestData rd, bool keepRequest)
-        {
-            if (Instance != null && Instance.showDebugInfo)
-            {
-                if (keepRequest)
-                    Debug.Log($"[{Time.realtimeSinceStartup}] {rd.handle} Keep {rd.titleID} {rd.descID}");
-                else
-                    Debug.Log($"[{Time.realtimeSinceStartup}] {rd.handle} Hide {rd.titleID} {rd.descID}");
-            }
-            if (currRequestData != rd)
-            {
-                Debug.LogError($"Unmatch request {rd.handle} != {currRequestData.handle}");
-                return;
-            }
-            if (keepRequest)
-            {
-                // Enqueue and Sort
-                requestDatas.Add(currRequestData);
-                requestDatas.Sort((x, y) => y.priority.CompareTo(x.priority));
-            }
-
-            // Finish and Next
-            currRequestData = null;
-            TryDequeue();
-        }
-
+        #region Public Static
         public static int Request(RequestData requestData)
         {
             if (requestData == null)
@@ -129,38 +91,6 @@ namespace SS
             return Request(requestData);
         }
 
-        private static bool TryDequeue()
-        {
-            var nextRequestData = (requestDatas.Count > 0) ? requestDatas[0] : null;
-            if (currRequestData != null)
-            {
-                if (nextRequestData != null && nextRequestData.priority > currRequestData.priority)
-                {
-                    if (currRequestData.currPanel && !currRequestData.currPanel.IsHiding(currRequestData))
-                    {
-                        // Close current request temporary (Don't remove current request)
-                        currRequestData.currPanel?.Hide(currRequestData, keepRequest: true);
-                    }
-                    else
-                    {
-                        // Just wait
-                    }
-                }
-                return false;
-            }
-
-            if (requestDatas.Count > 0)
-            {
-                currRequestData = requestDatas[0];
-                requestDatas.RemoveAt(0);
-                if (Instance)
-                {
-                    return Instance.Setup(currRequestData);
-                }
-            }
-            return false;
-        }
-
         public static void Close(int handle)
         {
             if (handle < 0)
@@ -211,19 +141,99 @@ namespace SS
                 return currRequestData != null || requestDatas.Count > 0;
             }
         }
-
-        #region Instance
-        private bool Setup(RequestData requestData)
-        {
-            requestData.currPanel = panels.Find((x) => string.IsNullOrEmpty(requestData.typeName) || x.name == requestData.typeName);
-            if (requestData.currPanel == null)
-                return false;
-
-            return requestData.currPanel.Setup(requestData);
-        }
+        public static Action<bool> onMessageToggle;
         #endregion
 
-        #region override
+        #region Private Static
+        private static int currHandle = -1;
+
+        private static List<RequestData> requestDatas = new List<RequestData>();
+        private static RequestData currRequestData = null;
+
+        private static SystemMessageUI Instance;
+        private static void OnRequestShow(RequestData rd)
+        {
+            // If it is first request, show message callback
+            if (requestDatas.Count == 1)
+                onMessageToggle?.Invoke(true);
+        }
+
+        private static void OnRequestHide(RequestData rd, bool keepRequest)
+        {
+            if (Instance != null && Instance.showDebugInfo)
+            {
+                if (keepRequest)
+                    Debug.Log($"[{Time.realtimeSinceStartup}] {rd.handle} Keep {rd.titleID} {rd.descID}");
+                else
+                    Debug.Log($"[{Time.realtimeSinceStartup}] {rd.handle} Hide {rd.titleID} {rd.descID}");
+            }
+            if (currRequestData != rd)
+            {
+                Debug.LogError($"Unmatch request {rd.handle} != {currRequestData.handle}");
+                return;
+            }
+            if (keepRequest)
+            {
+                // Enqueue and Sort
+                requestDatas.Add(currRequestData);
+                requestDatas.Sort((x, y) => y.priority.CompareTo(x.priority));
+            }
+
+            // Finish and Next
+            currRequestData = null;
+            TryDequeue();
+
+            // Check if no request, hide message callback
+            if (currRequestData == null)
+            {
+                onMessageToggle?.Invoke(false);
+            }
+        }
+
+
+        private static bool TryDequeue()
+        {
+            var nextRequestData = (requestDatas.Count > 0) ? requestDatas[0] : null;
+            if (currRequestData != null)
+            {
+                if (nextRequestData != null && nextRequestData.priority > currRequestData.priority)
+                {
+                    if (currRequestData.currPanel && !currRequestData.currPanel.IsHiding(currRequestData))
+                    {
+                        // Close current request temporary (Don't remove current request)
+                        currRequestData.currPanel?.Hide(currRequestData, keepRequest: true);
+                    }
+                    else
+                    {
+                        // Just wait
+                    }
+                }
+                return false;
+            }
+
+            if (requestDatas.Count > 0)
+            {
+                currRequestData = requestDatas[0];
+                requestDatas.RemoveAt(0);
+                if (Instance)
+                {
+                    return Instance.Setup(currRequestData);
+                }
+            }
+            return false;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Inspector
+        [SerializeField] private bool showDebugInfo = false;
+
+        [SerializeField] private List<SystemMessagePanel> panels = new List<SystemMessagePanel>();
+        #endregion
+
+        #region Public
 
         public override void OnRootInitialize()
         {
@@ -238,6 +248,18 @@ namespace SS
                 }
             }
         }
+        #endregion
+
+        #region Private / Protected
+        private bool Setup(RequestData requestData)
+        {
+            requestData.currPanel = panels.Find((x) => string.IsNullOrEmpty(requestData.typeName) || x.name == requestData.typeName);
+            if (requestData.currPanel == null)
+                return false;
+
+            return requestData.currPanel.Setup(requestData);
+        }
+        #endregion
 
         protected override void OnEntityAwake()
         {
@@ -250,8 +272,6 @@ namespace SS
             if (Instance == this)
                 Instance = null;
         }
-
-        #endregion
 
         #region Test
 

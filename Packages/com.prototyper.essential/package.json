@@ -1,8 +1,10 @@
 {
   "name": "com.prototyper.essential",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "displayName": "SS Essential",
   "description": "Essential",
+  "unity": null,
+  "unityRelease": null,
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
@@ -22,6 +24,11 @@
       "displayName": "Audio Visualization Example",
       "description": "",
       "path": "Samples~/Audio Visualization Example"
+    },
+    {
+      "displayName": "Async Await Example",
+      "description": "",
+      "path": "Samples~/Async Await Example"
     }
   ],
   "repository": {

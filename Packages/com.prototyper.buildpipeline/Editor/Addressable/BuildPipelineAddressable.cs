@@ -29,45 +29,45 @@ namespace SS
     using UnityEditor.AddressableAssets.Build;
     using UnityEditor.AddressableAssets.Settings;
 
-    public static class BuildPipelineSystem
+    public static partial class BuildPipelineSystem
     {
-        public static string build_script
+        public static string addressable_build_script
             = "Assets/AddressableAssetsData/DataBuilders/BuildScriptPackedMode.asset";
-        public static string settings_asset
+        public static string addressable_settings_asset
             = "Assets/AddressableAssetsData/AddressableAssetSettings.asset";
-        public static string profile_name = "Default";
-        private static AddressableAssetSettings settings;
+        public static string addressable_profile_name = "Default";
+        private static AddressableAssetSettings addressableSettings;
 
-        static void getSettingsObject(string settingsAsset)
+        static void getAddressableSettingsObject(string settingsAsset)
         {
             // This step is optional, you can also use the default settings:
             //settings = AddressableAssetSettingsDefaultObject.Settings;
 
-            settings
+            addressableSettings
                 = AssetDatabase.LoadAssetAtPath<ScriptableObject>(settingsAsset)
                     as AddressableAssetSettings;
 
-            if (settings == null)
+            if (addressableSettings == null)
                 Debug.LogError($"{settingsAsset} couldn't be found or isn't " +
                                 $"a settings object.");
         }
 
-        static void setProfile(string profile)
+        static void setAddressableProfile(string profile)
         {
-            string profileId = settings.profileSettings.GetProfileId(profile);
-            if (String.IsNullOrEmpty(profileId))
+            string profileId = addressableSettings.profileSettings.GetProfileId(profile);
+            if (string.IsNullOrEmpty(profileId))
                 Debug.LogWarning($"Couldn't find a profile named, {profile}, " +
                                     $"using current profile instead.");
             else
-                settings.activeProfileId = profileId;
+                addressableSettings.activeProfileId = profileId;
         }
 
-        static void setBuilder(IDataBuilder builder)
+        static void setAddressableBuilder(IDataBuilder builder)
         {
-            int index = settings.DataBuilders.IndexOf((ScriptableObject)builder);
+            int index = addressableSettings.DataBuilders.IndexOf((ScriptableObject)builder);
 
             if (index > 0)
-                settings.ActivePlayerDataBuilderIndex = index;
+                addressableSettings.ActivePlayerDataBuilderIndex = index;
             else
                 Debug.LogWarning($"{builder} must be added to the " +
                                     $"DataBuilders list before it can be made " +
@@ -90,23 +90,23 @@ namespace SS
         [MenuItem("Build/Addressables/Build Addressables only")]
         public static bool BuildAddressables()
         {
-            getSettingsObject(settings_asset);
-            setProfile(profile_name);
+            getAddressableSettingsObject(addressable_settings_asset);
+            setAddressableProfile(addressable_profile_name);
             IDataBuilder builderScript
-                = AssetDatabase.LoadAssetAtPath<ScriptableObject>(build_script) as IDataBuilder;
+                = AssetDatabase.LoadAssetAtPath<ScriptableObject>(addressable_build_script) as IDataBuilder;
 
             if (builderScript == null)
             {
-                Debug.LogError(build_script + " couldn't be found or isn't a build script.");
+                Debug.LogError(addressable_build_script + " couldn't be found or isn't a build script.");
                 return false;
             }
 
-            setBuilder(builderScript);
+            setAddressableBuilder(builderScript);
 
             return buildAddressableContent();
         }
 
-        [MenuItem("Build/Build Addressables and Player")]
+        [MenuItem("Build/Addressables/Build Addressables and Player")]
         public static void BuildAddressablesAndPlayer()
         {
             bool contentBuildSucceeded = BuildAddressables();

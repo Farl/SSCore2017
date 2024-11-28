@@ -33,7 +33,7 @@ namespace SS
         }
     }
 
-    public static class BuildPipelineSystem
+    public static partial class BuildPipelineSystem
     {
         #region Build Menu Item
         [MenuItem("Build/Build Player")]

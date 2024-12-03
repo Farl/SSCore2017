@@ -275,20 +275,10 @@ namespace SS
 
                 EditorGUILayout.Separator();
 
-                EditorGUILayout.BeginVertical();
+                // Run in background toggle
                 {
-                    EditorGUILayout.LabelField("XR Device Switch");
-                    EditorGUILayout.BeginHorizontal();
-                    foreach (var e in System.Enum.GetValues(typeof(XRDevice)))
-                    {
-                        if (GUILayout.Button(e.ToString()))
-                        {
-                            BuildPipelineImplementXR.SetXRPlatform((XRDevice)e);
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
+                    PlayerSettings.runInBackground = EditorGUILayout.Toggle("Run in background", PlayerSettings.runInBackground);
                 }
-                EditorGUILayout.EndVertical();
 
                 EditorGUILayout.Separator();
 
@@ -299,20 +289,37 @@ namespace SS
 
         private static void DrawXRBuildSettings()
         {
-            EditorGUILayout.LabelField("XR Build Settings");
-            if (GUILayout.Button("Get Settings"))
+            EditorGUILayout.BeginHorizontal();
             {
-                Selection.activeObject = XRBuildSettings.GetXRBuildSettings();
+                if (GUILayout.Button("XR Build Settings"))
+                {
+                    Selection.activeObject = XRBuildSettings.GetXRBuildSettings();
+                }
+                if (GUILayout.Button("XR Management"))
+                {
+                    SettingsService.OpenProjectSettings("Project/XR Plug-in Management");
+                }
             }
+            EditorGUILayout.EndHorizontal();
             // Target XR device
-            targetXRDevice = (XRDevice)EditorGUILayout.EnumPopup(new GUIContent("Target XR Device"), targetXRDevice);
-            if (GUILayout.Button("Save Settings"))
+            var deviceEnums = typeof(XRDevice).GetEnumValues();
+            foreach (var e in deviceEnums)
             {
-                XRBuildSettings.SaveDeviceSettings(targetXRDevice);
-            }
-            if (GUILayout.Button("Load Settings"))
-            {
-                XRBuildSettings.LoadDeviceSettings(targetXRDevice);
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(e.ToString(), GUILayout.Width(80));
+                if (GUILayout.Button("Switch"))
+                {
+                    BuildPipelineImplementXR.SetXRPlatform((XRDevice)e);
+                }
+                if (GUILayout.Button("Save"))
+                {
+                    XRBuildSettings.SaveDeviceSettings((XRDevice)e);
+                }
+                if (GUILayout.Button("Load"))
+                {
+                    XRBuildSettings.LoadDeviceSettings((XRDevice)e);
+                }
+                EditorGUILayout.EndHorizontal();
             }
         }
 

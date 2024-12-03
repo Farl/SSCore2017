@@ -89,6 +89,14 @@ namespace SS
             // Feature Sets
             stringBuilder.AppendLine($"Feature Sets:");
             var featureSets = OpenXRFeatureSetManager.FeatureSetsForBuildTarget(targetGroup);
+            // Disable first to prevent feature locked by feature set
+            foreach (var featureSet in featureSets)
+            {
+                if (useXRBuildSettings && !currXRDeviceSettings.featureSet.Contains(featureSet.name))
+                {
+                    featureSet.isEnabled = false;
+                }
+            }
             foreach (var featureSet in featureSets)
             {
                 if (useXRBuildSettings)

@@ -88,7 +88,6 @@ namespace SS
 
         #region Variables
         private static string viveVersion = "";
-        private static XRDevice targetXRDevice = XRDevice.MetaQuest;
         private Vector2 scrollPos;
         #endregion
 

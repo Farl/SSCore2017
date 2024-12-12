@@ -15,68 +15,7 @@ namespace SS
 {
     public class DebugMenu : UIEntity
     {
-        public Transform templateRoot;
-        public Transform pageRoot;
-        public Transform templatePage;
-
-        public Toggle pageToggleTemplate;
-        public DebugMenuLog logTemplate;
-        public float timeScale = 0.0f;
-
-        private bool input;
-        private ElementPage currPage;
-
-#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
-        private UnityEngine.InputSystem.Controls.KeyControl compKey;
-        private UnityEngine.InputSystem.Controls.KeyControl key;
-#endif
-
-        private void InitKeyboard()
-        {
-#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
-            var keyboard = Keyboard.current;
-            if (keyboard != null)
-            {
-                compKey = keyboard.FindKeyOnCurrentKeyboardLayout("Right Shift");
-                key = keyboard.FindKeyOnCurrentKeyboardLayout("Backspace");
-            }
-#endif
-        }
-
-        [Serializable]
-        public class ElementPage
-        {
-            [NonSerialized]
-            public bool isInit = false;
-            public string name;
-            public Transform rootTransform;
-            public Transform contentRootTransform;
-        }
-
-        public List<ElementPage> pageList = new List<ElementPage>();
-
-
-        private enum ElementDataType
-        {
-            Toggle,
-            Button,
-            Dropdown,
-        }
-
-        private class ElementData
-        {
-            public bool isInit = false;
-            public ElementDataType type = ElementDataType.Toggle;
-            public string page = defaultPageName;
-            public string label;
-            public Action<object, UnityEngine.Object> onValueChanged;
-            public Action<UnityEngine.Object> onShow;
-            public object value;
-            public List<string> stringList;
-            public UnityEngine.Object obj;
-            public DebugMenuElement element;
-        }
-
+        #region Static
         public static Action<bool> onMenuToggle;
         public static float TimeScale
         {
@@ -87,10 +26,8 @@ namespace SS
         }
         private static float _timeScale = 0.0f;
         private const string defaultPageName = "Default";
-        private Toggle currPageToggle = null;
         private static Dictionary<string, ElementData> dataSet = new Dictionary<string, ElementData>();
         private static Dictionary<string, ElementPage> pages = new Dictionary<string, ElementPage>();
-
         public static void Remove(string label)
         {
             if (dataSet.TryGetValue(label, out var elementData))
@@ -162,7 +99,8 @@ namespace SS
                 value = getter?.Invoke()
             };
             ed.onValueChanged += (b, obj) => { setter?.Invoke((bool)b); };
-            ed.onShow += (obj) => {
+            ed.onShow += (obj) =>
+            {
                 var toggle = obj as Toggle;
                 if (toggle != null) toggle.isOn = (bool)(getter?.Invoke());
             };
@@ -200,7 +138,113 @@ namespace SS
 
             pages.Add(ep.name, ep);
         }
+        #endregion
 
+        #region Enums / Classes
+        [Serializable]
+        public class ElementPage
+        {
+            [NonSerialized]
+            public bool isInit = false;
+            public string name;
+            public Transform rootTransform;
+            public Transform contentRootTransform;
+        }
+
+        private enum ElementDataType
+        {
+            Toggle,
+            Button,
+            Dropdown,
+        }
+
+        private class ElementData
+        {
+            public bool isInit = false;
+            public ElementDataType type = ElementDataType.Toggle;
+            public string page = defaultPageName;
+            public string label;
+            public Action<object, UnityEngine.Object> onValueChanged;
+            public Action<UnityEngine.Object> onShow;
+            public object value;
+            public List<string> stringList;
+            public UnityEngine.Object obj;
+            public DebugMenuElement element;
+        }
+        #endregion
+
+        #region Inspector
+
+        [SerializeField] public Transform templateRoot;
+        [SerializeField] public Transform pageRoot;
+        [SerializeField] public Transform templatePage;
+        [SerializeField] public Toggle pageToggleTemplate;
+        [SerializeField] public DebugMenuLog logTemplate;
+        [SerializeField] public float timeScale = 0.0f;
+        [SerializeField] public List<ElementPage> pageList = new List<ElementPage>();
+        [Header("Logger")]
+        [SerializeField] private bool isLog = false;
+        [SerializeField] private bool isLogWarning = false;
+        [SerializeField] private bool isLogError = true;
+
+        #endregion
+
+        #region Public
+        public override void OnUpdate()
+        {
+            bool prevInput = input;
+            input = false;
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
+
+            if (key != null)
+            {
+                input = key.IsPressed() && compKey.IsPressed();
+            }
+
+            if (EnhancedTouchSupport.enabled)
+            {
+                var touches = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches;
+                var touchCount = touches.Count;
+                if (touchCount >= 3)
+                    input = true;
+            }
+#else
+#endif
+            if (prevInput != input && input)
+            {
+                if (!IsShow)
+                {
+                    Show();
+                }
+                else
+                {
+                    Hide();
+                }
+            }
+        }
+        #endregion
+
+        #region Private / Protected
+
+        private bool input;
+        private ElementPage currPage;
+        private Toggle currPageToggle = null;
+
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
+        private UnityEngine.InputSystem.Controls.KeyControl compKey;
+        private UnityEngine.InputSystem.Controls.KeyControl key;
+#endif
+        private void InitKeyboard()
+        {
+#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
+            var keyboard = Keyboard.current;
+            if (keyboard != null)
+            {
+                compKey = keyboard.FindKeyOnCurrentKeyboardLayout("Right Shift");
+                key = keyboard.FindKeyOnCurrentKeyboardLayout("Backspace");
+            }
+#endif
+        }
         private Transform GetPageRoot(string pageName)
         {
             if (!string.IsNullOrEmpty(pageName) && pages.TryGetValue(pageName, out var p))
@@ -214,7 +258,7 @@ namespace SS
         {
             if (!string.IsNullOrEmpty(pageName) && pages.TryGetValue(pageName, out var p))
             {
-                return p.contentRootTransform? p.contentRootTransform: p.rootTransform;
+                return p.contentRootTransform ? p.contentRootTransform : p.rootTransform;
             }
             return GetPageContentRoot(defaultPageName);
         }
@@ -512,44 +556,9 @@ namespace SS
                 kvp.Value.isInit = false;
             }
         }
+        #endregion
 
-        public override void OnUpdate()
-        {
-            bool prevInput = input;
-            input = false;
-#if ENABLE_INPUT_SYSTEM && USE_INPUT_SYSTEM
-
-            if (key != null)
-            {
-                input = key.IsPressed() && compKey.IsPressed();
-            }
-
-            if (EnhancedTouchSupport.enabled)
-            {
-                var touches = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches;
-                var touchCount = touches.Count;
-                if (touchCount >= 3)
-                    input = true;
-            }
-#else
-#endif
-            if (prevInput != input && input)
-            {
-                if (!IsShow)
-                {
-                    Show();
-                }
-                else
-                {
-                    Hide();
-                }
-            }
-        }
-
-#region Logger
-        private bool isLog = false;
-        private bool isLogWarning = false;
-        private bool isLogError = true;
+        #region Logger
 
         private void InitLoggerMenu()
         {
@@ -650,6 +659,6 @@ namespace SS
                 }
             );
         }
-#endregion
+        #endregion
     }
 }

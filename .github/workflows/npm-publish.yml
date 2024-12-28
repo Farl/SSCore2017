@@ -11,7 +11,14 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-      - run: npm publish
+      - name: Get release name
+        run: |
+          RELEASE_NAME="${{ github.event.release.name }}"
+          echo "Release Name: $RELEASE_NAME"
+          RELEASE_NAME=$(echo "${RELEASE_NAME}" | cut -d '-' -f 1)
+          echo "Release Name: $RELEASE_NAME"
+      - run: |
+          # npm publish
         working-directory: Packages/com.prototyper.utility
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

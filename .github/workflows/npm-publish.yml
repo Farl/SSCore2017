@@ -1,9 +1,7 @@
 name: UPM on npsjs.com
-
 on:
   release:
     types: [created]
-
 jobs:
   publish:
     runs-on: ubuntu-latest

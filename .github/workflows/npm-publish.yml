@@ -19,8 +19,10 @@ jobs:
           echo "Release Name: $RELEASE_NAME"
           RELEASE_NAME=$(echo "${RELEASE_NAME}" | cut -d '-' -f 1)
           echo "Release Name: $RELEASE_NAME"
+          # Write into environment
+          echo "RELEASE_NAME=${RELEASE_NAME}" >> $GITHUB_ENV
       - name: NPM publish
         run: npm publish
-        working-directory: Packages/com.prototyper.${{ RELEASE_NAME }}
+        working-directory: Packages/com.prototyper.${{ env.RELEASE_NAME }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

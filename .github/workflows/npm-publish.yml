@@ -6,8 +6,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
@@ -17,8 +19,8 @@ jobs:
           echo "Release Name: $RELEASE_NAME"
           RELEASE_NAME=$(echo "${RELEASE_NAME}" | cut -d '-' -f 1)
           echo "Release Name: $RELEASE_NAME"
-      - run: |
-          # npm publish
-        working-directory: Packages/com.prototyper.utility
+      - name: NPM publish
+        run: npm publish
+        working-directory: Packages/com.prototyper.${{ env.RELEASE_NAME }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

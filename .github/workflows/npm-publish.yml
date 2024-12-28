@@ -21,6 +21,6 @@ jobs:
           echo "Release Name: $RELEASE_NAME"
       - name: NPM publish
         run: npm publish
-        working-directory: Packages/com.prototyper.${{ env.RELEASE_NAME }}
+        working-directory: Packages/com.prototyper.${{ RELEASE_NAME }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

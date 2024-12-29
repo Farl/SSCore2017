@@ -31,15 +31,18 @@ jobs:
           generateReleaseNotes: true
           makeLatest: false
       - name: Checkout code
+        if: env.is_version_tag == 'true'
         uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup node
+        if: env.is_version_tag == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
       - name: NPM publish
+        if: env.is_version_tag == 'true'
         run: npm publish
         working-directory: ${{ env.WORKING_DIR }}
         env:

@@ -1,0 +1,33 @@
+name: Create Release from Tag
+
+on:
+  push:
+    tags:
+      - '*'  # Trigger on any tag push
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Tag Name
+        id: check_tag
+        run: |
+          TAG_NAME=${GITHUB_REF##*/}
+          echo "Tag Name: $TAG_NAME"
+          if [[ "$TAG_NAME" == *"-v"* ]]; then
+            echo "is_version_tag=true" >> $GITHUB_ENV
+          else
+            echo "is_version_tag=false" >> $GITHUB_ENV
+          fi
+
+      - name: Create Release
+        if: env.is_version_tag == 'true'
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+          generateReleaseNotes: true
+          makeLatest: false

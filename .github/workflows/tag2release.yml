@@ -16,6 +16,10 @@ jobs:
           echo "Tag Name: $TAG_NAME"
           if [[ "$TAG_NAME" == *"-v"* ]]; then
             echo "is_version_tag=true" >> $GITHUB_ENV
+            # Package name
+            PACKAGE_NAME=$(echo "${TAG_NAME}" | cut -d '-' -f 1)
+            # Working directory
+            echo "WORKING_DIR=Packages/com.prototyper.${PACKAGE_NAME}" >> $GITHUB_ENV
           else
             echo "is_version_tag=false" >> $GITHUB_ENV
           fi

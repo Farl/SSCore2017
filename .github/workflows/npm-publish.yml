@@ -6,6 +6,16 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Get release name and set working directory
+        run: |
+          RELEASE_NAME="${{ github.event.release.name }}"
+          echo "Release Name: $RELEASE_NAME"
+          RELEASE_NAME=$(echo "${RELEASE_NAME}" | cut -d '-' -f 1)
+          echo "Release Name: $RELEASE_NAME"
+          # Write into environment
+          echo "RELEASE_NAME=${RELEASE_NAME}" >> $GITHUB_ENV
+          # Working directory
+          echo "WORKING_DIR=Packages/com.prototyper.${RELEASE_NAME}" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -15,16 +25,8 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-      - name: Get release name
-        run: |
-          RELEASE_NAME="${{ github.event.release.name }}"
-          echo "Release Name: $RELEASE_NAME"
-          RELEASE_NAME=$(echo "${RELEASE_NAME}" | cut -d '-' -f 1)
-          echo "Release Name: $RELEASE_NAME"
-          # Write into environment
-          echo "RELEASE_NAME=${RELEASE_NAME}" >> $GITHUB_ENV
       - name: NPM publish
         run: npm publish
-        working-directory: Packages/com.prototyper.${{ env.RELEASE_NAME }}
+        working-directory: ${{ env.WORKING_DIR }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

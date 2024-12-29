@@ -1,4 +1,4 @@
-name: UPM on npsjs.com
+name: Publish to npsjs.org
 on:
   release:
     types: [created]

@@ -26,8 +26,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
           draft: false
           prerelease: false
           generateReleaseNotes: true
           makeLatest: false
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+      - name: NPM publish
+        run: npm publish
+        working-directory: ${{ env.WORKING_DIR }}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}

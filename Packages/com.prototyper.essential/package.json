@@ -1,10 +1,8 @@
 {
   "name": "com.prototyper.essential",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "displayName": "SS Essential",
-  "description": "Essential",
-  "unity": null,
-  "unityRelease": null,
+  "description": "The Prototyper Essential Unity Package provides a foundational framework for Unity developers, offering a collection of utilities, extensions, and systems to streamline development workflows. It is designed to enhance productivity and simplify common tasks in Unity projects.",
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
@@ -18,22 +16,22 @@
     "url": ""
   },
   "hideInEditor": false,
-  "license": "",
+  "license": "MIT License",
   "samples": [
     {
       "displayName": "Audio Visualization Example",
-      "description": "",
+      "description": "Demonstrates audio visualization techniques.",
       "path": "Samples~/Audio Visualization Example"
     },
     {
       "displayName": "Async Await Example",
-      "description": "",
+      "description": "Shows how to use async/await in Unity.",
       "path": "Samples~/Async Await Example"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "",
+    "url": "https://github.com/Farl/SSCore2017.git",
     "revision": ""
   },
   "hideFlags": 0

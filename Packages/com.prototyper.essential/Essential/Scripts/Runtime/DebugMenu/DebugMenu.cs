@@ -52,6 +52,46 @@ namespace SS
             return true;
         }
 
+        public static bool AddFloatSlider(string page, string label, float minValue = 0.0f, float maxValue = 1.0f, float defaultValue = 0.0f, Action<float, UnityEngine.Object> onChanged = null, Action<UnityEngine.Object> onShow = null)
+        {
+            if (!CheckAdd(page, label))
+                return false;
+            var ed = new ElementData()
+            {
+                type = ElementDataType.Slider,
+                label = label,
+                page = page,
+                value = defaultValue,
+                minValue = minValue,
+                maxValue = maxValue,
+                wholeNumbers = false
+            };
+            ed.onValueChanged += (v, obj) => { onChanged((float)v, obj); };
+            ed.onShow += onShow;
+            dataSet.Add(label, ed);
+            return true;
+        }
+
+        public static bool AddIntSlider(string page, string label, int minValue, int maxValue, int defaultValue, Action<int, UnityEngine.Object> onChanged = null, Action<UnityEngine.Object> onShow = null)
+        {
+            if (!CheckAdd(page, label))
+                return false;
+            var ed = new ElementData()
+            {
+                type = ElementDataType.Slider,
+                label = label,
+                page = page,
+                value = defaultValue,
+                minValue = minValue,
+                maxValue = maxValue,
+                wholeNumbers = true
+            };
+            ed.onValueChanged += (v, obj) => { onChanged(Convert.ToInt32(v), obj); };
+            ed.onShow += onShow;
+            dataSet.Add(label, ed);
+            return true;
+        }
+
         public static bool AddDropdown(string page, string label, Action<int, UnityEngine.Object> onChanged, List<string> stringList, int defaultValue, Action<UnityEngine.Object> onShow = null)
         {
             if (!CheckAdd(page, label))
@@ -156,6 +196,7 @@ namespace SS
             Toggle,
             Button,
             Dropdown,
+            Slider,
         }
 
         private class ElementData
@@ -167,6 +208,9 @@ namespace SS
             public Action<object, UnityEngine.Object> onValueChanged;
             public Action<UnityEngine.Object> onShow;
             public object value;
+            public object minValue;
+            public object maxValue;
+            public bool wholeNumbers = false;
             public List<string> stringList;
             public UnityEngine.Object obj;
             public DebugMenuElement element;
@@ -286,6 +330,12 @@ namespace SS
                                 break;
                             case ElementDataType.Dropdown:
                                 ed.obj = ed.element.InitDropdown(ed.label, ed.onValueChanged, ed.stringList, (int)ed.value);
+                                break;
+                            case ElementDataType.Slider:
+                                if (ed.wholeNumbers)
+                                    ed.obj = ed.element.InitSlider(ed.label, (int)ed.minValue, (int)ed.maxValue, (int)ed.value, ed.onValueChanged, ed.wholeNumbers);
+                                else
+                                    ed.obj = ed.element.InitSlider(ed.label, (float)ed.minValue, (float)ed.maxValue, (float)ed.value, ed.onValueChanged, ed.wholeNumbers);
                                 break;
                         }
                     }

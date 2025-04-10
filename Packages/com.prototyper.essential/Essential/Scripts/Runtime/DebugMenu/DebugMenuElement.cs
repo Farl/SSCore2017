@@ -15,6 +15,7 @@ namespace SS
         public Toggle toggle;
         public Button button;
         public TMP_Dropdown dropdown;
+        public Slider slider;
 
         private Action<object, UnityEngine.Object> _onValueChanged;
         private string[] _stringArray;
@@ -95,6 +96,10 @@ namespace SS
                 label.SetText(labelContent);
             }
             _value = defaultValue;
+            if (valueText != null)
+            {
+                valueText.text = defaultValue.ToString();
+            }
             SetValueToggle();
             if (toggle != null)
             {
@@ -128,6 +133,50 @@ namespace SS
                 );
             }
             return dropdown;
+        }
+
+        public UnityEngine.Object InitSlider(string labelContent, object minValue, object maxValue, object defaultValue, Action<object, UnityEngine.Object> onValueChanged, bool wholeNumbers)
+        {
+            void setTextValue(Slider slider, float value)
+            {
+                if (valueText != null)
+                {
+                    // Format to 0.00 if wholeNumber is false
+                    valueText.text = slider.wholeNumbers ? value.ToString("0") : value.ToString("0.00");
+                }
+            }
+            _onValueChanged += onValueChanged;
+            if (label != null)
+            {
+                label.SetText(labelContent);
+            }
+            _value = defaultValue;
+            if (slider != null)
+            {
+                slider.wholeNumbers = wholeNumbers;
+                if (wholeNumbers)
+                {
+                    slider.minValue = (int)minValue;
+                    slider.maxValue = (int)maxValue;
+                    slider.value = (int)defaultValue;
+                    setTextValue(slider, slider.value);
+                }
+                else
+                {
+                    slider.minValue = (float)minValue;
+                    slider.maxValue = (float)maxValue;
+                    slider.value = (float)defaultValue;
+                    setTextValue(slider, slider.value);
+                }
+                slider.onValueChanged.AddListener(
+                    (f) =>
+                    {
+                        setTextValue(slider, f);
+                        onValueChanged?.Invoke(f, slider);
+                    }
+                );
+            }
+            return slider;
         }
 
         public void Init(string labelContent, Action<object, UnityEngine.Object> onValueChanged, string[] stringArray, int defaultIndex)

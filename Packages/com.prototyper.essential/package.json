@@ -1,13 +1,13 @@
 {
   "name": "com.prototyper.essential",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "displayName": "SS Essential",
   "description": "The Prototyper Essential Unity Package provides a foundational framework for Unity developers, offering a collection of utilities, extensions, and systems to streamline development workflows. It is designed to enhance productivity and simplify common tasks in Unity projects.",
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
   "dependencies": {
-    "com.prototyper.buildpipeline": ""
+    "com.prototyper.buildpipeline": "*"
   },
   "keywords": [],
   "author": {

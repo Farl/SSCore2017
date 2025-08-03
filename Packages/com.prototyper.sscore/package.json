@@ -1,13 +1,13 @@
 {
   "name": "com.prototyper.sscore",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "displayName": "SS Core",
   "description": "Core function",
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
   "dependencies": {
-    "com.prototyper.stringevent": ""
+    "com.prototyper.stringevent": "*"
   },
   "keywords": [],
   "author": {
